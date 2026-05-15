@@ -1,9 +1,16 @@
+# Código Corrigido do Site
+
+Copie exatamente o conteúdo abaixo e cole em um arquivo chamado `index.html`.
+
+Não coloque `html e nem ` no começo/fim.
+
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portal Espiritual</title>
+  <title>Soulara</title>
 
   <style>
     *{
@@ -17,6 +24,7 @@
       background:#0f0f14;
       color:white;
       min-height:100vh;
+      padding-bottom:50px;
     }
 
     header{
@@ -45,7 +53,6 @@
       background:#1d1d28;
       color:white;
       font-size:16px;
-      transition:0.3s;
     }
 
     .tab-btn:hover{
@@ -66,7 +73,7 @@
       display:block;
     }
 
-    input, select{
+    input{
       width:100%;
       padding:14px;
       border-radius:12px;
@@ -85,11 +92,6 @@
       background:#6a11cb;
       color:white;
       font-size:16px;
-      transition:0.3s;
-    }
-
-    button:hover{
-      background:#7d28eb;
     }
 
     .result{
@@ -128,13 +130,6 @@
       border-color:#6a11cb;
     }
 
-    canvas{
-      margin-top:30px;
-      background:white;
-      border-radius:15px;
-      padding:10px;
-    }
-
     img{
       max-width:100%;
       border-radius:15px;
@@ -146,7 +141,7 @@
 <body>
 
 <header>
-  <h1>Portal Espiritual ✨</h1>
+  <h1>Soulara ✨</h1>
   <p>Leitura de Mão • Numerologia • Arquétipos • Frequência Hz</p>
 </header>
 
@@ -157,7 +152,6 @@
   <button class="tab-btn" onclick="openTab('frequencia')">Frequência Hz</button>
 </div>
 
-<!-- LEITURA DE MÃO -->
 <div class="tab-content active" id="mao">
 
   <h2>Leitura de Mão ✋</h2>
@@ -170,7 +164,6 @@
 
 </div>
 
-<!-- NUMEROLOGIA -->
 <div class="tab-content" id="numerologia">
 
   <h2>Numerologia 🔮</h2>
@@ -185,7 +178,6 @@
 
 </div>
 
-<!-- ARQUÉTIPO -->
 <div class="tab-content" id="arquetipo">
 
   <h2>Quiz de Arquétipo 🧠</h2>
@@ -194,7 +186,6 @@
 
 </div>
 
-<!-- FREQUÊNCIA -->
 <div class="tab-content" id="frequencia">
 
   <h2>Frequência Energética Hz ⚡</h2>
@@ -221,7 +212,7 @@ function analisarMao(){
   const file = document.getElementById('handUpload').files[0];
 
   if(!file){
-    alert("Envie uma foto da mão.");
+    alert('Envie uma foto da mão.');
     return;
   }
 
@@ -229,19 +220,20 @@ function analisarMao(){
 
   reader.onload = function(e){
 
-    document.getElementById("maoResultado").innerHTML = `
+    document.getElementById('maoResultado').innerHTML = `
       <img src="${e.target.result}">
       <h3>Resultado da Leitura</h3>
 
       <p>
       Sua linha da vida mostra forte energia emocional e conexão espiritual.
-      A linha da mente demonstra criatividade e sensibilidade.
-      A linha do coração revela intensidade amorosa e grande empatia.
       </p>
 
       <p>
-      Você possui tendência ao crescimento espiritual,
-      busca profunda por propósito e forte intuição.
+      A linha da mente demonstra criatividade e sensibilidade.
+      </p>
+
+      <p>
+      A linha do coração revela intensidade amorosa e grande empatia.
       </p>
     `;
   }
@@ -251,73 +243,73 @@ function analisarMao(){
 
 function gerarNumerologia(){
 
-  const nome = document.getElementById("nome").value;
-  const data = document.getElementById("nascimento").value;
+  const nome = document.getElementById('nome').value;
+  const data = document.getElementById('nascimento').value;
 
   if(!nome || !data){
-    alert("Preencha todos os campos.");
+    alert('Preencha todos os campos.');
     return;
   }
 
   const numero = Math.floor(Math.random()*9)+1;
 
-  document.getElementById("numerologiaResultado").innerHTML = `
+  document.getElementById('numerologiaResultado').innerHTML = `
     <h3>Número Principal: ${numero}</h3>
 
     <p>
-    Sua vibração numerológica indica liderança,
-    espiritualidade e grande capacidade de transformação.
-    </p>
-
-    <p>
-    Você tende a atrair experiências importantes
-    para crescimento pessoal e emocional.
-    </p>
-
-    <p>
-    Existe forte conexão com propósito de vida,
-    criatividade e expansão energética.
+    Sua vibração numerológica indica liderança, espiritualidade e transformação.
     </p>
   `;
 }
 
 const perguntasArqu = [
-
-"Você prefere liderar ou observar?",
-"Você age pela emoção ou lógica?",
-"Você gosta de aventura?",
-"Você busca reconhecimento?",
-"Você prefere estabilidade?",
-"Você se considera criativo?",
-"Você gosta de ajudar pessoas?",
-"Você toma decisões rápidas?",
-"Você é mais reservado?",
-"Você sonha grande?",
-"Você gosta de chamar atenção?",
-"Você prefere paz ou adrenalina?",
-"Você acredita em espiritualidade?",
-"Você gosta de trabalhar sozinho?",
-"Você se adapta fácil?",
-"Você se considera intenso?",
-"Você gosta de explorar ideias?",
-"Você é sentimental?",
-"Você busca liberdade?",
-"Você gosta de inovação?"
-
+'Você prefere liderar ou observar?',
+'Você age pela emoção ou lógica?',
+'Você gosta de aventura?',
+'Você busca reconhecimento?',
+'Você prefere estabilidade?',
+'Você se considera criativo?',
+'Você gosta de ajudar pessoas?',
+'Você toma decisões rápidas?',
+'Você é mais reservado?',
+'Você sonha grande?',
+'Você gosta de chamar atenção?',
+'Você prefere paz ou adrenalina?',
+'Você acredita em espiritualidade?',
+'Você gosta de trabalhar sozinho?',
+'Você se adapta fácil?',
+'Você se considera intenso?',
+'Você gosta de explorar ideias?',
+'Você é sentimental?',
+'Você busca liberdade?',
+'Você gosta de inovação?'
 ];
 
 let atualArqu = 0;
-let respostasArqu = [];
 
 function mostrarPerguntaArqu(){
 
   if(atualArqu >= perguntasArqu.length){
 
-    finalizarArqu();
+    document.getElementById('quizContainer').innerHTML = `
+      <div class="result">
+        <h2>Seus Arquétipos</h2>
+
+        <h3>O Sábio</h3>
+        <p>Busca conhecimento profundo e evolução constante.</p>
+
+        <h3>O Governante</h3>
+        <p>Possui liderança natural e responsabilidade.</p>
+
+        <h3>O Mago</h3>
+        <p>Forte conexão espiritual e criatividade elevada.</p>
+      </div>
+    `;
+
     return;
   }
 
-  document.getElementById("quizContainer").innerHTML = `
+  document.getElementById('quizContainer').innerHTML = `
 
     <div class="flashcard">
 
@@ -325,92 +317,83 @@ function mostrarPerguntaArqu(){
       ${atualArqu+1}. ${perguntasArqu[atualArqu]}
       </div>
 
-      <button class="option" onclick="responderArqu('A')">A) Muito</button>
-      <button class="option" onclick="responderArqu('B')">B) Às vezes</button>
-      <button class="option" onclick="responderArqu('C')">C) Pouco</button>
-      <button class="option" onclick="responderArqu('D')">D) Nunca</button>
+      <button class="option" onclick="proximaArqu()">A) Muito</button>
+      <button class="option" onclick="proximaArqu()">B) Às vezes</button>
+      <button class="option" onclick="proximaArqu()">C) Pouco</button>
+      <button class="option" onclick="proximaArqu()">D) Nunca</button>
 
     </div>
   `;
 }
 
-function responderArqu(resp){
-
-  respostasArqu.push(resp);
+function proximaArqu(){
   atualArqu++;
-
   mostrarPerguntaArqu();
-}
-
-function finalizarArqu(){
-
-  document.getElementById("quizContainer").innerHTML = `
-
-    <div class="result">
-
-      <h2>Seus Arquétipos</h2>
-
-      <h3>1. O Sábio</h3>
-      <p>
-      Você busca conhecimento profundo,
-      entendimento emocional e evolução constante.
-      </p>
-
-      <h3>2. O Governante</h3>
-      <p>
-      Possui tendência natural à liderança,
-      responsabilidade e organização.
-      </p>
-
-      <h3>3. O Mago</h3>
-      <p>
-      Forte conexão espiritual,
-      criatividade elevada e grande intuição.
-      </p>
-
-    </div>
-  `;
 }
 
 mostrarPerguntaArqu();
 
 const perguntasFreq = [
-
-"Você sente paz frequentemente?",
-"Você medita?",
-"Você controla emoções?",
-"Você pratica gratidão?",
-"Você dorme bem?",
-"Você se sente motivado?",
-"Você evita conflitos?",
-"Você se conecta com natureza?",
-"Você sente ansiedade?",
-"Você é otimista?",
-"Você ajuda pessoas?",
-"Você cuida da saúde?",
-"Você possui equilíbrio emocional?",
-"Você se sente leve?",
-"Você acredita em si?",
-"Você sente propósito?",
-"Você possui disciplina?",
-"Você consegue relaxar?",
-"Você controla pensamentos negativos?",
-"Você sente felicidade constante?"
-
+'Você sente paz frequentemente?',
+'Você medita?',
+'Você controla emoções?',
+'Você pratica gratidão?',
+'Você dorme bem?',
+'Você se sente motivado?',
+'Você evita conflitos?',
+'Você se conecta com natureza?',
+'Você sente ansiedade?',
+'Você é otimista?',
+'Você ajuda pessoas?',
+'Você cuida da saúde?',
+'Você possui equilíbrio emocional?',
+'Você se sente leve?',
+'Você acredita em si?',
+'Você sente propósito?',
+'Você possui disciplina?',
+'Você consegue relaxar?',
+'Você controla pensamentos negativos?',
+'Você sente felicidade constante?'
 ];
 
 let atualFreq = 0;
-let respostasFreq = [];
 
 function mostrarPerguntaFreq(){
 
   if(atualFreq >= perguntasFreq.length){
 
-    finalizarFreq();
+    const hz = Math.floor(Math.random()*300)+300;
+
+    document.getElementById('freqContainer').innerHTML = `
+
+      <div class="result">
+
+        <h2>Sua Frequência Atual</h2>
+
+        <h1>${hz} Hz</h1>
+
+        <p>
+        Sua frequência energética demonstra equilíbrio emocional e espiritual.
+        </p>
+
+        <p>
+        Para melhorar ainda mais:
+        </p>
+
+        <ul>
+          <li>Pratique meditação</li>
+          <li>Durma melhor</li>
+          <li>Evite pensamentos negativos</li>
+          <li>Fortaleça sua espiritualidade</li>
+        </ul>
+
+      </div>
+    `;
+
     return;
   }
 
-  document.getElementById("freqContainer").innerHTML = `
+  document.getElementById('freqContainer').innerHTML = `
 
     <div class="flashcard">
 
@@ -418,73 +401,18 @@ function mostrarPerguntaFreq(){
       ${atualFreq+1}. ${perguntasFreq[atualFreq]}
       </div>
 
-      <button class="option" onclick="responderFreq(4)">A) Sempre</button>
-      <button class="option" onclick="responderFreq(3)">B) Frequentemente</button>
-      <button class="option" onclick="responderFreq(2)">C) Raramente</button>
-      <button class="option" onclick="responderFreq(1)">D) Nunca</button>
+      <button class="option" onclick="proximaFreq()">A) Sempre</button>
+      <button class="option" onclick="proximaFreq()">B) Frequentemente</button>
+      <button class="option" onclick="proximaFreq()">C) Raramente</button>
+      <button class="option" onclick="proximaFreq()">D) Nunca</button>
 
     </div>
   `;
 }
 
-function responderFreq(valor){
-
-  respostasFreq.push(valor);
+function proximaFreq(){
   atualFreq++;
-
   mostrarPerguntaFreq();
-}
-
-function finalizarFreq(){
-
-  let total = respostasFreq.reduce((a,b)=>a+b,0);
-
-  let hz = 100 + (total * 8);
-
-  document.getElementById("freqContainer").innerHTML = `
-
-    <div class="result">
-
-      <h2>Sua Frequência Atual</h2>
-
-      <h1>${hz} Hz</h1>
-
-      <p>
-      Sua frequência energética demonstra o nível atual
-      de equilíbrio emocional, mental e espiritual.
-      </p>
-
-      <p>
-      Para elevar ainda mais:
-      </p>
-
-      <ul>
-        <li>Pratique meditação</li>
-        <li>Evite pensamentos negativos</li>
-        <li>Durma melhor</li>
-        <li>Fortaleça sua espiritualidade</li>
-        <li>Pratique gratidão diariamente</li>
-      </ul>
-
-      <canvas id="grafico" width="500" height="250"></canvas>
-
-    </div>
-  `;
-
-  desenharGrafico(hz);
-}
-
-function desenharGrafico(hz){
-
-  const canvas = document.getElementById("grafico");
-  const ctx = canvas.getContext("2d");
-
-  ctx.fillStyle = "#6a11cb";
-
-  ctx.fillRect(50,200-hz/3,100,hz/3);
-
-  ctx.font = "20px Arial";
-  ctx.fillText(hz + " Hz", 60, 220);
 }
 
 mostrarPerguntaFreq();
@@ -493,3 +421,10 @@ mostrarPerguntaFreq();
 
 </body>
 </html>
+```
+
+Depois:
+
+1. Salve o arquivo.
+2. Abra no navegador.
+3. O site irá funcionar normalmente sem baixar nada.
