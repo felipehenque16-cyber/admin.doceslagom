@@ -4,34 +4,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Cosmo Interior — Ferramentas de autoconhecimento: Leitura de Mão, Numerologia, Arquétipos e Frequência Vibracional" />
-  <title>Cosmo Interior | Portal Espiritual</title>
+  <meta name="description" content="Cosmo Interior — Portal de Autoconhecimento: Leitura de Mão, Numerologia, Arquétipos e Frequência Vibracional" />
+  <meta name="theme-color" content="#07070f" />
+  <meta property="og:title" content="Cosmo Interior | Portal de Autoconhecimento" />
+  <meta property="og:description" content="Ferramentas de autoconhecimento: Leitura de Mão, Numerologia, Arquétipos e Frequência Vibracional" />
+  <title>Cosmo Interior | Portal de Autoconhecimento</title>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%2307070f'/%3E%3Ccircle cx='50' cy='50' r='38' fill='none' stroke='%23c4a044' stroke-width='4'/%3E%3Ccircle cx='50' cy='50' r='8' fill='%23c4a044'/%3E%3Cline x1='50' y1='12' x2='50' y2='88' stroke='%23c4a044' stroke-width='1.5' opacity='.35'/%3E%3Cline x1='12' y1='50' x2='88' y2='50' stroke='%23c4a044' stroke-width='1.5' opacity='.35'/%3E%3C/svg%3E" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
 
   <style>
-    /* ─── RESET & VARIABLES ─────────────────────────── */
+    /* ─── RESET & TOKENS ───────────────────────────────── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg:          #07070f;
-      --bg-mid:      #0d0d1e;
-      --surface:     #111128;
-      --surface-hi:  #181838;
-      --gold:        #c4a044;
-      --gold-lt:     #dfc078;
-      --gold-dim:    rgba(196,160,68,.10);
-      --gold-glow:   rgba(196,160,68,.18);
-      --plum:        #7d5eb5;
-      --text:        #f2eacc;
-      --text-muted:  #9a8c72;
-      --text-dim:    #5c5446;
-      --border:      rgba(196,160,68,.14);
-      --border-hi:   rgba(196,160,68,.34);
-      --ease:        cubic-bezier(.4,0,.2,1);
-      --ease-out:    cubic-bezier(0,.6,.4,1);
+      --bg:           #07070f;
+      --bg-mid:       #0a0a1c;
+      --surface:      #0f0f26;
+      --surface-hi:   #161634;
+      --surface-el:   #1c1c40;
+      --gold:         #c4a044;
+      --gold-lt:      #dfc06a;
+      --gold-dk:      #9e7828;
+      --gold-dim:     rgba(196,160,68,.07);
+      --gold-glow:    rgba(196,160,68,.18);
+      --gold-border:  rgba(196,160,68,.18);
+      --plum:         #6a4fa0;
+      --text:         #f0e8d0;
+      --text-muted:   #908070;
+      --text-dim:     #4e4838;
+      --border:       rgba(196,160,68,.11);
+      --border-hi:    rgba(196,160,68,.28);
+      --ease:         cubic-bezier(.4,0,.2,1);
+      --ease-out:     cubic-bezier(0,.6,.4,1);
+      --ease-spring:  cubic-bezier(.34,1.56,.64,1);
+      --r-card:       20px;
+      --r-btn:        100px;
     }
 
     html { scroll-behavior: smooth; }
@@ -47,7 +58,41 @@
       overflow-x: hidden;
     }
 
-    /* ─── STARFIELD ─────────────────────────────────── */
+    /* ─── GRAIN ─────────────────────────────────────────── */
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.048'/%3E%3C/svg%3E");
+      background-size: 220px 220px;
+    }
+
+    /* ─── SCROLL PROGRESS ────────────────────────────────── */
+    #progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 1.5px;
+      background: linear-gradient(90deg, var(--gold-dk), var(--gold-lt));
+      z-index: 200;
+      width: 0%;
+      transition: width .08s linear;
+      box-shadow: 0 0 8px rgba(196,160,68,.4);
+    }
+
+    /* ─── AMBIENT GLOW ───────────────────────────────────── */
+    #ambient {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 90% 55% at 50% -5%, rgba(106,79,160,.07), transparent),
+        radial-gradient(ellipse 55% 45% at 85% 90%, rgba(196,160,68,.04), transparent),
+        radial-gradient(ellipse 40% 35% at 10% 80%, rgba(106,79,160,.04), transparent);
+    }
+
+    /* ─── STARFIELD ──────────────────────────────────────── */
     #cosmos {
       position: fixed;
       inset: 0;
@@ -55,15 +100,14 @@
       z-index: 0;
     }
 
-    /* ─── APP SHELL ──────────────────────────────────── */
+    /* ─── APP ────────────────────────────────────────────── */
     #app { position: relative; z-index: 1; }
 
-    /* ─── HEADER ─────────────────────────────────────── */
+    /* ─── HEADER ─────────────────────────────────────────── */
     header {
-      padding: 56px 24px 44px;
+      padding: 68px 24px 56px;
       text-align: center;
       position: relative;
-      animation: revealUp .8s var(--ease) both;
     }
 
     header::after {
@@ -71,56 +115,107 @@
       position: absolute;
       bottom: 0; left: 50%;
       transform: translateX(-50%);
-      width: 200px; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      width: min(500px, 90%);
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(196,160,68,.08) 20%,
+        rgba(196,160,68,.5) 50%,
+        rgba(196,160,68,.08) 80%,
+        transparent
+      );
+    }
+
+    .header-eyebrow {
+      font-size: 10px;
+      letter-spacing: 4.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: .8;
+      margin-bottom: 18px;
+      animation: revealUp .55s var(--ease) both;
     }
 
     .brand {
       font-family: 'Cinzel Decorative', serif;
-      font-size: clamp(22px, 5.5vw, 40px);
+      font-size: clamp(22px, 5.8vw, 48px);
       font-weight: 400;
-      letter-spacing: 4px;
+      letter-spacing: 6px;
       color: var(--text);
-      margin-bottom: 8px;
-      text-shadow: 0 0 80px var(--gold-glow);
+      margin-bottom: 10px;
+      text-shadow: 0 0 80px var(--gold-glow), 0 0 160px rgba(196,160,68,.05);
+      animation: revealUp .6s .06s var(--ease) both;
     }
 
     .brand-sub {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: clamp(12px, 3vw, 15px);
+      font-size: clamp(11px, 2.5vw, 14px);
       color: var(--text-muted);
       letter-spacing: 5px;
       text-transform: uppercase;
+      animation: revealUp .65s .12s var(--ease) both;
     }
 
     .ornament {
       display: block;
-      margin: 18px auto 0;
-      width: 200px;
+      margin: 24px auto 0;
+      width: min(300px, 82%);
+      animation: revealUp .65s .18s var(--ease) both;
     }
 
-    /* ─── NAVIGATION ─────────────────────────────────── */
+    /* ─── NAVIGATION ─────────────────────────────────────── */
     nav {
-      padding: 28px 20px 0;
+      padding: 34px 20px 0;
       display: flex;
       justify-content: center;
-      animation: revealUp .8s .15s var(--ease) both;
+      animation: revealUp .65s .22s var(--ease) both;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, var(--bg) 60%, transparent);
+      z-index: -1;
     }
 
     .tab-bar {
       display: flex;
-      gap: 3px;
-      background: rgba(17,17,40,.7);
+      gap: 2px;
+      background: rgba(10,10,28,.78);
       border: 1px solid var(--border);
-      border-radius: 100px;
+      border-radius: var(--r-btn);
       padding: 5px;
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      position: relative;
+      box-shadow:
+        0 8px 36px rgba(0,0,0,.44),
+        0 1px 0 rgba(255,255,255,.04) inset;
+    }
+
+    .tab-indicator {
+      position: absolute;
+      top: 5px;
+      height: calc(100% - 10px);
+      border-radius: 100px;
+      background: linear-gradient(135deg, rgba(196,160,68,.22), rgba(106,79,160,.12));
+      border: 1px solid rgba(196,160,68,.22);
+      box-shadow: 0 0 20px rgba(196,160,68,.06);
+      transition: left .38s var(--ease), width .38s var(--ease);
+      pointer-events: none;
+      z-index: 0;
     }
 
     .tab-btn {
-      padding: 10px 22px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 20px;
       border: none;
       border-radius: 100px;
       cursor: pointer;
@@ -129,92 +224,119 @@
       font-family: 'DM Sans', sans-serif;
       font-size: 13px;
       font-weight: 400;
-      letter-spacing: .4px;
-      transition: all .3s var(--ease);
+      letter-spacing: .3px;
+      transition: color .28s var(--ease);
       white-space: nowrap;
+      position: relative;
+      z-index: 1;
     }
 
-    .tab-btn.active {
-      background: linear-gradient(135deg, rgba(196,160,68,.22), rgba(125,94,181,.14));
-      color: var(--gold-lt);
-      border: 1px solid rgba(196,160,68,.28);
-      box-shadow: 0 0 20px rgba(196,160,68,.06);
+    .tab-btn svg {
+      width: 13px; height: 13px;
+      flex-shrink: 0;
+      transition: opacity .28s;
+      opacity: .55;
     }
 
-    .tab-btn:hover:not(.active) {
-      color: var(--text);
-      background: rgba(255,255,255,.04);
-    }
+    .tab-btn.active { color: var(--gold-lt); }
+    .tab-btn.active svg { opacity: 1; }
+    .tab-btn:hover:not(.active) { color: var(--text); }
+    .tab-btn:hover:not(.active) svg { opacity: .75; }
 
-    /* ─── PANELS ─────────────────────────────────────── */
+    /* ─── PANELS ─────────────────────────────────────────── */
     .panels {
-      max-width: 820px;
+      max-width: 840px;
       margin: 0 auto;
-      padding: 32px 24px 72px;
+      padding: 40px 24px 88px;
     }
 
     .panel {
       display: none;
-      animation: panelIn .45s var(--ease) both;
+      animation: panelIn .42s var(--ease) both;
     }
 
     .panel.active { display: block; }
 
     @keyframes panelIn {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: none; }
     }
 
     @keyframes revealUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: none; }
     }
 
-    /* ─── SECTION HEADER ─────────────────────────────── */
+    /* ─── SECTION HEADER ─────────────────────────────────── */
+    .section-header { margin-bottom: 28px; }
+
+    .section-eyebrow {
+      font-size: 10px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: .85;
+      margin-bottom: 6px;
+    }
+
     .section-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(26px, 5vw, 34px);
+      font-size: clamp(26px, 5vw, 36px);
       font-weight: 300;
-      letter-spacing: .5px;
+      letter-spacing: .3px;
       color: var(--text);
-      margin-bottom: 4px;
+      line-height: 1.2;
+      margin-bottom: 8px;
     }
 
     .section-desc {
       color: var(--text-muted);
       font-size: 13.5px;
-      margin-bottom: 28px;
+      max-width: 520px;
+      line-height: 1.65;
     }
 
-    /* ─── CARD ───────────────────────────────────────── */
+    /* ─── CARD ───────────────────────────────────────────── */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 22px;
+      border-radius: var(--r-card);
       padding: 28px;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 4px 28px rgba(0,0,0,.32), 0 1px 0 rgba(255,255,255,.035) inset;
     }
 
     .card::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at top left, var(--gold-dim), transparent 55%);
+      background: radial-gradient(ellipse 75% 65% at 0% 0%, var(--gold-dim), transparent 58%);
       pointer-events: none;
     }
 
-    /* ─── FORM ───────────────────────────────────────── */
-    .field { margin-bottom: 20px; }
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.055), transparent);
+    }
+
+    /* ─── FORM ───────────────────────────────────────────── */
+    .field { margin-bottom: 22px; }
 
     label {
       display: block;
-      font-size: 11px;
-      letter-spacing: 1.8px;
+      font-size: 10.5px;
+      letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--text-muted);
       margin-bottom: 8px;
+      transition: color .28s;
     }
+
+    .field:focus-within label { color: var(--gold-lt); }
 
     input[type="text"],
     input[type="date"] {
@@ -222,51 +344,81 @@
       padding: 14px 18px;
       background: var(--surface-hi);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 11px;
       color: var(--text);
       font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
+      font-size: 14.5px;
       font-weight: 300;
-      transition: border-color .3s var(--ease), box-shadow .3s var(--ease);
+      transition: border-color .28s var(--ease), box-shadow .28s var(--ease), background .28s;
       outline: none;
       -webkit-appearance: none;
     }
 
     input:focus {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(196,160,68,.10);
+      border-color: rgba(196,160,68,.45);
+      box-shadow: 0 0 0 3px rgba(196,160,68,.07), 0 1px 10px rgba(0,0,0,.2);
+      background: var(--surface-el);
     }
 
-    input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.6); }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(.5) sepia(.3) saturate(1.8) hue-rotate(12deg);
+      cursor: pointer;
+      opacity: .7;
+    }
 
-    /* ─── BUTTONS ────────────────────────────────────── */
+    input::placeholder { color: var(--text-dim); font-weight: 300; }
+
+    /* ─── BUTTONS ────────────────────────────────────────── */
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 13px 28px;
+      gap: 9px;
+      padding: 14px 30px;
       border: none;
-      border-radius: 100px;
+      border-radius: var(--r-btn);
       cursor: pointer;
       font-family: 'DM Sans', sans-serif;
       font-size: 13.5px;
       font-weight: 400;
-      letter-spacing: .5px;
+      letter-spacing: .55px;
       transition: all .3s var(--ease);
       position: relative;
       overflow: hidden;
       width: 100%;
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, var(--gold) 0%, #9e7828 100%);
-      color: #1a1000;
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.13) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity .3s;
     }
 
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(196,160,68,.22); }
+    .btn:hover::before { opacity: 1; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dk) 100%);
+      color: #130e00;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(196,160,68,.14), inset 0 1px 0 rgba(255,255,255,.14);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 36px rgba(196,160,68,.26), inset 0 1px 0 rgba(255,255,255,.14);
+    }
+
     .btn-primary:active { transform: translateY(0); }
-    .btn-primary:disabled { opacity: .45; cursor: not-allowed; transform: none !important; }
+
+    .btn-primary:disabled {
+      opacity: .38;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none;
+    }
 
     .btn-ghost {
       background: transparent;
@@ -274,24 +426,30 @@
       border: 1px solid var(--border);
     }
 
-    .btn-ghost:hover { color: var(--text); border-color: var(--border-hi); }
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: var(--border-hi);
+      background: rgba(196,160,68,.04);
+    }
 
-    /* ─── DROPZONE ───────────────────────────────────── */
+    /* ─── DROPZONE ───────────────────────────────────────── */
     .dropzone {
       border: 1.5px dashed var(--border-hi);
       border-radius: 16px;
-      padding: 40px 20px;
+      padding: 44px 20px;
       text-align: center;
       cursor: pointer;
       transition: all .3s var(--ease);
       margin-bottom: 20px;
       position: relative;
+      background: rgba(196,160,68,.018);
     }
 
     .dropzone:hover,
     .dropzone.dragover {
       border-color: var(--gold);
       background: var(--gold-dim);
+      box-shadow: inset 0 0 48px rgba(196,160,68,.04);
     }
 
     .dropzone input[type="file"] {
@@ -304,10 +462,9 @@
     }
 
     .dz-icon {
-      font-size: 42px;
       display: block;
-      margin-bottom: 12px;
-      opacity: .55;
+      margin: 0 auto 16px;
+      opacity: .38;
     }
 
     .dz-main {
@@ -315,136 +472,200 @@
       font-size: 14px;
       font-weight: 400;
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
-    .dz-sub { color: var(--text-dim); font-size: 12px; }
+    .dz-sub {
+      color: var(--text-dim);
+      font-size: 11.5px;
+      letter-spacing: 1px;
+    }
 
-    /* ─── RESULT CARD ────────────────────────────────── */
+    /* ─── RESULT CARD ────────────────────────────────────── */
     .result-card {
       background: linear-gradient(160deg, var(--surface-hi) 0%, var(--surface) 100%);
       border: 1px solid var(--border-hi);
-      border-radius: 22px;
+      border-radius: var(--r-card);
       padding: 28px;
       margin-top: 20px;
-      animation: panelIn .45s var(--ease) both;
+      animation: panelIn .5s var(--ease) both;
+      box-shadow: 0 8px 48px rgba(0,0,0,.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(196,160,68,.45), transparent);
+    }
+
+    .result-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 100% 0%, rgba(106,79,160,.04), transparent);
+      pointer-events: none;
     }
 
     .result-card-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
+      font-size: 21px;
       font-weight: 400;
       color: var(--gold-lt);
-      margin-bottom: 20px;
-      padding-bottom: 14px;
+      margin-bottom: 22px;
+      padding-bottom: 16px;
       border-bottom: 1px solid var(--border);
     }
 
     .result-row {
-      padding: 14px 0;
+      padding: 16px 0;
       border-bottom: 1px solid var(--border);
     }
 
     .result-row:last-child { border-bottom: none; padding-bottom: 0; }
 
     .result-row strong {
-      display: block;
-      font-size: 11px;
-      letter-spacing: 1.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+      letter-spacing: 2.2px;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 5px;
+      margin-bottom: 9px;
       font-weight: 500;
     }
 
-    .result-row p { color: var(--text-muted); font-size: 14px; line-height: 1.8; }
-
-    /* ─── HAND PREVIEW ───────────────────────────────── */
-    .hand-preview {
-      width: 100%;
-      max-height: 240px;
-      object-fit: cover;
-      border-radius: 14px;
-      margin-bottom: 20px;
-      border: 1px solid var(--border);
+    .result-row strong::before {
+      content: '';
+      width: 18px; height: 1px;
+      background: var(--gold);
+      flex-shrink: 0;
+      opacity: .55;
     }
 
-    /* ─── NUMEROLOGY ─────────────────────────────────── */
+    .result-row p {
+      color: var(--text-muted);
+      font-size: 14.5px;
+      line-height: 1.88;
+    }
+
+    /* ─── HAND PREVIEW ───────────────────────────────────── */
+    .hand-preview {
+      width: 100%;
+      max-height: 260px;
+      object-fit: cover;
+      border-radius: 13px;
+      margin-bottom: 22px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    /* ─── NUMEROLOGY ─────────────────────────────────────── */
     .num-display {
       text-align: center;
-      padding: 28px 0 20px;
+      padding: 32px 0 24px;
     }
 
     .num-circle {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 128px; height: 128px;
+      width: 140px; height: 140px;
       border-radius: 50%;
       border: 1.5px solid var(--gold);
-      background: radial-gradient(circle, rgba(196,160,68,.14), transparent 65%);
+      background: radial-gradient(circle, rgba(196,160,68,.12), transparent 65%);
       font-family: 'Cormorant Garamond', serif;
-      font-size: 68px;
+      font-size: 74px;
       font-weight: 300;
       color: var(--gold-lt);
-      margin: 0 auto 14px;
+      margin: 0 auto 18px;
       position: relative;
-      transition: border-color .4s;
+      box-shadow: 0 0 40px rgba(196,160,68,.06);
     }
 
     .num-circle::before {
       content: '';
       position: absolute;
-      inset: -8px;
+      inset: -10px;
       border-radius: 50%;
-      border: 1px solid rgba(196,160,68,.14);
+      border: 1px solid rgba(196,160,68,.09);
+    }
+
+    .num-circle::after {
+      content: '';
+      position: absolute;
+      inset: -20px;
+      border-radius: 50%;
+      border: 1px solid rgba(196,160,68,.04);
     }
 
     @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 0 0 0 transparent; }
-      50% { box-shadow: 0 0 28px 4px rgba(196,160,68,.12); }
+      0%, 100% { box-shadow: 0 0 0 0 transparent, 0 0 40px rgba(196,160,68,.06); }
+      50%       { box-shadow: 0 0 30px 6px rgba(196,160,68,.09), 0 0 60px rgba(196,160,68,.05); }
     }
 
-    .num-circle.lit { animation: pulseGlow 3s ease infinite; }
+    .num-circle.lit { animation: pulseGlow 3.5s ease infinite; }
 
     .num-label {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: 17px;
+      font-size: 18px;
       color: var(--text-muted);
     }
 
-    /* ─── QUIZ ───────────────────────────────────────── */
+    /* ─── QUIZ ───────────────────────────────────────────── */
     .quiz-dots {
       display: flex;
       justify-content: center;
-      gap: 7px;
-      margin-bottom: 24px;
+      gap: 8px;
+      margin-bottom: 28px;
     }
 
     .dot {
-      width: 6px; height: 6px;
+      width: 5px; height: 5px;
       border-radius: 50%;
-      background: var(--border);
-      transition: all .35s var(--ease);
+      background: var(--surface-hi);
+      border: 1px solid var(--border);
+      transition: all .38s var(--ease-spring);
     }
 
-    .dot.done { background: var(--gold); }
-    .dot.current { background: var(--gold-lt); transform: scale(1.6); }
+    .dot.done { background: var(--gold-dk); border-color: var(--gold-dk); }
+
+    .dot.current {
+      background: var(--gold-lt);
+      border-color: var(--gold-lt);
+      transform: scale(1.9);
+      box-shadow: 0 0 8px rgba(196,160,68,.35);
+    }
 
     .question-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 32px 28px;
+      border-radius: var(--r-card);
+      padding: 36px 28px;
+      box-shadow: 0 4px 28px rgba(0,0,0,.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .question-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.05), transparent);
     }
 
     .question-num {
-      font-size: 11px;
-      letter-spacing: 2px;
+      font-size: 10px;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
       color: var(--text-dim);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .question-text {
@@ -453,17 +674,18 @@
       font-weight: 300;
       color: var(--text);
       margin-bottom: 28px;
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
     .opt-btn {
-      display: block;
+      display: flex;
+      align-items: center;
       width: 100%;
-      padding: 13px 20px;
-      margin-bottom: 10px;
+      padding: 14px 20px;
+      margin-bottom: 8px;
       background: var(--surface-hi);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 11px;
       color: var(--text-muted);
       font-family: 'DM Sans', sans-serif;
       font-size: 13.5px;
@@ -471,25 +693,51 @@
       text-align: left;
       cursor: pointer;
       transition: all .22s var(--ease);
+      gap: 13px;
+    }
+
+    .opt-btn::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      border: 1px solid var(--border-hi);
+      flex-shrink: 0;
+      transition: all .22s;
     }
 
     .opt-btn:hover {
-      border-color: var(--gold);
+      border-color: rgba(196,160,68,.28);
       color: var(--text);
-      background: var(--gold-dim);
-      transform: translateX(7px);
+      background: rgba(196,160,68,.04);
+      transform: translateX(5px);
+    }
+
+    .opt-btn:hover::before {
+      background: var(--gold);
+      border-color: var(--gold);
+      box-shadow: 0 0 6px rgba(196,160,68,.4);
     }
 
     .opt-btn:last-child { margin-bottom: 0; }
 
-    /* ─── ARCHETYPE CARDS ────────────────────────────── */
+    /* ─── ARCHETYPE CARDS ────────────────────────────────── */
     .arch-card {
       background: var(--surface-hi);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px;
-      margin-top: 14px;
+      border-radius: 15px;
+      padding: 22px;
+      margin-top: 12px;
       animation: revealUp .45s var(--ease) both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .arch-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(196,160,68,.18), transparent);
     }
 
     .arch-card:nth-child(2) { animation-delay: .1s; }
@@ -497,54 +745,79 @@
 
     .arch-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 19px;
+      font-size: 20px;
       font-weight: 400;
       color: var(--gold-lt);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
     }
 
     .arch-badge {
-      font-size: 10px;
-      letter-spacing: 1.5px;
+      display: inline-block;
+      font-size: 9px;
+      letter-spacing: 1.8px;
       text-transform: uppercase;
       color: var(--text-dim);
-      margin-left: 8px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 2px 9px;
+      margin-left: 10px;
+      font-family: 'DM Sans', sans-serif;
+      vertical-align: middle;
+      font-weight: 400;
     }
 
-    .arch-desc { color: var(--text-muted); font-size: 14px; line-height: 1.8; }
+    .arch-desc {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.88;
+    }
 
-    /* ─── GAUGE ──────────────────────────────────────── */
-    .gauge-wrap { text-align: center; padding: 20px 0 24px; }
-    .gauge-svg { max-width: 280px; margin: 0 auto; display: block; }
+    /* ─── GAUGE ──────────────────────────────────────────── */
+    .gauge-wrap { text-align: center; padding: 24px 0 28px; }
+    .gauge-svg { max-width: 290px; margin: 0 auto; display: block; overflow: visible; }
 
-    .gauge-track { transition: none; }
     .gauge-fill {
       stroke-dasharray: 282.74;
       stroke-dashoffset: 282.74;
-      transition: stroke-dashoffset 1.4s cubic-bezier(.22,1,.36,1);
+      transition: stroke-dashoffset 1.7s cubic-bezier(.22,1,.36,1);
     }
 
     .gauge-level {
       font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
       font-size: 18px;
       color: var(--gold-lt);
-      margin-top: 4px;
+      margin-top: 10px;
     }
 
-    /* ─── TIPS LIST ──────────────────────────────────── */
-    .tips-list { list-style: none; display: grid; gap: 10px; margin-top: 14px; }
+    /* ─── TIPS ───────────────────────────────────────────── */
+    .tips-list { list-style: none; display: grid; gap: 8px; margin-top: 14px; }
 
     .tip-item {
       display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 11px 16px;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 13px 18px;
       background: var(--surface-hi);
-      border-radius: 10px;
+      border-radius: 11px;
       border-left: 2px solid var(--gold);
       color: var(--text-muted);
       font-size: 13.5px;
+      line-height: 1.7;
       animation: revealUp .4s var(--ease) both;
+    }
+
+    .tip-item::before {
+      content: '';
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+      margin-top: 9px;
     }
 
     .tip-item:nth-child(1) { animation-delay: .06s; }
@@ -553,16 +826,16 @@
     .tip-item:nth-child(4) { animation-delay: .24s; }
     .tip-item:nth-child(5) { animation-delay: .30s; }
 
-    /* ─── RESET / RETRY ROW ──────────────────────────── */
+    /* ─── RESET ROW ──────────────────────────────────────── */
     .reset-row { text-align: center; margin-top: 24px; }
     .reset-row .btn { width: auto; display: inline-flex; }
 
-    /* ─── SPINNER ────────────────────────────────────── */
+    /* ─── SPINNER ────────────────────────────────────────── */
     .spinner {
       display: inline-block;
-      width: 15px; height: 15px;
-      border: 2px solid rgba(0,0,0,.2);
-      border-top-color: rgba(0,0,0,.7);
+      width: 14px; height: 14px;
+      border: 1.5px solid rgba(0,0,0,.15);
+      border-top-color: rgba(0,0,0,.6);
       border-radius: 50%;
       animation: spin .7s linear infinite;
       flex-shrink: 0;
@@ -570,84 +843,131 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ─── TOAST ──────────────────────────────────────── */
+    /* ─── TOAST ──────────────────────────────────────────── */
     #toast {
       position: fixed;
       bottom: 28px;
       right: 28px;
-      padding: 11px 20px;
-      border-radius: 100px;
+      padding: 12px 22px;
+      border-radius: var(--r-btn);
       font-size: 13px;
       z-index: 999;
       pointer-events: none;
       border: 1px solid transparent;
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       animation: toastIn .3s var(--ease) both;
       display: none;
+      max-width: 300px;
     }
 
-    #toast.success { background: rgba(20,18,10,.92); color: var(--gold-lt); border-color: rgba(196,160,68,.3); }
-    #toast.error   { background: rgba(25,10,10,.92); color: #e88a8a;        border-color: rgba(220,80,80,.3); }
+    #toast.success {
+      background: rgba(16,14,8,.94);
+      color: var(--gold-lt);
+      border-color: rgba(196,160,68,.22);
+      box-shadow: 0 4px 24px rgba(0,0,0,.44);
+    }
+
+    #toast.error {
+      background: rgba(22,8,8,.94);
+      color: #e88a8a;
+      border-color: rgba(220,80,80,.22);
+      box-shadow: 0 4px 24px rgba(0,0,0,.44);
+    }
 
     @keyframes toastIn {
-      from { transform: translateY(12px); opacity: 0; }
-      to   { transform: translateY(0);    opacity: 1; }
+      from { transform: translateY(10px); opacity: 0; }
+      to   { transform: none; opacity: 1; }
     }
 
-    /* ─── FOOTER ─────────────────────────────────────── */
+    /* ─── FOOTER ─────────────────────────────────────────── */
     footer {
       text-align: center;
-      padding: 28px 24px 52px;
+      padding: 40px 24px 60px;
       border-top: 1px solid var(--border);
-      position: relative; z-index: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-diamond {
+      display: block;
+      margin: 0 auto 22px;
+      opacity: .3;
     }
 
     .footer-brand {
       font-family: 'Cinzel Decorative', serif;
-      font-size: 13px;
-      letter-spacing: 3px;
+      font-size: 12px;
+      letter-spacing: 4px;
       color: var(--text-dim);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
-    .footer-text { font-size: 12px; color: var(--text-dim); }
+    .footer-text {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
 
-    /* ─── RESPONSIVE ─────────────────────────────────── */
+    .footer-copy {
+      font-size: 10.5px;
+      color: var(--text-dim);
+      opacity: .55;
+      letter-spacing: .4px;
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
     @media (max-width: 560px) {
       .tab-bar {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
-        border-radius: 14px;
+        border-radius: 16px;
+        max-width: calc(100vw - 32px);
       }
       .tab-bar::-webkit-scrollbar { display: none; }
-      .tab-btn { flex-shrink: 0; padding: 9px 14px; font-size: 12px; }
+      .tab-btn { flex-shrink: 0; padding: 9px 14px; font-size: 12px; gap: 5px; }
+      .tab-btn svg { width: 11px; height: 11px; }
       .card, .result-card, .question-card { padding: 20px 16px; }
-      #toast { left: 20px; right: 20px; text-align: center; }
+      .panels { padding: 28px 16px 72px; }
+      header { padding: 52px 20px 44px; }
+      nav { padding: 20px 16px 0; }
+      #toast { left: 16px; right: 16px; text-align: center; }
+    }
+
+    @media (min-width: 700px) {
+      .section-header { display: flex; flex-direction: column; }
     }
   </style>
 </head>
 
 <body>
-<canvas id="cosmos"></canvas>
+
+<div class="grain" aria-hidden="true"></div>
+<div id="ambient" aria-hidden="true"></div>
+<div id="progress" aria-hidden="true"></div>
+<canvas id="cosmos" aria-hidden="true"></canvas>
 
 <div id="app">
 
   <!-- ══ HEADER ════════════════════════════════════════ -->
   <header>
+    <div class="header-eyebrow">Portal de Autoconhecimento</div>
     <div class="brand">Cosmo Interior</div>
-    <div class="brand-sub">Portal de Autoconhecimento</div>
-    <svg class="ornament" viewBox="0 0 200 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <line x1="0" y1="7" x2="80" y2="7" stroke="url(#ol)" stroke-width=".6"/>
-      <rect x="94" y="1" width="12" height="12" rx="1" transform="rotate(45 100 7)" fill="none" stroke="#c4a044" stroke-width=".8"/>
-      <line x1="120" y1="7" x2="200" y2="7" stroke="url(#or)" stroke-width=".6"/>
+    <div class="brand-sub">Ferramentas para a Jornada Espiritual</div>
+    <svg class="ornament" viewBox="0 0 300 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <line x1="0" y1="8" x2="116" y2="8" stroke="url(#ol)" stroke-width=".6"/>
+      <circle cx="150" cy="8" r="4" fill="none" stroke="#c4a044" stroke-width=".7" opacity=".5"/>
+      <rect x="143" y="1" width="14" height="14" rx="1" transform="rotate(45 150 8)" fill="none" stroke="#c4a044" stroke-width=".9"/>
+      <circle cx="150" cy="8" r="1.5" fill="#c4a044" opacity=".75"/>
+      <line x1="184" y1="8" x2="300" y2="8" stroke="url(#or)" stroke-width=".6"/>
       <defs>
-        <linearGradient id="ol" x1="0" y1="0" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+        <linearGradient id="ol" x1="0" y1="0" x2="116" y2="0" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stop-color="#c4a044" stop-opacity="0"/>
-          <stop offset="100%" stop-color="#c4a044" stop-opacity=".55"/>
+          <stop offset="100%" stop-color="#c4a044" stop-opacity=".5"/>
         </linearGradient>
-        <linearGradient id="or" x1="120" y1="0" x2="200" y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#c4a044" stop-opacity=".55"/>
+        <linearGradient id="or" x1="184" y1="0" x2="300" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#c4a044" stop-opacity=".5"/>
           <stop offset="100%" stop-color="#c4a044" stop-opacity="0"/>
         </linearGradient>
       </defs>
@@ -657,10 +977,35 @@
   <!-- ══ NAVIGATION ════════════════════════════════════ -->
   <nav>
     <div class="tab-bar" role="tablist">
-      <button class="tab-btn active" data-tab="mao"        role="tab" aria-selected="true">Leitura da Mão</button>
-      <button class="tab-btn"        data-tab="numerologia" role="tab" aria-selected="false">Numerologia</button>
-      <button class="tab-btn"        data-tab="arquetipo"   role="tab" aria-selected="false">Arquétipo</button>
-      <button class="tab-btn"        data-tab="frequencia"  role="tab" aria-selected="false">Frequência</button>
+      <div class="tab-indicator" id="tabIndicator" aria-hidden="true"></div>
+
+      <button class="tab-btn active" data-tab="mao" role="tab" aria-selected="true" aria-controls="panel-mao">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 11V6a2 2 0 0 0-4 0v0M14 10V4a2 2 0 0 0-4 0v2M10 10.5V6a2 2 0 0 0-4 0v8l-1-1a2 2 0 0 0-3 3l3 4a2 2 0 0 0 2 1h7a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2z"/>
+        </svg>
+        Leitura da Mão
+      </button>
+
+      <button class="tab-btn" data-tab="numerologia" role="tab" aria-selected="false" aria-controls="panel-numerologia">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+        Numerologia
+      </button>
+
+      <button class="tab-btn" data-tab="arquetipo" role="tab" aria-selected="false" aria-controls="panel-arquetipo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        Arquétipo
+      </button>
+
+      <button class="tab-btn" data-tab="frequencia" role="tab" aria-selected="false" aria-controls="panel-frequencia">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+        Frequência
+      </button>
     </div>
   </nav>
 
@@ -669,13 +1014,20 @@
 
     <!-- ── LEITURA DE MÃO ─────────────────────────── -->
     <div class="panel active" id="panel-mao" role="tabpanel">
-      <h2 class="section-title">Leitura da Mão</h2>
-      <p class="section-desc">Envie uma foto nítida da sua palma para uma análise das suas linhas energéticas</p>
+      <div class="section-header">
+        <div class="section-eyebrow">Quiromancia</div>
+        <h2 class="section-title">Leitura da Mão</h2>
+        <p class="section-desc">Envie uma foto nítida da sua palma para uma análise das suas linhas energéticas</p>
+      </div>
 
       <div class="card">
         <div class="dropzone" id="dropzone">
           <input type="file" id="handUpload" accept="image/*" aria-label="Selecionar foto da palma" />
-          <span class="dz-icon">✋</span>
+          <span class="dz-icon" aria-hidden="true">
+            <svg width="52" height="52" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M38 24V13a4 4 0 0 0-8 0v0M30 22V8a4 4 0 0 0-8 0v4M22 23V13a4 4 0 0 0-8 0v18l-2-2a4 4 0 0 0-6 6l6 8c1 1.5 2.5 3 5 3h14a4 4 0 0 0 4-4V24a4 4 0 0 0-4-4 4 4 0 0 0-4 4"/>
+            </svg>
+          </span>
           <span class="dz-main" id="dzLabel">Selecione ou arraste a foto aqui</span>
           <span class="dz-sub">JPG · PNG · WEBP</span>
         </div>
@@ -687,8 +1039,11 @@
 
     <!-- ── NUMEROLOGIA ────────────────────────────── -->
     <div class="panel" id="panel-numerologia" role="tabpanel">
-      <h2 class="section-title">Numerologia Pessoal</h2>
-      <p class="section-desc">Descubra o significado espiritual dos números gravados na sua jornada de vida</p>
+      <div class="section-header">
+        <div class="section-eyebrow">Pitagórica</div>
+        <h2 class="section-title">Numerologia Pessoal</h2>
+        <p class="section-desc">Descubra o significado espiritual dos números gravados na sua jornada de vida</p>
+      </div>
 
       <div class="card">
         <div class="field">
@@ -707,15 +1062,21 @@
 
     <!-- ── ARQUÉTIPO ──────────────────────────────── -->
     <div class="panel" id="panel-arquetipo" role="tabpanel">
-      <h2 class="section-title">Arquétipo Dominante</h2>
-      <p class="section-desc">Responda com honestidade para revelar os padrões arquetípicos que guiam sua alma</p>
+      <div class="section-header">
+        <div class="section-eyebrow">Psicologia Junguiana</div>
+        <h2 class="section-title">Arquétipo Dominante</h2>
+        <p class="section-desc">Responda com honestidade para revelar os padrões arquetípicos que guiam sua alma</p>
+      </div>
       <div id="quizContainer"></div>
     </div>
 
     <!-- ── FREQUÊNCIA ─────────────────────────────── -->
     <div class="panel" id="panel-frequencia" role="tabpanel">
-      <h2 class="section-title">Frequência Vibracional</h2>
-      <p class="section-desc">Meça sua energia atual e descubra práticas para elevar sua vibração</p>
+      <div class="section-header">
+        <div class="section-eyebrow">Escala Vibracional</div>
+        <h2 class="section-title">Frequência Vibracional</h2>
+        <p class="section-desc">Meça sua energia atual e descubra práticas para elevar sua vibração</p>
+      </div>
       <div id="freqContainer"></div>
     </div>
 
@@ -723,13 +1084,42 @@
 
   <!-- ══ FOOTER ════════════════════════════════════════ -->
   <footer>
+    <svg class="footer-diamond" width="64" height="14" viewBox="0 0 64 14" fill="none" aria-hidden="true">
+      <line x1="0" y1="7" x2="22" y2="7" stroke="url(#fd-l)" stroke-width=".6"/>
+      <rect x="26" y="1" width="12" height="12" rx="1" transform="rotate(45 32 7)" fill="none" stroke="#c4a044" stroke-width=".8"/>
+      <circle cx="32" cy="7" r="1.5" fill="#c4a044" opacity=".5"/>
+      <line x1="42" y1="7" x2="64" y2="7" stroke="url(#fd-r)" stroke-width=".6"/>
+      <defs>
+        <linearGradient id="fd-l" x1="0" y1="0" x2="22" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#c4a044" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#c4a044" stop-opacity=".4"/>
+        </linearGradient>
+        <linearGradient id="fd-r" x1="42" y1="0" x2="64" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#c4a044" stop-opacity=".4"/>
+          <stop offset="100%" stop-color="#c4a044" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+    </svg>
     <div class="footer-brand">Cosmo Interior</div>
     <p class="footer-text">Ferramentas de autoconhecimento para a jornada espiritual</p>
+    <p class="footer-copy">&copy; 2025 Cosmo Interior &middot; Todos os direitos reservados</p>
   </footer>
 
 </div><!-- /app -->
 
+<div id="toast" role="status" aria-live="polite"></div>
+
 <script>
+/* ═══════════════════════════════════════
+   SCROLL PROGRESS
+═══════════════════════════════════════ */
+window.addEventListener('scroll', () => {
+  const el = document.getElementById('progress');
+  if (!el) return;
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  el.style.width = (h > 0 ? (window.scrollY / h * 100) : 0) + '%';
+}, { passive: true });
+
 /* ═══════════════════════════════════════
    STARFIELD
 ═══════════════════════════════════════ */
@@ -743,13 +1133,13 @@
     H = cv.height = window.innerHeight;
   }
 
-  function initStars(n = 200) {
+  function initStars(n = 260) {
     stars = Array.from({ length: n }, () => ({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      r: Math.random() * 1.1 + 0.15,
-      a: Math.random(),
-      da: (Math.random() * .007 + .002) * (Math.random() > .5 ? 1 : -1),
+      x:  Math.random() * W,
+      y:  Math.random() * H,
+      r:  Math.random() * 1.15 + 0.1,
+      a:  Math.random(),
+      da: (Math.random() * .006 + .0014) * (Math.random() > .5 ? 1 : -1),
     }));
   }
 
@@ -761,7 +1151,7 @@
       s.a = Math.max(0, Math.min(1, s.a));
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(242,234,204,${s.a * .55})`;
+      ctx.fillStyle = `rgba(238,226,196,${s.a * .48})`;
       ctx.fill();
     });
     requestAnimationFrame(draw);
@@ -772,19 +1162,37 @@
 })();
 
 /* ═══════════════════════════════════════
-   TAB MANAGEMENT
+   TAB INDICATOR
 ═══════════════════════════════════════ */
-document.querySelectorAll('.tab-btn').forEach(btn => {
+const tabBtns      = document.querySelectorAll('.tab-btn');
+const tabIndicator = document.getElementById('tabIndicator');
+
+function moveIndicator(btn) {
+  const barRect = btn.closest('.tab-bar').getBoundingClientRect();
+  const btnRect = btn.getBoundingClientRect();
+  tabIndicator.style.left  = (btnRect.left - barRect.left) + 'px';
+  tabIndicator.style.width = btnRect.width + 'px';
+}
+
+tabBtns.forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b => {
-      b.classList.remove('active');
-      b.setAttribute('aria-selected', 'false');
-    });
+    tabBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
     btn.setAttribute('aria-selected', 'true');
     document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    moveIndicator(btn);
   });
+});
+
+requestAnimationFrame(() => {
+  const active = document.querySelector('.tab-btn.active');
+  if (active) moveIndicator(active);
+});
+
+window.addEventListener('resize', () => {
+  const active = document.querySelector('.tab-btn.active');
+  if (active) moveIndicator(active);
 });
 
 /* ═══════════════════════════════════════
@@ -811,7 +1219,10 @@ const dzLabel = document.getElementById('dzLabel');
 if (dz) {
   ['dragenter', 'dragover'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add('dragover'); }));
   ['dragleave', 'drop'].forEach(ev => dz.addEventListener(ev, () => dz.classList.remove('dragover')));
-  dz.addEventListener('drop', e => { e.preventDefault(); if (e.dataTransfer.files[0]) handIn.files = e.dataTransfer.files; updateLabel(); });
+  dz.addEventListener('drop', e => {
+    e.preventDefault();
+    if (e.dataTransfer.files[0]) { handIn.files = e.dataTransfer.files; updateLabel(); }
+  });
   handIn.addEventListener('change', updateLabel);
 }
 
@@ -822,7 +1233,7 @@ function updateLabel() {
 function analisarMao() {
   const file = handIn && handIn.files[0];
   const btn  = document.getElementById('btnAnalisar');
-  if (!file)                    { toast('Selecione uma foto da sua palma primeiro.', 'error'); return; }
+  if (!file)                           { toast('Selecione uma foto da sua palma primeiro.', 'error'); return; }
   if (!file.type.startsWith('image/')) { toast('Envie um arquivo de imagem válido.', 'error'); return; }
 
   if (btn) { btn.innerHTML = '<span class="spinner"></span> Analisando...'; btn.disabled = true; }
@@ -830,7 +1241,8 @@ function analisarMao() {
   const reader = new FileReader();
   reader.onload = e => {
     setTimeout(() => {
-      document.getElementById('maoResultado').innerHTML = `
+      const result = document.getElementById('maoResultado');
+      result.innerHTML = `
         <div class="result-card">
           <img src="${e.target.result}" alt="Palma enviada" class="hand-preview">
           <div class="result-card-title">Leitura Energética da Palma</div>
@@ -851,9 +1263,10 @@ function analisarMao() {
             <p>A palma que você apresentou carrega os registros de uma alma em movimento consciente. Você está em um ciclo que os místicos chamam de despertar expandido — não o primeiro, não o último, mas um dos mais significativos da sua jornada atual. Há sinais de que antigas camadas estão sendo completadas, antigos padrões sendo reconhecidos e gentilmente liberados. O que antes exigia luta começa a pedir apenas presença. Confie na sua intuição neste momento — ela não está apenas aguçada, está calibrada para o que vem a seguir. A bússola mais confiável desta fase não é a opinião externa nem a análise excessiva: é aquela voz interna que fala com menos volume mas com muito mais clareza do que qualquer ruído ao redor.</p>
           </div>
         </div>`;
+      result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       if (btn) { btn.innerHTML = 'Analisar Palma'; btn.disabled = false; }
       toast('Análise concluída com sucesso.');
-    }, 900);
+    }, 1200);
   };
   reader.onerror = () => {
     toast('Erro ao ler a imagem. Tente novamente.', 'error');
@@ -889,41 +1302,64 @@ function numExpressao(nome) {
 }
 
 const NUMS = {
-   1: { titulo: 'O Pioneiro', sig: 'Você carrega no seu número a energia primordial da criação — aquela força que existia antes de qualquer coisa tomar forma. O número 1 é a faísca que acende o fogo, o primeiro passo em território nunca antes pisado. Você nasceu para inaugurar ciclos, abrir caminhos que outros ainda não ousaram trilhar, e sua simples presença desperta nos outros o desejo de agir. Liderança, para você, não é um cargo ou um título — é uma responsabilidade que carrega na alma. Em momentos de crise, é a sua voz que instintivamente os outros buscam. Em momentos de incerteza, é a sua direção que cria ordem. O Pioneiro não segue mapas; ele os desenha. Há uma coragem quase mítica na sua natureza — a de começar mesmo sem garantias, de caminhar mesmo sem companhia. Porém, essa mesma força, quando não canalizada com consciência, pode se transformar em teimosia ou isolamento. Aprender a ouvir é, para o número 1, um dos maiores atos de coragem que existem.', tip: 'Canalize sua força interior para projetos que genuinamente importam para você. A liderança mais poderosa que você pode exercer é aquela em que inspira pela autenticidade — pelo exemplo de alguém que age mesmo com medo, que começa mesmo sem certezas.', cor: '#c87844' },
-   2: { titulo: 'O Diplomata', sig: 'Existe em você uma sensibilidade que poucas pessoas possuem: a capacidade de sentir o que está por baixo do que é dito, de perceber as camadas invisíveis das relações humanas. O número 2 é o número da união — ele não cria sozinho, mas potencializa tudo ao se conectar. Você prospera nas pontes que constrói entre mundos, pessoas e ideias aparentemente opostos. Sua presença tem um efeito calmante e harmonizador que você frequentemente subestima, mas que as pessoas ao seu redor sentem profundamente. Onde há conflito, você instintivamente busca o ponto em comum. Onde há separação, você tende a criar espaços de encontro. O desafio do número 2 é não perder a si mesmo nessa dança de cuidado com o outro — porque a paz que você tanto cultiva ao redor precisa, antes de tudo, habitar dentro de você.', tip: 'Cultive parcerias que honrem sua necessidade de profundidade e reciprocidade. Você tem muito a dar — mas só pode dar com plenitude quando também se permite receber. Não negligencie suas próprias necessidades em nome da harmonia do grupo.', cor: '#7a9bd4' },
-   3: { titulo: 'O Criador', sig: 'Você é habitado por uma vitalidade criativa que não consegue ficar quieta — uma energia que precisa se expressar, ganhar forma, se comunicar. O número 3 é a voz do universo manifestando alegria. Você inspira os outros pela forma como enxerga o mundo: com cores que a maioria não vê, com possibilidades onde outros veem obstáculos, com leveza que não é ingenuidade, mas uma escolha consciente de habitar a beleza da existência. A comunicação é para você tanto um dom quanto uma necessidade — em palavras, arte, movimento ou presença. Quando você está em fluxo criativo, há algo contagiante na sua energia que eleva o ambiente ao redor. O desafio do 3 é canalizar essa abundância de ideias e impulsos — porque a dispersão pode diluir um potencial que, concentrado, tem o poder de criar obras duradouras.', tip: 'Use a criatividade e a adaptabilidade como ferramentas de transformação pessoal. Escolha intencionalmente onde investir sua energia criativa — porque tudo que você toca com presença genuína se transforma em algo extraordinário.', cor: '#c4a044' },
-   4: { titulo: 'O Construtor', sig: 'Você tem um dom que o mundo moderno tende a subestimar: a capacidade de transformar visões em estruturas reais, de fazer durar aquilo que outros apenas sonham. O número 4 é o alicerce — a pedra angular sem a qual nenhuma arquitetura se sustenta. Você constrói com paciência e com uma integridade quase instintiva, e as fundações que você cria tendem a atravessar gerações. Há uma confiabilidade na sua presença que as pessoas sentem antes mesmo de perceber conscientemente: quando você diz que algo será feito, é feito. Quando você assume uma responsabilidade, ela está em boas mãos. O desafio do número 4 é não se prender tanto ao processo que perde de vista a beleza do movimento — porque há momentos em que a vida pede que você largue o mapa e confie no caminho.', tip: 'Permita-se descansar — a solidez que você oferece ao mundo também merece ser nutrída em você. A disciplina que tanto te honra precisa de pausas contemplativas para se renovar e continuar gerando frutos.', cor: '#7d8a6a' },
-   5: { titulo: 'O Explorador', sig: 'Você é feito de movimento — não apenas físico, mas existencial. O número 5 carrega a energia da expansão, da fronteira empurrada mais um passo adiante, do horizonte que sempre chama. Você floresce na mudança e tem um talento natural para se adaptar com graça a qualquer terreno — o que para outros parece ameaçador, para você parece apenas uma nova paisagem a ser conhecida. Sua presença traz ao ambiente uma energia renovadora: você questiona o que outros aceitam como permanente, experimenta onde outros recusam e aprende com uma velocidade que frequentemente impressiona. O desafio do 5 é encontrar o fio condutor que une todas essas experiências em algo coerente — porque a liberdade mais profunda não é a ausência de raízes, mas a consciência de que você pode voar e ainda saber onde pousar.', tip: 'Encontre liberdade com intencionalidade — o movimento com propósito eleva muito mais do que a mudança pela mudança. Quando você une sua sede de experiências a uma direção clara, torna-se uma força de transformação genuína e duradoura.', cor: '#a87fc4' },
-   6: { titulo: 'O Nutridor', sig: 'Existe em você uma capacidade de amar que vai além do romântico — é uma habilidade quase arquitetônica de criar condições para que outros floresçam. O número 6 é o coração do lar, a força que mantém a família unida, que transforma espaços em refúgios e relações em fortalezas de afeto. Você tem vocação para cuidar, e faz isso com uma naturalidade que frequentemente faz as pessoas esquecerem o quanto de esforço e entrega está por trás. Sua beleza interior se manifesta na capacidade de enxergar o que o outro precisa antes mesmo que ele mesmo saiba pedir. Há uma cura que acontece simplesmente por estar perto de você. O desafio do 6 é lembrar que a fonte não pode dar o que não tem — e que cuidar de si mesmo não é egoísmo, mas a condição necessária para que o seu cuidado com os outros permaneça genuíno e sustentável.', tip: 'Lembre que cuidar de si mesmo é o maior ato de amor que você pode oferecer ao mundo. Quando você se nutre, toda a rede de pessoas ao seu redor se beneficia de uma versão sua mais plena, presente e verdadeira.', cor: '#c47a8a' },
-   7: { titulo: 'O Místico', sig: 'Você habita um espaço que poucos acessam: aquele lugar entre o visível e o invisível, entre o que pode ser demonstrado e o que simplesmente se sabe. O número 7 é o mais espiritual de todos — não no sentido de rituais ou dogmas, mas no sentido de uma busca permanente por verdades que transcendem o superficial. Você questiona, investiga, conecta pontos que outros nem percebem que estão separados. Há uma inteligência em você que vai além do intelectual — é uma sabedoria que surge da introspecção, do silêncio, da disposição de ir fundo onde a maioria prefere ficar na superfície. As pessoas frequentemente buscam você em momentos de dúvida existencial porque percebem, mesmo sem articular, que você tem acesso a uma perspectiva mais ampla. O desafio do 7 é não se perder tanto nas profundezas da mente que perde a conexão com a leveza da vida cotidiana.', tip: 'Invista em momentos de silêncio — é no quieto que suas melhores respostas surgem. A mente que você carrega precisa de espaços vazios para organizar o que recebe, e nesses espaços habitam as suas intuições mais transformadoras.', cor: '#6a9bb5' },
-   8: { titulo: 'O Realizador', sig: 'Você carrega uma das energias mais poderosas da numerologia — a capacidade de manifestar no mundo material o que começa como visão. O número 8 é o ciclo infinito: a força que transforma intenção em conquista, que constrói impérios não por acaso, mas por uma combinação de visão clara e trabalho incansável. Há em você uma ambição que não é mesquinha — é a expressão de uma alma que sabe que veio para criar algo de grandeza real e duradoura. O poder te encontra naturalmente, porque você entende instintivamente como os sistemas funcionam, como as pessoas se movem e como a energia flui. O desafio do 8 é lembrar que a verdadeira abundância não é apenas material — é também a riqueza das relações, da saúde, da paz interior. Quando você aprende a equilibrar o poder exterior com a riqueza interior, torna-se verdadeiramente inestimável.', tip: 'Canalize sua ambição para construir algo que transcenda o material — algo que carregue seu nome não apenas como sucesso, mas como legado. O número 8 tem o potencial de criar obras que atravessam gerações.', cor: '#c49a3a' },
-   9: { titulo: 'O Humanista', sig: 'Você chegou ao fim do ciclo numerológico como quem retorna de uma longa jornada — carregando a sabedoria de tudo que veio antes. O número 9 é a expressão mais elevada da consciência humana: compaixão que não discrimina, generosidade que não calcula, amor que não pede retorno. Você sente o sofrimento dos outros de forma visceral, e isso pode ser ao mesmo tempo seu maior dom e seu maior peso. Há em você uma missão que vai além do pessoal — algo que te chama para contribuir com o coletivo, para elevar a consciência ao redor, para ser um ponto de luz em espaços de escuridão. Pessoas que precisam de acolhimento te encontram de formas que parecem improváveis porque, em algum nível profundo, a sua frequência as chama. O desafio do 9 é aprender a completar ciclos sem guardar o peso deles — a soltar o que foi, para criar espaço para o que está chegando.', tip: 'Confie que seu papel mais profundo está no impacto invisível que você deixa nas pessoas — nas conversas que mudaram perspectivas, nos gestos que chegaram na hora certa, nos momentos em que você simplesmente esteve presente quando alguém precisava.', cor: '#7aaa7a' },
-  11: { titulo: 'O Iluminado', sig: 'Você não apenas carrega um número — você carrega um portal. O 11 é o primeiro dos números mestres, e isso significa que sua missão não é simples de viver: exige uma sensibilidade que pode parecer um fardo antes de ser reconhecida como o maior presente. Você é um canal entre o ordinário e o extraordinário — sua intuição não é um recurso, é uma linguagem. Você percebe nuances que escapam a todos os radares comuns, sente atmosferas antes de entrar nos ambientes, e tem a capacidade de tocar as pessoas em pontos que elas mesmas mal conseguem nomear. O número 11 está sempre entre dois mundos: o humano e o espiritual, o pessoal e o coletivo, o sensível e o visionário. Quando você encontra equilíbrio entre esses polos, torna-se um farol genuíno — alguém cuja presença não apenas inspira, mas transforma profundamente os que têm a sorte de encontrá-lo.', tip: 'A meditação e o silêncio são seus portais mais poderosos de acesso à verdade. Cuide da sua sensibilidade como cuida de um instrumento precioso — porque é através dela que você acessa e transmite frequências que o mundo precisa urgentemente.', cor: '#d4c07a' },
-  22: { titulo: 'O Mestre Construtor', sig: 'Você carrega o número de maior potencial realizador de toda a numerologia — o 22 é a fusão da visão infinita com a capacidade de ancorá-la na realidade. Você não apenas sonha grande: você tem a rara habilidade de transformar o grandioso em algo concreto, funcional, duradouro. Onde o número 11 vê o horizonte, o 22 traça o mapa e organiza a expedição. Há em você uma combinação que o mundo raramente encontra reunida em uma mesma pessoa: idealismo e pragmatismo, intuição e disciplina, ousadia e método. Quando você está alinhado com o seu propósito mais profundo, é capaz de criar estruturas — físicas, sociais, espirituais — que se tornam referências para gerações. O desafio do Mestre Construtor é não sucumbir ao peso da própria grandiosidade — porque a consciência de tanto potencial pode, às vezes, paralisar mais do que impulsionar.', tip: 'Sua visão é genuinamente rara — cerque-se de pessoas que honram e nutrem a sua grandiosidade em vez de diminuí-la. O mundo precisa do que você é capaz de criar, mas primeiro você precisa acreditar que merece construir.', cor: '#c4a044' },
+   1: { titulo: 'O Pioneiro',          cor: '#c87844',
+        sig: 'Você carrega no seu número a energia primordial da criação — aquela força que existia antes de qualquer coisa tomar forma. O número 1 é a faísca que acende o fogo, o primeiro passo em território nunca antes pisado. Você nasceu para inaugurar ciclos, abrir caminhos que outros ainda não ousaram trilhar, e sua simples presença desperta nos outros o desejo de agir. Liderança, para você, não é um cargo ou um título — é uma responsabilidade que carrega na alma. Em momentos de crise, é a sua voz que instintivamente os outros buscam. Em momentos de incerteza, é a sua direção que cria ordem. O Pioneiro não segue mapas; ele os desenha. Há uma coragem quase mítica na sua natureza — a de começar mesmo sem garantias, de caminhar mesmo sem companhia. Porém, essa mesma força, quando não canalizada com consciência, pode se transformar em teimosia ou isolamento. Aprender a ouvir é, para o número 1, um dos maiores atos de coragem que existem.',
+        tip: 'Canalize sua força interior para projetos que genuinamente importam para você. A liderança mais poderosa que você pode exercer é aquela em que inspira pela autenticidade — pelo exemplo de alguém que age mesmo com medo, que começa mesmo sem certezas.' },
+   2: { titulo: 'O Diplomata',          cor: '#7a9bd4',
+        sig: 'Existe em você uma sensibilidade que poucas pessoas possuem: a capacidade de sentir o que está por baixo do que é dito, de perceber as camadas invisíveis das relações humanas. O número 2 é o número da união — ele não cria sozinho, mas potencializa tudo ao se conectar. Você prospera nas pontes que constrói entre mundos, pessoas e ideias aparentemente opostos. Sua presença tem um efeito calmante e harmonizador que você frequentemente subestima, mas que as pessoas ao seu redor sentem profundamente. Onde há conflito, você instintivamente busca o ponto em comum. Onde há separação, você tende a criar espaços de encontro. O desafio do número 2 é não perder a si mesmo nessa dança de cuidado com o outro — porque a paz que você tanto cultiva ao redor precisa, antes de tudo, habitar dentro de você.',
+        tip: 'Cultive parcerias que honrem sua necessidade de profundidade e reciprocidade. Você tem muito a dar — mas só pode dar com plenitude quando também se permite receber. Não negligencie suas próprias necessidades em nome da harmonia do grupo.' },
+   3: { titulo: 'O Criador',            cor: '#c4a044',
+        sig: 'Você é habitado por uma vitalidade criativa que não consegue ficar quieta — uma energia que precisa se expressar, ganhar forma, se comunicar. O número 3 é a voz do universo manifestando alegria. Você inspira os outros pela forma como enxerga o mundo: com cores que a maioria não vê, com possibilidades onde outros veem obstáculos, com leveza que não é ingenuidade, mas uma escolha consciente de habitar a beleza da existência. A comunicação é para você tanto um dom quanto uma necessidade — em palavras, arte, movimento ou presença. Quando você está em fluxo criativo, há algo contagiante na sua energia que eleva o ambiente ao redor. O desafio do 3 é canalizar essa abundância de ideias e impulsos — porque a dispersão pode diluir um potencial que, concentrado, tem o poder de criar obras duradouras.',
+        tip: 'Use a criatividade e a adaptabilidade como ferramentas de transformação pessoal. Escolha intencionalmente onde investir sua energia criativa — porque tudo que você toca com presença genuína se transforma em algo extraordinário.' },
+   4: { titulo: 'O Construtor',         cor: '#7d8a6a',
+        sig: 'Você tem um dom que o mundo moderno tende a subestimar: a capacidade de transformar visões em estruturas reais, de fazer durar aquilo que outros apenas sonham. O número 4 é o alicerce — a pedra angular sem a qual nenhuma arquitetura se sustenta. Você constrói com paciência e com uma integridade quase instintiva, e as fundações que você cria tendem a atravessar gerações. Há uma confiabilidade na sua presença que as pessoas sentem antes mesmo de perceber conscientemente: quando você diz que algo será feito, é feito. Quando você assume uma responsabilidade, ela está em boas mãos. O desafio do número 4 é não se prender tanto ao processo que perde de vista a beleza do movimento — porque há momentos em que a vida pede que você largue o mapa e confie no caminho.',
+        tip: 'Permita-se descansar — a solidez que você oferece ao mundo também merece ser nutrída em você. A disciplina que tanto te honra precisa de pausas contemplativas para se renovar e continuar gerando frutos.' },
+   5: { titulo: 'O Explorador',         cor: '#a87fc4',
+        sig: 'Você é feito de movimento — não apenas físico, mas existencial. O número 5 carrega a energia da expansão, da fronteira empurrada mais um passo adiante, do horizonte que sempre chama. Você floresce na mudança e tem um talento natural para se adaptar com graça a qualquer terreno — o que para outros parece ameaçador, para você parece apenas uma nova paisagem a ser conhecida. Sua presença traz ao ambiente uma energia renovadora: você questiona o que outros aceitam como permanente, experimenta onde outros recusam e aprende com uma velocidade que frequentemente impressiona. O desafio do 5 é encontrar o fio condutor que une todas essas experiências em algo coerente — porque a liberdade mais profunda não é a ausência de raízes, mas a consciência de que você pode voar e ainda saber onde pousar.',
+        tip: 'Encontre liberdade com intencionalidade — o movimento com propósito eleva muito mais do que a mudança pela mudança. Quando você une sua sede de experiências a uma direção clara, torna-se uma força de transformação genuína e duradoura.' },
+   6: { titulo: 'O Nutridor',           cor: '#c47a8a',
+        sig: 'Existe em você uma capacidade de amar que vai além do romântico — é uma habilidade quase arquitetônica de criar condições para que outros floresçam. O número 6 é o coração do lar, a força que mantém a família unida, que transforma espaços em refúgios e relações em fortalezas de afeto. Você tem vocação para cuidar, e faz isso com uma naturalidade que frequentemente faz as pessoas esquecerem o quanto de esforço e entrega está por trás. Sua beleza interior se manifesta na capacidade de enxergar o que o outro precisa antes mesmo que ele mesmo saiba pedir. Há uma cura que acontece simplesmente por estar perto de você. O desafio do 6 é lembrar que a fonte não pode dar o que não tem — e que cuidar de si mesmo não é egoísmo, mas a condição necessária para que o seu cuidado com os outros permaneça genuíno e sustentável.',
+        tip: 'Lembre que cuidar de si mesmo é o maior ato de amor que você pode oferecer ao mundo. Quando você se nutre, toda a rede de pessoas ao seu redor se beneficia de uma versão sua mais plena, presente e verdadeira.' },
+   7: { titulo: 'O Místico',            cor: '#6a9bb5',
+        sig: 'Você habita um espaço que poucos acessam: aquele lugar entre o visível e o invisível, entre o que pode ser demonstrado e o que simplesmente se sabe. O número 7 é o mais espiritual de todos — não no sentido de rituais ou dogmas, mas no sentido de uma busca permanente por verdades que transcendem o superficial. Você questiona, investiga, conecta pontos que outros nem percebem que estão separados. Há uma inteligência em você que vai além do intelectual — é uma sabedoria que surge da introspecção, do silêncio, da disposição de ir fundo onde a maioria prefere ficar na superfície. As pessoas frequentemente buscam você em momentos de dúvida existencial porque percebem, mesmo sem articular, que você tem acesso a uma perspectiva mais ampla. O desafio do 7 é não se perder tanto nas profundezas da mente que perde a conexão com a leveza da vida cotidiana.',
+        tip: 'Invista em momentos de silêncio — é no quieto que suas melhores respostas surgem. A mente que você carrega precisa de espaços vazios para organizar o que recebe, e nesses espaços habitam as suas intuições mais transformadoras.' },
+   8: { titulo: 'O Realizador',         cor: '#c49a3a',
+        sig: 'Você carrega uma das energias mais poderosas da numerologia — a capacidade de manifestar no mundo material o que começa como visão. O número 8 é o ciclo infinito: a força que transforma intenção em conquista, que constrói impérios não por acaso, mas por uma combinação de visão clara e trabalho incansável. Há em você uma ambição que não é mesquinha — é a expressão de uma alma que sabe que veio para criar algo de grandeza real e duradoura. O poder te encontra naturalmente, porque você entende instintivamente como os sistemas funcionam, como as pessoas se movem e como a energia flui. O desafio do 8 é lembrar que a verdadeira abundância não é apenas material — é também a riqueza das relações, da saúde, da paz interior. Quando você aprende a equilibrar o poder exterior com a riqueza interior, torna-se verdadeiramente inestimável.',
+        tip: 'Canalize sua ambição para construir algo que transcenda o material — algo que carregue seu nome não apenas como sucesso, mas como legado. O número 8 tem o potencial de criar obras que atravessam gerações.' },
+   9: { titulo: 'O Humanista',          cor: '#7aaa7a',
+        sig: 'Você chegou ao fim do ciclo numerológico como quem retorna de uma longa jornada — carregando a sabedoria de tudo que veio antes. O número 9 é a expressão mais elevada da consciência humana: compaixão que não discrimina, generosidade que não calcula, amor que não pede retorno. Você sente o sofrimento dos outros de forma visceral, e isso pode ser ao mesmo tempo seu maior dom e seu maior peso. Há em você uma missão que vai além do pessoal — algo que te chama para contribuir com o coletivo, para elevar a consciência ao redor, para ser um ponto de luz em espaços de escuridão. Pessoas que precisam de acolhimento te encontram de formas que parecem improváveis porque, em algum nível profundo, a sua frequência as chama. O desafio do 9 é aprender a completar ciclos sem guardar o peso deles — a soltar o que foi, para criar espaço para o que está chegando.',
+        tip: 'Confie que seu papel mais profundo está no impacto invisível que você deixa nas pessoas — nas conversas que mudaram perspectivas, nos gestos que chegaram na hora certa, nos momentos em que você simplesmente esteve presente quando alguém precisava.' },
+  11: { titulo: 'O Iluminado',          cor: '#d4c07a',
+        sig: 'Você não apenas carrega um número — você carrega um portal. O 11 é o primeiro dos números mestres, e isso significa que sua missão não é simples de viver: exige uma sensibilidade que pode parecer um fardo antes de ser reconhecida como o maior presente. Você é um canal entre o ordinário e o extraordinário — sua intuição não é um recurso, é uma linguagem. Você percebe nuances que escapam a todos os radares comuns, sente atmosferas antes de entrar nos ambientes, e tem a capacidade de tocar as pessoas em pontos que elas mesmas mal conseguem nomear. O número 11 está sempre entre dois mundos: o humano e o espiritual, o pessoal e o coletivo, o sensível e o visionário. Quando você encontra equilíbrio entre esses polos, torna-se um farol genuíno — alguém cuja presença não apenas inspira, mas transforma profundamente os que têm a sorte de encontrá-lo.',
+        tip: 'A meditação e o silêncio são seus portais mais poderosos de acesso à verdade. Cuide da sua sensibilidade como cuida de um instrumento precioso — porque é através dela que você acessa e transmite frequências que o mundo precisa urgentemente.' },
+  22: { titulo: 'O Mestre Construtor',  cor: '#c4a044',
+        sig: 'Você carrega o número de maior potencial realizador de toda a numerologia — o 22 é a fusão da visão infinita com a capacidade de ancorá-la na realidade. Você não apenas sonha grande: você tem a rara habilidade de transformar o grandioso em algo concreto, funcional, duradouro. Onde o número 11 vê o horizonte, o 22 traça o mapa e organiza a expedição. Há em você uma combinação que o mundo raramente encontra reunida em uma mesma pessoa: idealismo e pragmatismo, intuição e disciplina, ousadia e método. Quando você está alinhado com o seu propósito mais profundo, é capaz de criar estruturas — físicas, sociais, espirituais — que se tornam referências para gerações. O desafio do Mestre Construtor é não sucumbir ao peso da própria grandiosidade — porque a consciência de tanto potencial pode, às vezes, paralisar mais do que impulsionar.',
+        tip: 'Sua visão é genuinamente rara — cerque-se de pessoas que honram e nutrem a sua grandiosidade em vez de diminuí-la. O mundo precisa do que você é capaz de criar, mas primeiro você precisa acreditar que merece construir.' },
 };
 
 function gerarNumerologia() {
   const nome = (document.getElementById('nome').value || '').trim();
-  const data = document.getElementById('nascimento').value;
+  const data  = document.getElementById('nascimento').value;
   if (!nome || !data) { toast('Preencha nome e data de nascimento.', 'error'); return; }
 
-  const nv   = numVida(data);
-  const ne   = numExpressao(nome);
-  const info = NUMS[nv] || NUMS[1];
+  const nv    = numVida(data);
+  const ne    = numExpressao(nome);
+  const info  = NUMS[nv] || NUMS[1];
   const infoE = NUMS[ne] || NUMS[1];
 
-  document.getElementById('numerologiaResultado').innerHTML = `
+  const result = document.getElementById('numerologiaResultado');
+  result.innerHTML = `
     <div class="result-card">
       <div class="num-display">
-        <div class="num-circle lit" style="border-color:${info.cor}; color:${info.cor}">${nv}</div>
+        <div class="num-circle lit" style="border-color:${info.cor};color:${info.cor}">${nv}</div>
         <div class="num-label">${info.titulo}</div>
       </div>
       <div class="result-row">
-        <strong>Número de Vida · ${nv} — ${info.titulo}</strong>
+        <strong>Número de Vida &middot; ${nv} — ${info.titulo}</strong>
         <p>${info.sig}</p>
       </div>
       <div class="result-row">
-        <strong>Número de Expressão · ${ne} — ${infoE.titulo}</strong>
+        <strong>Número de Expressão &middot; ${ne} — ${infoE.titulo}</strong>
         <p>${infoE.sig}</p>
       </div>
       <div class="result-row">
@@ -935,7 +1371,8 @@ function gerarNumerologia() {
         <p>${info.tip}</p>
       </div>
     </div>`;
-  toast(`Número de Vida: ${nv} — ${info.titulo}`);
+  result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  toast('Número de Vida: ' + nv + ' — ' + info.titulo);
 }
 
 /* ═══════════════════════════════════════
@@ -956,7 +1393,7 @@ const PERGS_ARQU = [
 
 const ARQS = {
   heroi:    { nome: 'O Herói',    desc: 'Você é movido por uma força interior que não aceita estagnação. O Herói não é necessariamente aquele que não tem medo — é aquele que age apesar do medo, que escolhe se mover quando seria mais fácil recuar. Há em você uma energia transformadora que se manifesta na disposição de enfrentar o que é difícil, de ir além do que outros julgam possível, de superar versões anteriores de si mesmo em ciclos contínuos de crescimento. Sua presença inspira porque as pessoas sentem, intuitivamente, que estão diante de alguém que não desiste. O Herói carrega, porém, um desafio que poucos falam: a necessidade de aprender que força verdadeira também inclui a vulnerabilidade de pedir ajuda, de reconhecer os próprios limites e de entender que descanso não é fraqueza — é a preparação para o próximo movimento.' },
-  sabio:    { nome: 'O Sábio',    desc: 'Você habita o mundo de uma forma diferente da maioria: com uma necessidade quase visceral de entender — não apenas os fatos, mas o porquê por trás dos fatos, as conexões invisíveis que dão sentido ao aparente caos da existência. O Sábio não se satisfaz com respostas superficiais. Para você, uma conversa real é aquela que vai fundo, que questiona os próprios pilares, que não tem medo de chegar a incertezas maiores do que as que existiam antes. Há em você uma forma de ver o mundo que é ao mesmo tempo analítica e intuitiva — você percebe padrões, reconhece arquétipos, decifra dinâmicas que outros mal percebem. O desafio do Sábio é lembrar que o conhecimento mais profundo não vive apenas nos livros ou nas análises — ele também mora nas experiências vividas no corpo, nas emoções sentidas sem julgamento, nos momentos de não saber.' },
+  sabio:    { nome: 'O Sábio',    desc: 'Você habita o mundo de uma forma diferente da maioria: com uma necessidade quase visceral de entender — não apenas os fatos, mas o porquê por trás dos fatos, as conexões invisíveis que dão sentido ao aparente caos da existência. O Sábio não se satisfaz com respostas superficiais. Para você, uma conversa real é aquela que vai fundo, que questiona os próprios pilares, que não tem medo de chegar a incertezas maiores do que as que existiam antes. Há em você uma forma de ver o mundo que é ao mesmo tempo analítica e intuitiva — você percebe padrões, reconhece arquétipos, decifra dinâmicas que outros mal percebem. As pessoas frequentemente buscam você em momentos de dúvida existencial porque percebem, mesmo sem articular, que você tem acesso a uma perspectiva mais ampla. O desafio do Sábio é lembrar que o conhecimento mais profundo não vive apenas nos livros ou nas análises — ele também mora nas experiências vividas no corpo, nas emoções sentidas sem julgamento, nos momentos de não saber.' },
   cuidador: { nome: 'O Cuidador', desc: 'Seu coração tem uma capacidade de expansão que poucos possuem. O Cuidador não cuida por obrigação ou por medo de desapontar — cuida porque genuinamente encontra sentido e alegria em ser o espaço seguro para quem está ao redor. Há em você uma presença que as pessoas sentem antes de você dizer uma palavra: algo que comunica "aqui é um lugar seguro, aqui você pode ser como é". Você tem o dom de perceber o que o outro precisa muitas vezes antes que ele mesmo articule, e uma habilidade quase instintiva de criar condições para que as pessoas ao seu redor floresçam. O desafio do Cuidador — e é um desafio real, não apenas retórico — é aprender que as suas necessidades também importam, que seus limites são sagrados, e que uma versão sua esgotada e invisível a si mesma não consegue dar ao mundo o melhor que tem a oferecer.' },
   mago:     { nome: 'O Mago',     desc: 'Você enxerga o que ainda não existe como se já fosse real. O Mago opera no espaço entre a intenção e a manifestação — aquela zona onde as coisas ainda são possibilidades mas já carregam a semente do que estão prestes a se tornar. Você tem uma capacidade de transformar realidades que vai além do técnico ou do estratégico: é uma força que emerge da combinação de intuição elevada, criatividade genuína e uma fé profunda no poder da intenção consciente. Quando você está em pleno alinhamento com o seu propósito, há algo quase alquímico no que você cria — situações que pareciam impossíveis se reorganizam, pessoas certas aparecem, recursos surgem de formas que a lógica linear não consegue explicar. O desafio do Mago é ancorar esse poder em ação consistente — porque visão sem prática é apenas imaginação.' },
 };
@@ -986,19 +1423,19 @@ function renderArqu() {
 window.respA_fn = function (r) { respA.push(r); idxA++; renderArqu(); };
 
 function finalizarArqu() {
-  const w = { A: 3, B: 2, C: 1 };
+  const w  = { A: 3, B: 2, C: 1 };
   const sc = { heroi: 0, sabio: 0, cuidador: 0, mago: 0 };
 
-  sc.heroi    += w[respA[0]] || 0;                                            // Q0  liderança
-  if (respA[1] === 'A') sc.mago += 3; else if (respA[1] === 'C') sc.sabio += 3; else { sc.mago++; sc.sabio++; } // Q1 emoção
-  sc.heroi    += w[respA[2]] || 0;                                            // Q2  aventura
-  sc.heroi    += Math.max(0, (w[respA[3]] || 0) - 1);                        // Q3  reconhecimento
-  sc.cuidador += w[respA[4]] || 0;                                            // Q4  estabilidade
-  sc.mago     += w[respA[5]] || 0;                                            // Q5  criatividade
-  sc.cuidador += w[respA[6]] || 0;                                            // Q6  ajudar
-  sc.heroi    += Math.max(0, (w[respA[7]] || 0) - 1);                        // Q7  decisão rápida
-  sc.sabio    += w[respA[8]] || 0;                                            // Q8  reservado
-  sc.mago     += w[respA[9]] || 0;                                            // Q9  sonha grande
+  sc.heroi    += w[respA[0]] || 0;
+  if (respA[1] === 'A') sc.mago += 3; else if (respA[1] === 'C') sc.sabio += 3; else { sc.mago++; sc.sabio++; }
+  sc.heroi    += w[respA[2]] || 0;
+  sc.heroi    += Math.max(0, (w[respA[3]] || 0) - 1);
+  sc.cuidador += w[respA[4]] || 0;
+  sc.mago     += w[respA[5]] || 0;
+  sc.cuidador += w[respA[6]] || 0;
+  sc.heroi    += Math.max(0, (w[respA[7]] || 0) - 1);
+  sc.sabio    += w[respA[8]] || 0;
+  sc.mago     += w[respA[9]] || 0;
 
   const sorted = Object.entries(sc).sort((a, b) => b[1] - a[1]);
   const [p, s] = sorted;
@@ -1014,8 +1451,8 @@ function finalizarArqu() {
         <div class="arch-name">${ARQS[s[0]].nome} <span class="arch-badge">Secundário</span></div>
         <div class="arch-desc">${ARQS[s[0]].desc}</div>
       </div>
-      <div class="arch-card" style="border-color:rgba(196,160,68,.22)">
-        <div class="arch-name" style="font-size:16px;color:var(--text-muted)">A Combinação dos Seus Arquétipos</div>
+      <div class="arch-card" style="border-color:rgba(196,160,68,.18)">
+        <div class="arch-name" style="font-size:17px;color:var(--text-muted)">A Combinação dos Seus Arquétipos</div>
         <div class="arch-desc">Nenhum ser humano é habitado por um único arquétipo — somos constelações de forças em constante diálogo. O arquétipo principal é aquele que domina a forma como você age no mundo, como você enfrenta desafios e como os outros instintivamente te percebem. O arquétipo secundário é a sua camada de profundidade: ele aparece nas relações mais íntimas, nos momentos de crise genuína, nas escolhas que você faz quando ninguém está olhando. Compreender como essas duas forças interagem dentro de você é um dos exercícios mais ricos do autoconhecimento — porque é nessa interface que vivem seus maiores potenciais e também seus desafios mais recorrentes.</div>
       </div>
       <div class="reset-row">
@@ -1073,29 +1510,27 @@ function finalizarFreq() {
   const hz    = Math.round(50 + pct * 200);
 
   let nivel, cor, interp;
-  if      (hz >= 210) { nivel = 'Alta Vibração';              cor = '#c4a044'; interp = 'Você está em um dos estados mais elevados de sintonia espiritual que uma pessoa pode alcançar no cotidiano. Sua frequência não é acidente — é o resultado acumulado de escolhas conscientes, práticas consistentes e uma disposição genuína de olhar para dentro com honestidade. Neste estado, sua energia irradia de forma que afeta positivamente tudo e todos ao seu redor: você atrai experiências de crescimento genuíno, relações que nutrem, oportunidades que se alinham com seu propósito mais profundo. Há uma leveza na forma como você atravessa os desafios — não porque eles inexistem, mas porque você desenvolveu a capacidade de não se fundir com eles. A sua presença neste momento é um presente para o campo coletivo. Mantenha as práticas que te trouxeram até aqui e permita-se também celebrar este nível de alinhamento — você construiu algo real.'; }
-  else if (hz >= 165) { nivel = 'Boa Frequência';             cor = '#7a9bd4'; interp = 'Sua energia está em um bom patamar de equilíbrio e expansão contínua. Você não está no ápice, mas está claramente em movimento ascendente — e isso, na jornada espiritual, é frequentemente mais valioso do que chegar ao topo de uma vez. Você demonstra consistência nas práticas que nutrem seu bem-estar, e isso se traduz em uma base energética estável sobre a qual você pode continuar construindo. Há uma maturidade crescente na forma como você lida com seus estados internos — uma capacidade de observar sem ser arrastado, de sentir sem se perder, de agir sem reagir. Continue cultivando as práticas que te trouxeram até aqui. O próximo nível de vibração não requer grandes revoluções — requer a continuidade e o aprofundamento do que você já está fazendo com intenção.'; }
-  else if (hz >= 120) { nivel = 'Frequência em Expansão';     cor = '#a87fc4'; interp = 'Existe em você uma energia que quer crescer, expandir, se elevar — e também há algumas áreas onde padrões antigos ainda exercem uma influência que talvez você já esteja começando a reconhecer. Este é um ponto muito importante da jornada: você está num limiar. Não no início, não no ápice, mas naquele espaço fértil onde pequenas mudanças consistentes têm o poder de criar transformações internas que redefinem toda a trajetória. As sementes que você plantar agora em termos de práticas, hábitos de atenção e cuidado com sua energia vão florescer de formas que hoje podem parecer improváveis. Não subestime o impacto de um pequeno gesto diário de presença — de cinco minutos de silêncio, de uma refeição consciente, de uma conversa honesta consigo mesmo antes de dormir.'; }
-  else                { nivel = 'Frequência em Reconstrução'; cor = '#c48888'; interp = 'Este resultado não é um julgamento — é uma leitura honesta de um momento que, para quem está disposto a ouvi-lo, carrega um convite poderoso. Você está numa fase de reconstrução, e reconstrução é um dos processos mais sagrados que existem: é quando o que não servia mais foi removido e há espaço, finalmente, para que algo mais verdadeiro tome forma. Neste momento, cada ato de cuidado consigo mesmo é um ato espiritual de primeira grandeza. Não precisa ser grandioso — precisa ser real. Beber água com atenção. Respirar fundo antes de reagir. Dormir cedo um dia. Dizer não a algo que drena. São esses gestos que, acumulados com gentileza e sem pressa, reconstroem uma frequência sólida e duradoura. Você chegou até aqui. Isso já é evidência de força.'; }
+  if      (hz >= 210) { nivel = 'Alta Vibração';              cor = '#c4a044'; interp = 'Você está em um dos estados mais elevados de sintonia espiritual que uma pessoa pode alcançar no cotidiano. Sua frequência não é acidente — é o resultado acumulado de escolhas conscientes, práticas consistentes e uma disposição genuína de olhar para dentro com honestidade. Neste estado, sua energia irradia de forma que afeta positivamente tudo e todos ao seu redor: você atrai experiências de crescimento genuíno, relações que nutrem, oportunidades que se alinham com seu propósito mais profundo. Há uma leveza na forma como você atravessa os desafios — não porque eles inexistem, mas porque você desenvolveu a capacidade de não se fundir com eles. A sua presença neste momento é um presente para o campo coletivo. Mantenha as práticas que te trouxeram até aqui e permita-se também celebrar este nível de alinhamento — você construiu algo real.' }
+  else if (hz >= 165) { nivel = 'Boa Frequência';             cor = '#7a9bd4'; interp = 'Sua energia está em um bom patamar de equilíbrio e expansão contínua. Você não está no ápice, mas está claramente em movimento ascendente — e isso, na jornada espiritual, é frequentemente mais valioso do que chegar ao topo de uma vez. Você demonstra consistência nas práticas que nutrem seu bem-estar, e isso se traduz em uma base energética estável sobre a qual você pode continuar construindo. Há uma maturidade crescente na forma como você lida com seus estados internos — uma capacidade de observar sem ser arrastado, de sentir sem se perder, de agir sem reagir. Continue cultivando as práticas que te trouxeram até aqui. O próximo nível de vibração não requer grandes revoluções — requer a continuidade e o aprofundamento do que você já está fazendo com intenção.' }
+  else if (hz >= 120) { nivel = 'Frequência em Expansão';     cor = '#a87fc4'; interp = 'Existe em você uma energia que quer crescer, expandir, se elevar — e também há algumas áreas onde padrões antigos ainda exercem uma influência que talvez você já esteja começando a reconhecer. Este é um ponto muito importante da jornada: você está num limiar. Não no início, não no ápice, mas naquele espaço fértil onde pequenas mudanças consistentes têm o poder de criar transformações internas que redefinem toda a trajetória. As sementes que você plantar agora em termos de práticas, hábitos de atenção e cuidado com sua energia vão florescer de formas que hoje podem parecer improváveis. Não subestime o impacto de um pequeno gesto diário de presença — de cinco minutos de silêncio, de uma refeição consciente, de uma conversa honesta consigo mesmo antes de dormir.' }
+  else                { nivel = 'Frequência em Reconstrução'; cor = '#c48888'; interp = 'Este resultado não é um julgamento — é uma leitura honesta de um momento que, para quem está disposto a ouvi-lo, carrega um convite poderoso. Você está numa fase de reconstrução, e reconstrução é um dos processos mais sagrados que existem: é quando o que não servia mais foi removido e há espaço, finalmente, para que algo mais verdadeiro tome forma. Neste momento, cada ato de cuidado consigo mesmo é um ato espiritual de primeira grandeza. Não precisa ser grandioso — precisa ser real. Beber água com atenção. Respirar fundo antes de reagir. Dormir cedo um dia. Dizer não a algo que drena. São esses gestos que, acumulados com gentileza e sem pressa, reconstroem uma frequência sólida e duradoura. Você chegou até aqui. Isso já é evidência de força.' }
 
-  const ARC_LEN = Math.PI * 90;
+  const ARC_LEN   = Math.PI * 90;
   const finalOffset = (ARC_LEN * (1 - pct)).toFixed(2);
-
-  const cx = 130, cy = 120, r = 90;
 
   document.getElementById('freqContainer').innerHTML = `
     <div class="result-card">
       <div class="gauge-wrap">
-        <svg class="gauge-svg" viewBox="0 0 260 132" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Medidor de frequência: ${hz} Hz">
-          <path class="gauge-track" d="M 40 120 A 90 90 0 0 0 220 120"
-                stroke="rgba(255,255,255,.06)" stroke-width="14" stroke-linecap="round" fill="none"/>
-          <path class="gauge-fill" d="M 40 120 A 90 90 0 0 0 220 120"
+        <svg class="gauge-svg" viewBox="0 0 260 134" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Medidor de frequência: ${hz} Hz">
+          <path d="M 40 122 A 90 90 0 0 0 220 122"
+                stroke="rgba(255,255,255,.05)" stroke-width="14" stroke-linecap="round" fill="none"/>
+          <path class="gauge-fill" d="M 40 122 A 90 90 0 0 0 220 122"
                 stroke="${cor}" stroke-width="14" stroke-linecap="round" fill="none"
-                style="filter:drop-shadow(0 0 6px ${cor}55); --final:${finalOffset}"/>
-          <text x="130" y="104" text-anchor="middle"
-                font-family="Cormorant Garamond, serif" font-size="46" fill="${cor}" font-weight="300">${hz}</text>
-          <text x="130" y="120" text-anchor="middle"
-                font-family="DM Sans, sans-serif" font-size="11" fill="rgba(242,234,204,.38)" letter-spacing="2">Hz</text>
+                style="filter:drop-shadow(0 0 8px ${cor}66)"/>
+          <text x="130" y="106" text-anchor="middle"
+                font-family="Cormorant Garamond, serif" font-size="48" fill="${cor}" font-weight="300">${hz}</text>
+          <text x="130" y="122" text-anchor="middle"
+                font-family="DM Sans, sans-serif" font-size="11" fill="rgba(240,232,200,.32)" letter-spacing="2">Hz</text>
         </svg>
         <div class="gauge-level" style="color:${cor}">${nivel}</div>
       </div>
@@ -1106,33 +1541,32 @@ function finalizarFreq() {
       </div>
 
       <div class="result-row">
-        <strong>Para elevar e sustentar sua frequência</strong>
+        <strong>Para Elevar e Sustentar Sua Frequência</strong>
+        <ul class="tips-list" style="margin-top:10px">
+          <li class="tip-item">Medite 10 a 20 minutos ao amanhecer — antes de checar o celular, antes de falar com alguém, antes de qualquer ruído externo. Esse momento é seu.</li>
+          <li class="tip-item">Pratique gratidão com intenção antes de dormir — não uma lista automática, mas a lembrança genuína de um momento do dia que merece ser honrado.</li>
+          <li class="tip-item">Tome sol matinal por pelo menos 15 minutos com os pés descalços na terra, se possível. O corpo vibra diferente quando reconhece os ritmos naturais.</li>
+          <li class="tip-item">Conecte-se com a natureza semanalmente de forma consciente — uma caminhada, um jardim, o céu estrelado. O mundo natural recalibra o que o ambiente artificial desregula.</li>
+          <li class="tip-item">Escute música em 528 Hz ou 432 Hz durante atividades cotidianas — essas frequências sonoras têm efeito documentado sobre o sistema nervoso e o estado emocional.</li>
+        </ul>
       </div>
-
-      <ul class="tips-list">
-        <li class="tip-item">Medite 10 a 20 minutos ao amanhecer — antes de checar o celular, antes de falar com alguém, antes de qualquer ruído externo. Esse momento é seu.</li>
-        <li class="tip-item">Pratique gratidão com intenção antes de dormir — não uma lista automática, mas a lembrança genuína de um momento do dia que merece ser honrado.</li>
-        <li class="tip-item">Tome sol matinal por pelo menos 15 minutos com os pés descalços na terra, se possível. O corpo vibra diferente quando reconhece os ritmos naturais.</li>
-        <li class="tip-item">Conecte-se com a natureza semanalmente de forma consciente — uma caminhada, um jardim, o céu estrelado. O mundo natural recalibra o que o ambiente artificial desregula.</li>
-        <li class="tip-item">Escute música em 528 Hz ou 432 Hz durante atividades cotidianas — essas frequências sonoras têm efeito documentado sobre o sistema nervoso e o estado emocional.</li>
-      </ul>
 
       <div class="reset-row" style="margin-top:24px">
         <button class="btn btn-ghost" onclick="resetFreq()">Refazer Avaliação</button>
       </div>
     </div>`;
 
-  /* animate gauge fill */
   requestAnimationFrame(() => requestAnimationFrame(() => {
     const fill = document.querySelector('.gauge-fill');
     if (fill) fill.style.strokeDashoffset = finalOffset;
   }));
 
-  toast(`Sua frequência: ${hz} Hz — ${nivel}`);
+  toast('Sua frequência: ' + hz + ' Hz — ' + nivel);
 }
 
 function resetFreq() { idxF = 0; respF = []; renderFreq(); }
 renderFreq();
 </script>
+
 </body>
 </html>
