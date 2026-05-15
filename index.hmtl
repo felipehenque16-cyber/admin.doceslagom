@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -41,8 +42,9 @@
       --ease:         cubic-bezier(.4,0,.2,1);
       --ease-out:     cubic-bezier(0,.6,.4,1);
       --ease-spring:  cubic-bezier(.34,1.56,.64,1);
-      --r-card:       20px;
-      --r-btn:        100px;
+      --r-card:       8px;
+      --r-btn:        8px;
+      --sidebar:      252px;
     }
 
     html { scroll-behavior: smooth; }
@@ -101,13 +103,24 @@
     }
 
     /* ─── APP ────────────────────────────────────────────── */
-    #app { position: relative; z-index: 1; }
+    #app {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+    }
+
+    @media (min-width: 900px) {
+      #app { padding-left: var(--sidebar); }
+    }
 
     /* ─── HEADER ─────────────────────────────────────────── */
     header {
-      padding: 68px 24px 56px;
-      text-align: center;
+      padding: 64px 24px 48px;
+      text-align: left;
       position: relative;
+      min-height: 520px;
+      display: grid;
+      align-items: center;
     }
 
     header::after {
@@ -115,7 +128,7 @@
       position: absolute;
       bottom: 0; left: 50%;
       transform: translateX(-50%);
-      width: min(500px, 90%);
+      width: min(980px, 90%);
       height: 1px;
       background: linear-gradient(90deg,
         transparent,
@@ -138,11 +151,13 @@
 
     .brand {
       font-family: 'Cinzel Decorative', serif;
-      font-size: clamp(22px, 5.8vw, 48px);
+      font-size: clamp(34px, 7vw, 78px);
       font-weight: 400;
-      letter-spacing: 6px;
+      letter-spacing: 5px;
       color: var(--text);
       margin-bottom: 10px;
+      max-width: 780px;
+      line-height: .98;
       text-shadow: 0 0 80px var(--gold-glow), 0 0 160px rgba(196,160,68,.05);
       animation: revealUp .6s .06s var(--ease) both;
     }
@@ -157,9 +172,80 @@
       animation: revealUp .65s .12s var(--ease) both;
     }
 
+    .hero-inner {
+      width: min(1120px, calc(100vw - 48px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, .7fr);
+      gap: 44px;
+      align-items: end;
+    }
+
+    .hero-copy {
+      color: #c9bfa8;
+      max-width: 680px;
+      margin-top: 24px;
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.75;
+      animation: revealUp .65s .18s var(--ease) both;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+      animation: revealUp .65s .24s var(--ease) both;
+    }
+
+    .hero-actions .btn {
+      width: auto;
+      min-width: 178px;
+    }
+
+    .hero-panel {
+      background: linear-gradient(160deg, rgba(22,22,52,.92), rgba(10,10,28,.78));
+      border: 1px solid rgba(196,160,68,.22);
+      border-radius: var(--r-card);
+      padding: 24px;
+      box-shadow: 0 28px 80px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.04);
+      animation: revealUp .7s .28s var(--ease) both;
+    }
+
+    .hero-panel-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      color: var(--gold-lt);
+      margin-bottom: 18px;
+      line-height: 1.2;
+    }
+
+    .hero-feature {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 13px;
+      padding: 15px 0;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .hero-feature:first-of-type { border-top: 0; padding-top: 0; }
+
+    .hero-feature svg {
+      width: 34px;
+      height: 34px;
+      padding: 8px;
+      border: 1px solid var(--border-hi);
+      border-radius: 8px;
+      color: var(--gold-lt);
+      background: rgba(196,160,68,.04);
+    }
+
     .ornament {
       display: block;
-      margin: 24px auto 0;
+      margin: 24px 0 0;
       width: min(300px, 82%);
       animation: revealUp .65s .18s var(--ease) both;
     }
@@ -170,8 +256,12 @@
       display: flex;
       justify-content: center;
       animation: revealUp .65s .22s var(--ease) both;
-      position: sticky;
+      position: fixed;
+      left: 0;
       top: 0;
+      bottom: 0;
+      width: var(--sidebar);
+      align-items: center;
       z-index: 50;
     }
 
@@ -179,17 +269,19 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, var(--bg) 60%, transparent);
+      background: linear-gradient(90deg, rgba(7,7,15,.98), rgba(7,7,15,.84) 68%, transparent);
       z-index: -1;
     }
 
     .tab-bar {
       display: flex;
-      gap: 2px;
+      flex-direction: column;
+      gap: 8px;
       background: rgba(10,10,28,.78);
       border: 1px solid var(--border);
-      border-radius: var(--r-btn);
-      padding: 5px;
+      border-radius: var(--r-card);
+      padding: 10px;
+      width: 196px;
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
       position: relative;
@@ -200,13 +292,13 @@
 
     .tab-indicator {
       position: absolute;
-      top: 5px;
-      height: calc(100% - 10px);
-      border-radius: 100px;
+      left: 10px;
+      width: calc(100% - 20px);
+      border-radius: 8px;
       background: linear-gradient(135deg, rgba(196,160,68,.22), rgba(106,79,160,.12));
       border: 1px solid rgba(196,160,68,.22);
       box-shadow: 0 0 20px rgba(196,160,68,.06);
-      transition: left .38s var(--ease), width .38s var(--ease);
+      transition: top .38s var(--ease), height .38s var(--ease), left .38s var(--ease), width .38s var(--ease);
       pointer-events: none;
       z-index: 0;
     }
@@ -215,7 +307,7 @@
       display: flex;
       align-items: center;
       gap: 7px;
-      padding: 10px 20px;
+      padding: 12px 14px;
       border: none;
       border-radius: 100px;
       cursor: pointer;
@@ -245,7 +337,7 @@
 
     /* ─── PANELS ─────────────────────────────────────────── */
     .panels {
-      max-width: 840px;
+      max-width: 980px;
       margin: 0 auto;
       padding: 40px 24px 88px;
     }
@@ -617,6 +709,146 @@
       color: var(--text-muted);
     }
 
+    /* ─── TAROT ─────────────────────────────────────────── */
+    .tarot-spread {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .tarot-card {
+      min-height: 300px;
+      border: 0;
+      background: transparent;
+      perspective: 1200px;
+      cursor: pointer;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+    }
+
+    .tarot-card-inner {
+      position: relative;
+      width: 100%;
+      min-height: 300px;
+      transform-style: preserve-3d;
+      transition: transform .7s var(--ease);
+    }
+
+    .tarot-card.revealed .tarot-card-inner { transform: rotateY(180deg); }
+
+    .tarot-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: var(--r-card);
+      border: 1px solid var(--border-hi);
+      overflow: hidden;
+      box-shadow: 0 18px 48px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    .tarot-back {
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      background:
+        linear-gradient(155deg, rgba(22,22,52,.96), rgba(9,9,25,.96)),
+        radial-gradient(circle at 50% 20%, rgba(196,160,68,.18), transparent 42%);
+    }
+
+    .tarot-back::before {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(196,160,68,.26);
+      border-radius: 6px;
+    }
+
+    .tarot-back::after {
+      content: '';
+      width: 86px;
+      height: 86px;
+      border: 1px solid rgba(196,160,68,.42);
+      transform: rotate(45deg);
+      box-shadow: 0 0 0 18px rgba(196,160,68,.035), 0 0 45px rgba(196,160,68,.08);
+    }
+
+    .tarot-back span {
+      position: absolute;
+      bottom: 28px;
+      left: 22px;
+      right: 22px;
+      text-align: center;
+      color: var(--gold-lt);
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    .tarot-front {
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 24px;
+      background: linear-gradient(165deg, rgba(28,28,64,.98), rgba(12,12,30,.98));
+    }
+
+    .tarot-front::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(196,160,68,.14), transparent 34%),
+        radial-gradient(circle at 88% 84%, rgba(106,79,160,.16), transparent 38%);
+      pointer-events: none;
+    }
+
+    .tarot-symbol {
+      width: 72px;
+      height: 72px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(196,160,68,.28);
+      border-radius: 50%;
+      color: var(--gold-lt);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      line-height: 1;
+      background: rgba(196,160,68,.045);
+      position: relative;
+      z-index: 1;
+    }
+
+    .tarot-name {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 25px;
+      line-height: 1.12;
+      color: var(--gold-lt);
+      position: relative;
+      z-index: 1;
+      margin-bottom: 10px;
+    }
+
+    .tarot-meaning {
+      display: block;
+      color: var(--text-muted);
+      font-size: 13.5px;
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tarot-status {
+      margin-top: 18px;
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
     /* ─── QUIZ ───────────────────────────────────────────── */
     .quiz-dots {
       display: flex;
@@ -918,25 +1150,89 @@
 
     /* ─── RESPONSIVE ─────────────────────────────────────── */
     @media (max-width: 560px) {
+      #app { padding-left: 0; }
+      header {
+        min-height: auto;
+        padding: 44px 20px 34px;
+      }
+      .hero-inner {
+        width: 100%;
+        grid-template-columns: 1fr;
+        gap: 26px;
+      }
+      .brand {
+        font-size: clamp(30px, 12vw, 44px);
+        letter-spacing: 2.5px;
+      }
+      .brand-sub { letter-spacing: 3px; }
+      .hero-copy { font-size: 15px; }
+      .hero-actions .btn { width: 100%; }
+      .hero-panel { padding: 18px; }
+      nav {
+        top: auto;
+        bottom: 0;
+        width: 100%;
+        height: auto;
+        padding: 10px 10px max(10px, env(safe-area-inset-bottom));
+        align-items: stretch;
+      }
+      nav::before {
+        background: linear-gradient(180deg, transparent, rgba(7,7,15,.96) 26%, rgba(7,7,15,.99));
+      }
       .tab-bar {
+        flex-direction: row;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
-        border-radius: 16px;
-        max-width: calc(100vw - 32px);
+        border-radius: 8px;
+        max-width: none;
+        width: 100%;
       }
       .tab-bar::-webkit-scrollbar { display: none; }
       .tab-btn { flex-shrink: 0; padding: 9px 14px; font-size: 12px; gap: 5px; }
       .tab-btn svg { width: 11px; height: 11px; }
       .card, .result-card, .question-card { padding: 20px 16px; }
-      .panels { padding: 28px 16px 72px; }
-      header { padding: 52px 20px 44px; }
-      nav { padding: 20px 16px 0; }
-      #toast { left: 16px; right: 16px; text-align: center; }
+      .tarot-spread { grid-template-columns: 1fr; }
+      .tarot-card, .tarot-card-inner { min-height: 260px; }
+      .panels { padding: 28px 16px 104px; }
+      #toast { left: 16px; right: 16px; bottom: 88px; text-align: center; }
+      footer { padding-bottom: 120px; }
+      .tab-indicator {
+        top: 10px;
+        height: calc(100% - 20px);
+      }
     }
 
     @media (min-width: 700px) {
       .section-header { display: flex; flex-direction: column; }
+    }
+
+    @media (min-width: 561px) and (max-width: 899px) {
+      #app { padding-left: 0; }
+      .hero-inner { grid-template-columns: 1fr; }
+      nav {
+        top: auto;
+        bottom: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: auto;
+        bottom: 18px;
+        padding: 0;
+        align-items: center;
+      }
+      nav::before { display: none; }
+      .tab-bar {
+        flex-direction: row;
+        width: auto;
+        max-width: calc(100vw - 32px);
+        overflow-x: auto;
+      }
+      .tab-indicator {
+        top: 10px;
+        height: calc(100% - 20px);
+      }
+      .panels { padding-bottom: 118px; }
+      footer { padding-bottom: 118px; }
     }
   </style>
 </head>
@@ -952,26 +1248,50 @@
 
   <!-- ══ HEADER ════════════════════════════════════════ -->
   <header>
-    <div class="header-eyebrow">Portal de Autoconhecimento</div>
-    <div class="brand">Cosmo Interior</div>
-    <div class="brand-sub">Ferramentas para a Jornada Espiritual</div>
-    <svg class="ornament" viewBox="0 0 300 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <line x1="0" y1="8" x2="116" y2="8" stroke="url(#ol)" stroke-width=".6"/>
-      <circle cx="150" cy="8" r="4" fill="none" stroke="#c4a044" stroke-width=".7" opacity=".5"/>
-      <rect x="143" y="1" width="14" height="14" rx="1" transform="rotate(45 150 8)" fill="none" stroke="#c4a044" stroke-width=".9"/>
-      <circle cx="150" cy="8" r="1.5" fill="#c4a044" opacity=".75"/>
-      <line x1="184" y1="8" x2="300" y2="8" stroke="url(#or)" stroke-width=".6"/>
-      <defs>
-        <linearGradient id="ol" x1="0" y1="0" x2="116" y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#c4a044" stop-opacity="0"/>
-          <stop offset="100%" stop-color="#c4a044" stop-opacity=".5"/>
-        </linearGradient>
-        <linearGradient id="or" x1="184" y1="0" x2="300" y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#c4a044" stop-opacity=".5"/>
-          <stop offset="100%" stop-color="#c4a044" stop-opacity="0"/>
-        </linearGradient>
-      </defs>
-    </svg>
+    <div class="hero-inner">
+      <div>
+        <div class="header-eyebrow">Portal de Espiritualidade e Autocuidado</div>
+        <div class="brand">Cosmo Interior</div>
+        <div class="brand-sub">Cuidado espiritual para viver com mais presença</div>
+        <p class="hero-copy">Cuidar da espiritualidade é criar um espaço interno de escuta, equilíbrio e proteção para atravessar a vida com mais consciência. A Cosmo Interior reúne práticas simbólicas de autoconhecimento para ajudar você a observar sua energia, reconhecer sinais do seu caminho e fortalecer a relação com a sua própria essência.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" type="button" onclick="selectTab('tarot')">Tarot do Dia</button>
+          <button class="btn btn-ghost" type="button" onclick="selectTab('frequencia')">Cuidar da Energia</button>
+        </div>
+        <svg class="ornament" viewBox="0 0 300 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <line x1="0" y1="8" x2="116" y2="8" stroke="url(#ol)" stroke-width=".6"/>
+          <circle cx="150" cy="8" r="4" fill="none" stroke="#c4a044" stroke-width=".7" opacity=".5"/>
+          <rect x="143" y="1" width="14" height="14" rx="1" transform="rotate(45 150 8)" fill="none" stroke="#c4a044" stroke-width=".9"/>
+          <circle cx="150" cy="8" r="1.5" fill="#c4a044" opacity=".75"/>
+          <line x1="184" y1="8" x2="300" y2="8" stroke="url(#or)" stroke-width=".6"/>
+          <defs>
+            <linearGradient id="ol" x1="0" y1="0" x2="116" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#c4a044" stop-opacity="0"/>
+              <stop offset="100%" stop-color="#c4a044" stop-opacity=".5"/>
+            </linearGradient>
+            <linearGradient id="or" x1="184" y1="0" x2="300" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#c4a044" stop-opacity=".5"/>
+              <stop offset="100%" stop-color="#c4a044" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <aside class="hero-panel" aria-label="Práticas espirituais disponíveis">
+        <div class="hero-panel-title">Escolha uma prática</div>
+        <div class="hero-feature">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7 9 18l-5-5"/></svg>
+          <span>Leituras organizadas por abas independentes, com acesso direto aos caminhos de autoconhecimento.</span>
+        </div>
+        <div class="hero-feature">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span>Tarot do Dia para virar cartas e receber uma mensagem simbólica no momento.</span>
+        </div>
+        <div class="hero-feature">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.4 5.7 6.1.5-4.7 4 1.4 5.9-5.2-3.1-5.2 3.1 1.4-5.9-4.7-4 6.1-.5L12 3Z"/></svg>
+          <span>Conteúdo voltado ao cuidado espiritual, ao equilíbrio energético e à escuta interior.</span>
+        </div>
+      </aside>
+    </div>
   </header>
 
   <!-- ══ NAVIGATION ════════════════════════════════════ -->
@@ -991,6 +1311,14 @@
           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
         </svg>
         Numerologia
+      </button>
+
+      <button class="tab-btn" data-tab="tarot" role="tab" aria-selected="false" aria-controls="panel-tarot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="6" y="3" width="12" height="18" rx="2"/>
+          <path d="M12 7v4M10 9h4M9 16h6"/>
+        </svg>
+        Tarot do Dia
       </button>
 
       <button class="tab-btn" data-tab="arquetipo" role="tab" aria-selected="false" aria-controls="panel-arquetipo">
@@ -1058,6 +1386,23 @@
       </div>
 
       <div id="numerologiaResultado"></div>
+    </div>
+
+    <!-- ── TAROT DO DIA ───────────────────────────── -->
+    <div class="panel" id="panel-tarot" role="tabpanel">
+      <div class="section-header">
+        <div class="section-eyebrow">Mensagem do Agora</div>
+        <h2 class="section-title">Tarot do Dia</h2>
+        <p class="section-desc">Vire uma carta para receber um significado imediato sobre a energia que pede atenção hoje</p>
+      </div>
+
+      <div class="card">
+        <div class="tarot-spread" id="tarotSpread" aria-live="polite"></div>
+        <p class="tarot-status" id="tarotStatus">Escolha uma das cartas. O significado aparece assim que ela virar.</p>
+        <div class="reset-row">
+          <button class="btn btn-ghost" type="button" onclick="resetTarot()">Embaralhar Novamente</button>
+        </div>
+      </div>
     </div>
 
     <!-- ── ARQUÉTIPO ──────────────────────────────── -->
@@ -1170,18 +1515,35 @@ const tabIndicator = document.getElementById('tabIndicator');
 function moveIndicator(btn) {
   const barRect = btn.closest('.tab-bar').getBoundingClientRect();
   const btnRect = btn.getBoundingClientRect();
-  tabIndicator.style.left  = (btnRect.left - barRect.left) + 'px';
-  tabIndicator.style.width = btnRect.width + 'px';
+  const isColumn = getComputedStyle(btn.closest('.tab-bar')).flexDirection === 'column';
+  if (isColumn) {
+    tabIndicator.style.top = (btnRect.top - barRect.top) + 'px';
+    tabIndicator.style.height = btnRect.height + 'px';
+    tabIndicator.style.left = '10px';
+    tabIndicator.style.width = 'calc(100% - 20px)';
+  } else {
+    tabIndicator.style.left  = (btnRect.left - barRect.left) + 'px';
+    tabIndicator.style.width = btnRect.width + 'px';
+    tabIndicator.style.top = '10px';
+    tabIndicator.style.height = 'calc(100% - 20px)';
+  }
 }
 
-tabBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
+function selectTab(tab) {
+  const btn = document.querySelector(`.tab-btn[data-tab="${tab}"]`);
+  if (!btn) return;
     tabBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
     btn.setAttribute('aria-selected', 'true');
     document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
     moveIndicator(btn);
+    document.getElementById('panel-' + btn.dataset.tab).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    selectTab(btn.dataset.tab);
   });
 });
 
@@ -1374,6 +1736,82 @@ function gerarNumerologia() {
   result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   toast('Número de Vida: ' + nv + ' — ' + info.titulo);
 }
+
+/* ═══════════════════════════════════════
+   DAILY TAROT
+═══════════════════════════════════════ */
+const TAROT_CARDS = [
+  { nome: 'O Mago', simbolo: 'I', significado: 'A energia do dia pede ação consciente. Você tem recursos internos suficientes para iniciar algo importante, desde que una intenção, palavra e atitude no mesmo foco.' },
+  { nome: 'A Sacerdotisa', simbolo: 'II', significado: 'O convite é escutar antes de responder. Nem tudo precisa ser resolvido pela pressa: uma percepção silenciosa pode mostrar o caminho mais verdadeiro.' },
+  { nome: 'A Imperatriz', simbolo: 'III', significado: 'Hoje favorece nutrição, criatividade e cuidado com o corpo. O que recebe atenção amorosa tende a florescer com mais facilidade.' },
+  { nome: 'O Imperador', simbolo: 'IV', significado: 'A carta aponta para limites, organização e firmeza. Cuidar da espiritualidade também exige estrutura: escolha uma prática e sustente-a com presença.' },
+  { nome: 'O Hierofante', simbolo: 'V', significado: 'Busque sabedoria em uma tradição, em uma conversa madura ou em um ritual simples. O dia favorece aprender, pedir orientação e honrar valores profundos.' },
+  { nome: 'Os Enamorados', simbolo: 'VI', significado: 'Uma escolha precisa ser feita com o coração desperto. Observe se suas decisões aproximam você da verdade ou apenas do conforto imediato.' },
+  { nome: 'O Carro', simbolo: 'VII', significado: 'A energia se move quando existe direção. Evite dispersão e conduza o dia com intenção clara, mesmo que o caminho ainda pareça incompleto.' },
+  { nome: 'A Força', simbolo: 'VIII', significado: 'A carta fala de coragem gentil. Hoje, a potência espiritual está em responder com domínio interior, não em vencer pela pressão.' },
+  { nome: 'O Eremita', simbolo: 'IX', significado: 'Recolher-se pode ser necessário. Um momento de silêncio, oração ou escrita vai ajudar a separar a sua voz interna dos ruídos externos.' },
+  { nome: 'A Roda da Fortuna', simbolo: 'X', significado: 'Ciclos estão em movimento. Aceite mudanças com atenção: algo que parecia desvio pode revelar uma oportunidade de amadurecimento.' },
+  { nome: 'A Justiça', simbolo: 'XI', significado: 'O dia pede verdade, equilíbrio e responsabilidade. Observe onde suas escolhas precisam ficar mais alinhadas com aquilo que você diz acreditar.' },
+  { nome: 'A Estrela', simbolo: 'XVII', significado: 'Há uma energia de cura e esperança disponível. Cuide da fé com gestos simples e permita que o futuro volte a parecer habitável.' },
+  { nome: 'A Lua', simbolo: 'XVIII', significado: 'Nem tudo está claro, e tudo bem. A carta orienta a respeitar sonhos, intuições e sinais emocionais sem tomar decisões movidas por medo.' },
+  { nome: 'O Sol', simbolo: 'XIX', significado: 'Clareza, vitalidade e expansão marcam o dia. Procure o que aquece sua alma e compartilhe sua presença sem diminuir a própria luz.' },
+  { nome: 'O Mundo', simbolo: 'XXI', significado: 'Um ciclo encontra integração. Reconheça o quanto já caminhou e escolha o próximo passo a partir de maturidade, não de cobrança.' },
+];
+
+let tarotSelection = [];
+let tarotRevealed = false;
+
+function shuffleTarot() {
+  tarotSelection = [...TAROT_CARDS].sort(() => Math.random() - .5).slice(0, 3);
+}
+
+function renderTarot() {
+  const spread = document.getElementById('tarotSpread');
+  if (!spread) return;
+  if (!tarotSelection.length) shuffleTarot();
+
+  spread.innerHTML = tarotSelection.map((card, i) => `
+    <button class="tarot-card" type="button" onclick="revealTarot(${i})" aria-label="Virar carta ${i + 1}">
+      <span class="tarot-card-inner">
+        <span class="tarot-face tarot-back"><span>Carta ${i + 1}</span></span>
+        <span class="tarot-face tarot-front">
+          <span class="tarot-symbol">${card.simbolo}</span>
+          <span>
+            <span class="tarot-name">${card.nome}</span>
+            <span class="tarot-meaning">${card.significado}</span>
+          </span>
+        </span>
+      </span>
+    </button>
+  `).join('');
+}
+
+window.revealTarot = function (index) {
+  if (tarotRevealed) return;
+  const card = tarotSelection[index];
+  const btn = document.querySelectorAll('.tarot-card')[index];
+  const status = document.getElementById('tarotStatus');
+  if (!card || !btn || !status) return;
+
+  tarotRevealed = true;
+  btn.classList.add('revealed');
+  document.querySelectorAll('.tarot-card').forEach((el, i) => {
+    if (i !== index) el.style.opacity = '.36';
+    el.disabled = true;
+  });
+  status.innerHTML = `<strong style="color:var(--gold-lt);font-weight:400">${card.nome}</strong> — ${card.significado}`;
+  toast('Carta revelada: ' + card.nome);
+};
+
+function resetTarot() {
+  tarotRevealed = false;
+  shuffleTarot();
+  renderTarot();
+  const status = document.getElementById('tarotStatus');
+  if (status) status.textContent = 'Escolha uma das cartas. O significado aparece assim que ela virar.';
+}
+
+renderTarot();
 
 /* ═══════════════════════════════════════
    ARCHETYPE QUIZ
