@@ -2,6 +2,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -715,7 +716,7 @@
     .tarot-spread {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
-      gap: 14px;
+      gap: 6px;
       align-items: stretch;
     }
 
@@ -1140,6 +1141,236 @@
       to   { transform: none; opacity: 1; }
     }
 
+    /* ─── QUOTE ROTATOR ─────────────────────────────────── */
+    .quote-rotator {
+      margin-top: 36px;
+      position: relative;
+      min-height: 88px;
+    }
+
+    .quote-item {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .7s var(--ease), transform .7s var(--ease);
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+    }
+
+    .quote-item.active {
+      position: relative;
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+
+    .quote-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 44px;
+      color: var(--gold);
+      opacity: .22;
+      line-height: 1;
+      display: block;
+      margin-bottom: -4px;
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(14px, 1.9vw, 17px);
+      color: var(--text-muted);
+      line-height: 1.72;
+      max-width: 540px;
+    }
+
+    .quote-theme {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 11px;
+      font-size: 9.5px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: .65;
+    }
+
+    .quote-nav {
+      display: flex;
+      gap: 6px;
+      margin-top: 16px;
+    }
+
+    .quote-dot {
+      width: 4px; height: 4px;
+      border-radius: 2px;
+      background: var(--border-hi);
+      border: none;
+      cursor: pointer;
+      transition: all .32s var(--ease-spring);
+      padding: 0;
+    }
+
+    .quote-dot.active {
+      background: var(--gold);
+      width: 22px;
+      box-shadow: 0 0 6px rgba(196,160,68,.38);
+    }
+
+    /* ─── THEMES SHOWCASE ───────────────────────────────── */
+    .themes-section {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 52px 24px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .themes-section-header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .themes-section-eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: .78;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .themes-section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 3.5vw, 30px);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+
+    .themes-section-desc {
+      color: var(--text-muted);
+      font-size: 13.5px;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    .themes-divider {
+      display: block;
+      width: min(320px, 80%);
+      margin: 28px auto 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-hi) 30%, var(--border-hi) 70%, transparent);
+    }
+
+    .themes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 14px;
+    }
+
+    .theme-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-card);
+      padding: 22px 20px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color .3s var(--ease), transform .3s var(--ease), box-shadow .3s var(--ease);
+      box-shadow: 0 4px 20px rgba(0,0,0,.26);
+    }
+
+    .theme-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 0% 0%, var(--gold-dim), transparent 55%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .4s;
+    }
+
+    .theme-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.05), transparent);
+    }
+
+    .theme-card:hover {
+      border-color: var(--border-hi);
+      transform: translateY(-4px);
+      box-shadow: 0 14px 44px rgba(0,0,0,.4);
+    }
+
+    .theme-card:hover::before { opacity: 1; }
+
+    .theme-card-icon {
+      width: 40px; height: 40px;
+      border: 1px solid var(--border-hi);
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      color: var(--gold-lt);
+      background: rgba(196,160,68,.04);
+      margin-bottom: 16px;
+    }
+
+    .theme-card-icon svg { width: 20px; height: 20px; }
+
+    .theme-card-label {
+      font-size: 9px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: .7;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .theme-card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px;
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .theme-card-phrase {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 0;
+      display: block;
+    }
+
+    .theme-card-footer {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10.5px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: .6;
+      transition: opacity .22s, gap .22s;
+    }
+
+    .theme-card:hover .theme-card-footer { opacity: 1; gap: 10px; }
+
+    .theme-card-footer svg { width: 13px; height: 13px; flex-shrink: 0; }
+
     /* ─── FOOTER ─────────────────────────────────────────── */
     footer {
       text-align: center;
@@ -1196,6 +1427,10 @@
       .hero-copy { font-size: 15px; }
       .hero-actions .btn { width: 100%; }
       .hero-panel { padding: 18px; }
+      .themes-section { padding: 36px 16px 10px; }
+      .themes-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .theme-card { padding: 16px 14px; }
+      .quote-rotator { min-height: auto; }
       nav {
         top: auto;
         bottom: 0;
@@ -1468,7 +1703,7 @@
 
     .tarot-spread {
       grid-template-columns: repeat(auto-fit, minmax(136px, 1fr));
-      gap: 16px;
+      gap: 6px;
     }
 
     .tarot-card,
@@ -1569,6 +1804,41 @@
             </linearGradient>
           </defs>
         </svg>
+
+        <div class="quote-rotator" id="quoteRotator" aria-live="polite">
+          <div class="quote-item active">
+            <span class="quote-mark" aria-hidden="true">"</span>
+            <p class="quote-text">As cartas não revelam o futuro — revelam as forças que já habitam em você.</p>
+            <span class="quote-theme">✦ Tarot do Dia</span>
+          </div>
+          <div class="quote-item">
+            <span class="quote-mark" aria-hidden="true">"</span>
+            <p class="quote-text">Seu nome e data de nascimento carregam uma frequência única que molda sua jornada.</p>
+            <span class="quote-theme">✦ Numerologia</span>
+          </div>
+          <div class="quote-item">
+            <span class="quote-mark" aria-hidden="true">"</span>
+            <p class="quote-text">Cada linha na sua palma é uma narrativa escrita antes mesmo de você poder ler.</p>
+            <span class="quote-theme">✦ Leitura da Mão</span>
+          </div>
+          <div class="quote-item">
+            <span class="quote-mark" aria-hidden="true">"</span>
+            <p class="quote-text">Conhecer seu arquétipo é encontrar o personagem que dirige sua história interior.</p>
+            <span class="quote-theme">✦ Arquétipos</span>
+          </div>
+          <div class="quote-item">
+            <span class="quote-mark" aria-hidden="true">"</span>
+            <p class="quote-text">Tudo é vibração. Sintonizar sua frequência é o ato mais profundo de autocuidado.</p>
+            <span class="quote-theme">✦ Frequência Vibracional</span>
+          </div>
+          <div class="quote-nav" role="group" aria-label="Navegar entre citações">
+            <button class="quote-dot active" onclick="goToQuote(0)" aria-label="Citação 1"></button>
+            <button class="quote-dot" onclick="goToQuote(1)" aria-label="Citação 2"></button>
+            <button class="quote-dot" onclick="goToQuote(2)" aria-label="Citação 3"></button>
+            <button class="quote-dot" onclick="goToQuote(3)" aria-label="Citação 4"></button>
+            <button class="quote-dot" onclick="goToQuote(4)" aria-label="Citação 5"></button>
+          </div>
+        </div>
       </div>
       <aside class="hero-panel" aria-label="Práticas espirituais disponíveis">
         <div class="hero-panel-title">Um ritual digital para voltar ao centro</div>
@@ -1587,6 +1857,84 @@
       </aside>
     </div>
   </header>
+
+  <!-- ══ THEMES SHOWCASE ════════════════════════════════ -->
+  <section class="themes-section" aria-label="Práticas de autoconhecimento">
+    <div class="themes-section-header">
+      <span class="themes-section-eyebrow">Explore as práticas</span>
+      <h2 class="themes-section-title">Cinco caminhos para o autoconhecimento</h2>
+      <p class="themes-section-desc">Ferramentas simbólicas e vibracionais para iluminar padrões, expandir consciência e cuidar da sua energia interior.</p>
+      <span class="themes-divider" aria-hidden="true"></span>
+    </div>
+    <div class="themes-grid">
+
+      <div class="theme-card" onclick="selectTab('mao')" role="button" tabindex="0" onkeypress="if(event.key==='Enter')selectTab('mao')">
+        <div class="theme-card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v0M14 10V4a2 2 0 0 0-4 0v2M10 10.5V6a2 2 0 0 0-4 0v8l-1-1a2 2 0 0 0-3 3l3 4a2 2 0 0 0 2 1h7a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2z"/></svg>
+        </div>
+        <span class="theme-card-label">Quiromancia</span>
+        <div class="theme-card-name">Leitura da Mão</div>
+        <span class="theme-card-phrase">"Cada linha na sua palma é uma narrativa escrita antes mesmo de você poder ler."</span>
+        <div class="theme-card-footer">
+          Acessar
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <div class="theme-card" onclick="selectTab('numerologia')" role="button" tabindex="0" onkeypress="if(event.key==='Enter')selectTab('numerologia')">
+        <div class="theme-card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <span class="theme-card-label">Números &amp; Essência</span>
+        <div class="theme-card-name">Numerologia</div>
+        <span class="theme-card-phrase">"Seu nome e data de nascimento carregam uma frequência única que molda sua jornada."</span>
+        <div class="theme-card-footer">
+          Acessar
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <div class="theme-card" onclick="selectTab('tarot')" role="button" tabindex="0" onkeypress="if(event.key==='Enter')selectTab('tarot')">
+        <div class="theme-card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M12 7v4M10 9h4M9 16h6"/></svg>
+        </div>
+        <span class="theme-card-label">Arcanos &amp; Símbolos</span>
+        <div class="theme-card-name">Tarot do Dia</div>
+        <span class="theme-card-phrase">"As cartas não revelam o futuro — revelam as forças que já habitam em você."</span>
+        <div class="theme-card-footer">
+          Acessar
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <div class="theme-card" onclick="selectTab('arquetipo')" role="button" tabindex="0" onkeypress="if(event.key==='Enter')selectTab('arquetipo')">
+        <div class="theme-card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <span class="theme-card-label">Psicologia Simbólica</span>
+        <div class="theme-card-name">Arquétipo</div>
+        <span class="theme-card-phrase">"Conhecer seu arquétipo é encontrar o personagem que dirige sua história interior."</span>
+        <div class="theme-card-footer">
+          Acessar
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <div class="theme-card" onclick="selectTab('frequencia')" role="button" tabindex="0" onkeypress="if(event.key==='Enter')selectTab('frequencia')">
+        <div class="theme-card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <span class="theme-card-label">Vibração &amp; Energia</span>
+        <div class="theme-card-name">Frequência</div>
+        <span class="theme-card-phrase">"Tudo é vibração. Sintonizar sua frequência é o ato mais profundo de autocuidado."</span>
+        <div class="theme-card-footer">
+          Acessar
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+
+    </div>
+  </section>
 
   <!-- ══ NAVIGATION ════════════════════════════════════ -->
   <nav>
@@ -2354,6 +2702,24 @@ function finalizarFreq() {
 
 function resetFreq() { idxF = 0; respF = []; renderFreq(); }
 renderFreq();
+
+// ── Quote Rotator ─────────────────────────────────────
+(function() {
+  let current = 0;
+  const items = document.querySelectorAll('.quote-item');
+  const dots  = document.querySelectorAll('.quote-dot');
+  if (!items.length) return;
+
+  window.goToQuote = function(n) {
+    items[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = n;
+    items[current].classList.add('active');
+    dots[current].classList.add('active');
+  };
+
+  setInterval(() => window.goToQuote((current + 1) % items.length), 4600);
+})();
 </script>
 
 </body>
