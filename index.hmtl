@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
   <meta name="description" content="Portal Espiritual - Ferramentas de autoconhecimento como Leitura de Mão, Numerologia, Arquétipos e Frequência Hz">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Portal Espiritual | Autoconhecimento e Energia</title>
 
   <style>
@@ -278,7 +279,7 @@
   <h2>📸 Leitura de Mão</h2>
   <p style="margin-bottom: 15px; opacity: 0.8;">Envie uma foto nítida da sua palma para análise intuitiva</p>
   
-  <input type="file" id="handUpload" accept="image/*" capture="environment"/>
+  <input type="file" id="handUpload" accept="image/*"/>
   <button onclick="analisarMao()" id="btnAnalisarMao">✨ Analisar Palma</button>
   <div id="maoResultado" class="result"></div>
 </div>
@@ -307,22 +308,35 @@
 </div>
 
 <script>
-// Gerenciamento de abas com evento delegation
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    const tabId = this.getAttribute('data-tab');
-    openTab(tabId);
-    
-    // Atualizar estilo ativo dos botões
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
+// Garantir que o código só executa após o carregamento completo
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('Portal Espiritual carregado ✨');
+  
+  // Gerenciamento de abas
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const tabId = this.getAttribute('data-tab');
+      openTab(tabId);
+      
+      // Atualizar estilo ativo dos botões
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
   });
+  
+  // Inicializar quizzes
+  mostrarPerguntaArqu();
+  mostrarPerguntaFreq();
 });
 
 function openTab(tabId) {
   const tabs = document.querySelectorAll('.tab-content');
   tabs.forEach(tab => tab.classList.remove('active'));
-  document.getElementById(tabId).classList.add('active');
+  const targetTab = document.getElementById(tabId);
+  if (targetTab) {
+    targetTab.classList.add('active');
+  }
 }
 
 // Feedback visual
@@ -332,10 +346,14 @@ function showFeedback(message, isError = false) {
   feedback.textContent = message;
   feedback.style.background = isError ? '#f44336' : '#4caf50';
   document.body.appendChild(feedback);
-  setTimeout(() => feedback.remove(), 3000);
+  setTimeout(() => {
+    if (feedback && feedback.remove) {
+      feedback.remove();
+    }
+  }, 3000);
 }
 
-// Análise de mão melhorada
+// Análise de mão
 function analisarMao() {
   const fileInput = document.getElementById('handUpload');
   const file = fileInput.files[0];
@@ -351,29 +369,43 @@ function analisarMao() {
     return;
   }
   
-  btn.innerHTML = '<span class="loading"></span> Analisando...';
-  btn.disabled = true;
+  if (btn) {
+    btn.innerHTML = '<span class="loading"></span> Analisando...';
+    btn.disabled = true;
+  }
   
   setTimeout(() => {
     const reader = new FileReader();
     reader.onload = function(e) {
-      document.getElementById("maoResultado").innerHTML = `
-        <img src="${e.target.result}" alt="Foto da mão enviada">
-        <h3>🔍 Resultado da Leitura Energética</h3>
-        <p><strong>✋ Linha da Vida:</strong> Demonstra forte vitalidade emocional e conexão com propósito espiritual.</p>
-        <p><strong>🧠 Linha da Mente:</strong> Revela mente criativa, sensibilidade aguçada e intuição aflorada.</p>
-        <p><strong>❤️ Linha do Coração:</strong> Indica amor intenso, grande empatia e capacidade de cura emocional.</p>
-        <p><strong>✨ Mensagem espiritual:</strong> Você está em um momento de despertar, buscando significado mais profundo na vida. Confie na sua intuição!</p>
-      `;
-      btn.innerHTML = '✨ Analisar Palma';
-      btn.disabled = false;
+      const resultadoDiv = document.getElementById("maoResultado");
+      if (resultadoDiv) {
+        resultadoDiv.innerHTML = `
+          <img src="${e.target.result}" alt="Foto da mão enviada">
+          <h3>🔍 Resultado da Leitura Energética</h3>
+          <p><strong>✋ Linha da Vida:</strong> Demonstra forte vitalidade emocional e conexão com propósito espiritual.</p>
+          <p><strong>🧠 Linha da Mente:</strong> Revela mente criativa, sensibilidade aguçada e intuição aflorada.</p>
+          <p><strong>❤️ Linha do Coração:</strong> Indica amor intenso, grande empatia e capacidade de cura emocional.</p>
+          <p><strong>✨ Mensagem espiritual:</strong> Você está em um momento de despertar, buscando significado mais profundo na vida. Confie na sua intuição!</p>
+        `;
+      }
+      if (btn) {
+        btn.innerHTML = '✨ Analisar Palma';
+        btn.disabled = false;
+      }
       showFeedback('Análise concluída com sucesso!');
+    };
+    reader.onerror = function() {
+      showFeedback('Erro ao ler a imagem. Tente novamente.', true);
+      if (btn) {
+        btn.innerHTML = '✨ Analisar Palma';
+        btn.disabled = false;
+      }
     };
     reader.readAsDataURL(file);
   }, 500);
 }
 
-// Numerologia com cálculo real
+// Numerologia
 function gerarNumerologia() {
   const nome = document.getElementById("nome").value.trim();
   const data = document.getElementById("nascimento").value;
@@ -385,6 +417,11 @@ function gerarNumerologia() {
   
   // Cálculo do número de vida baseado na data
   const dataParts = data.split('-');
+  if (dataParts.length !== 3) {
+    showFeedback("Data inválida!", true);
+    return;
+  }
+  
   const ano = parseInt(dataParts[0]);
   const mes = parseInt(dataParts[1]);
   const dia = parseInt(dataParts[2]);
@@ -411,16 +448,19 @@ function gerarNumerologia() {
     22: "Grandes realizações, construção, visão prática e poder."
   };
   
-  document.getElementById("numerologiaResultado").innerHTML = `
-    <h3>🔢 Seu Número de Vida: ${numero}</h3>
-    <p><strong>Significado:</strong> ${significados[numero] || "Caminho único de evolução espiritual"}</p>
-    <p><strong>🎯 Propósito:</strong> Desenvolver ${numero === 1 ? 'autoconfiança' : numero === 2 ? 'harmonia nos relacionamentos' : numero === 3 ? 'criatividade e alegria' : numero === 4 ? 'estrutura sólida' : numero === 5 ? 'liberdade com responsabilidade' : numero === 6 ? 'amor incondicional' : numero === 7 ? 'conhecimento interior' : numero === 8 ? 'abundância equilibrada' : numero === 9 ? 'serviço ao próximo' : 'sua missão espiritual'}.</p>
-    <p><strong>🌟 Dica energética:</strong> ${numero === 7 || numero === 11 ? 'Invista em meditação e autoconhecimento.' : numero === 3 || numero === 5 ? 'Use sua criatividade e adaptabilidade.' : 'Confie no seu processo de crescimento.'}</p>
-  `;
+  const resultadoDiv = document.getElementById("numerologiaResultado");
+  if (resultadoDiv) {
+    resultadoDiv.innerHTML = `
+      <h3>🔢 Seu Número de Vida: ${numero}</h3>
+      <p><strong>Significado:</strong> ${significados[numero] || "Caminho único de evolução espiritual"}</p>
+      <p><strong>🎯 Propósito:</strong> Desenvolver ${numero === 1 ? 'autoconfiança' : numero === 2 ? 'harmonia nos relacionamentos' : numero === 3 ? 'criatividade e alegria' : numero === 4 ? 'estrutura sólida' : numero === 5 ? 'liberdade com responsabilidade' : numero === 6 ? 'amor incondicional' : numero === 7 ? 'conhecimento interior' : numero === 8 ? 'abundância equilibrada' : numero === 9 ? 'serviço ao próximo' : 'sua missão espiritual'}.</p>
+      <p><strong>🌟 Dica energética:</strong> ${numero === 7 || numero === 11 ? 'Invista em meditação e autoconhecimento.' : numero === 3 || numero === 5 ? 'Use sua criatividade e adaptabilidade.' : 'Confie no seu processo de crescimento.'}</p>
+    `;
+  }
   showFeedback(`Seu número de vida é ${numero}!`);
 }
 
-// Quiz de Arquétipo melhorado
+// Quiz de Arquétipo
 const perguntasArqu = [
   "Você prefere liderar ou observar?",
   "Você age pela emoção ou lógica?",
@@ -438,6 +478,9 @@ let atualArqu = 0;
 let respostasArqu = [];
 
 function mostrarPerguntaArqu() {
+  const container = document.getElementById("quizContainer");
+  if (!container) return;
+  
   if (atualArqu >= perguntasArqu.length) {
     finalizarArqu();
     return;
@@ -445,7 +488,7 @@ function mostrarPerguntaArqu() {
   
   const progresso = (atualArqu / perguntasArqu.length) * 100;
   
-  document.getElementById("quizContainer").innerHTML = `
+  container.innerHTML = `
     <div class="progress-bar">
       <div class="progress-fill" style="width: ${progresso}%"></div>
     </div>
@@ -460,29 +503,32 @@ function mostrarPerguntaArqu() {
   `;
 }
 
-function responderArqu(resp) {
+window.responderArqu = function(resp) {
   respostasArqu.push(resp);
   atualArqu++;
   mostrarPerguntaArqu();
-}
+};
 
 function finalizarArqu() {
-  document.getElementById("quizContainer").innerHTML = `
-    <div class="result">
-      <h2>🎭 Seus Arquétipos Dominantes</h2>
-      <h3>📚 O Sábio</h3>
-      <p>Busca conhecimento profundo, entendimento emocional e evolução constante. Você valoriza a verdade e a sabedoria interior.</p>
-      <h3>👑 O Governante</h3>
-      <p>Tendência natural à liderança, responsabilidade e organização. Inspira confiança e cria estruturas sólidas.</p>
-      <h3>✨ O Mago</h3>
-      <p>Forte conexão espiritual, criatividade elevada e grande intuição. Você manifesta realidade através da intenção.</p>
-      <p><strong>💫 Mensagem:</strong> Seus arquétipos mostram equilíbrio entre poder, sabedoria e transformação.</p>
-    </div>
-  `;
+  const container = document.getElementById("quizContainer");
+  if (container) {
+    container.innerHTML = `
+      <div class="result">
+        <h2>🎭 Seus Arquétipos Dominantes</h2>
+        <h3>📚 O Sábio</h3>
+        <p>Busca conhecimento profundo, entendimento emocional e evolução constante. Você valoriza a verdade e a sabedoria interior.</p>
+        <h3>👑 O Governante</h3>
+        <p>Tendência natural à liderança, responsabilidade e organização. Inspira confiança e cria estruturas sólidas.</p>
+        <h3>✨ O Mago</h3>
+        <p>Forte conexão espiritual, criatividade elevada e grande intuição. Você manifesta realidade através da intenção.</p>
+        <p><strong>💫 Mensagem:</strong> Seus arquétipos mostram equilíbrio entre poder, sabedoria e transformação.</p>
+      </div>
+    `;
+  }
   showFeedback('Quiz concluído! Descubra seus arquétipos acima.');
 }
 
-// Frequência melhorada
+// Frequência
 const perguntasFreq = [
   "Você sente paz interior frequentemente?",
   "Você pratica meditação ou momentos de silêncio?",
@@ -498,6 +544,9 @@ let atualFreq = 0;
 let respostasFreq = [];
 
 function mostrarPerguntaFreq() {
+  const container = document.getElementById("freqContainer");
+  if (!container) return;
+  
   if (atualFreq >= perguntasFreq.length) {
     finalizarFreq();
     return;
@@ -505,7 +554,7 @@ function mostrarPerguntaFreq() {
   
   const progresso = (atualFreq / perguntasFreq.length) * 100;
   
-  document.getElementById("freqContainer").innerHTML = `
+  container.innerHTML = `
     <div class="progress-bar">
       <div class="progress-fill" style="width: ${progresso}%"></div>
     </div>
@@ -521,11 +570,11 @@ function mostrarPerguntaFreq() {
   `;
 }
 
-function responderFreq(valor) {
+window.responderFreq = function(valor) {
   respostasFreq.push(valor);
   atualFreq++;
   mostrarPerguntaFreq();
-}
+};
 
 function finalizarFreq() {
   let total = respostasFreq.reduce((a, b) => a + b, 0);
@@ -538,25 +587,28 @@ function finalizarFreq() {
   else if (hz >= 130) interpretacao = "Boa frequência. Continue cultivando práticas positivas.";
   else interpretacao = "Frequência média. Há espaço para elevação energética.";
   
-  document.getElementById("freqContainer").innerHTML = `
-    <div class="result">
-      <h2>⚡ Sua Frequência Vibracional</h2>
-      <h1 style="font-size: 48px; text-align: center;">${hz} Hz</h1>
-      <p>${interpretacao}</p>
-      <p><strong>📈 Nível energético:</strong> ${porcentagem.toFixed(0)}% de equilíbrio</p>
-      <h3>🌿 Para elevar sua frequência:</h3>
-      <ul>
-        <li>🧘 Medite 10 minutos diários</li>
-        <li>💖 Pratique gratidão ao acordar</li>
-        <li>🌞 Tome sol pela manhã</li>
-        <li>🍃 Conecte-se com a natureza</li>
-        <li>🎵 Ouça música em 528 Hz ou 432 Hz</li>
-      </ul>
-      <canvas id="grafico" width="500" height="250" style="max-width:100%; height:auto"></canvas>
-    </div>
-  `;
-  
-  desenharGraficoMelhorado(hz);
+  const container = document.getElementById("freqContainer");
+  if (container) {
+    container.innerHTML = `
+      <div class="result">
+        <h2>⚡ Sua Frequência Vibracional</h2>
+        <h1 style="font-size: 48px; text-align: center;">${hz} Hz</h1>
+        <p>${interpretacao}</p>
+        <p><strong>📈 Nível energético:</strong> ${porcentagem.toFixed(0)}% de equilíbrio</p>
+        <h3>🌿 Para elevar sua frequência:</h3>
+        <ul>
+          <li>🧘 Medite 10 minutos diários</li>
+          <li>💖 Pratique gratidão ao acordar</li>
+          <li>🌞 Tome sol pela manhã</li>
+          <li>🍃 Conecte-se com a natureza</li>
+          <li>🎵 Ouça música em 528 Hz ou 432 Hz</li>
+        </ul>
+        <canvas id="grafico" width="500" height="250" style="max-width:100%; height:auto"></canvas>
+      </div>
+    `;
+    
+    desenharGraficoMelhorado(hz);
+  }
   showFeedback(`Sua frequência é de ${hz} Hz!`);
 }
 
@@ -576,7 +628,6 @@ function desenharGraficoMelhorado(hz) {
   
   // Barra
   let altura = Math.min(180, (hz / 300) * 180);
-  ctx.fillStyle = "linear-gradient(90deg, #6a11cb, #2575fc)";
   const grad = ctx.createLinearGradient(50, 200 - altura, 50, 200);
   grad.addColorStop(0, "#6a11cb");
   grad.addColorStop(1, "#2575fc");
@@ -601,15 +652,6 @@ function desenharGraficoMelhorado(hz) {
   ctx.font = "bold 16px Arial";
   ctx.fillText(`${hz} Hz`, 60, 190 - altura);
 }
-
-// Inicialização
-mostrarPerguntaArqu();
-mostrarPerguntaFreq();
-
-// Limpeza de cache e prevenção de problemas
-window.addEventListener('load', () => {
-  console.log('Portal Espiritual carregado ✨');
-});
 </script>
 
 </body>
