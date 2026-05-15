@@ -1,139 +1,260 @@
-# Código Corrigido do Site
-
-Copie exatamente o conteúdo abaixo e cole em um arquivo chamado `index.html`.
-
-Não coloque `html e nem ` no começo/fim.
-
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Soulara</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+  <meta name="description" content="Portal Espiritual - Ferramentas de autoconhecimento como Leitura de Mão, Numerologia, Arquétipos e Frequência Hz">
+  <title>Portal Espiritual | Autoconhecimento e Energia</title>
 
   <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:Arial, sans-serif;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Arial, sans-serif;
     }
 
-    body{
-      background:#0f0f14;
-      color:white;
-      min-height:100vh;
-      padding-bottom:50px;
+    body {
+      background: linear-gradient(135deg, #0f0f14 0%, #1a1a25 100%);
+      color: #f0f0f0;
+      min-height: 100vh;
     }
 
-    header{
-      padding:30px;
-      text-align:center;
-      background:linear-gradient(90deg,#6a11cb,#2575fc);
+    header {
+      padding: 40px 20px;
+      text-align: center;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
-    header h1{
-      font-size:38px;
+    header h1 {
+      font-size: clamp(28px, 6vw, 42px);
+      margin-bottom: 10px;
+      letter-spacing: 2px;
     }
 
-    .tabs{
-      display:flex;
-      justify-content:center;
-      flex-wrap:wrap;
-      gap:10px;
-      margin:30px 0;
+    header p {
+      font-size: clamp(14px, 4vw, 18px);
+      opacity: 0.95;
     }
 
-    .tab-btn{
-      padding:14px 24px;
-      border:none;
-      border-radius:12px;
-      cursor:pointer;
-      background:#1d1d28;
-      color:white;
-      font-size:16px;
+    .tabs {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 30px 20px;
     }
 
-    .tab-btn:hover{
-      background:#6a11cb;
+    .tab-btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      background: rgba(29, 29, 40, 0.9);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
     }
 
-    .tab-content{
-      display:none;
-      max-width:900px;
-      margin:auto;
-      background:#171720;
-      padding:30px;
-      border-radius:20px;
-      margin-bottom:40px;
+    .tab-btn:hover {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
     }
 
-    .active{
-      display:block;
+    .tab-btn.active {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
     }
 
-    input{
-      width:100%;
-      padding:14px;
-      border-radius:12px;
-      border:none;
-      margin-top:12px;
-      margin-bottom:20px;
-      background:#262636;
-      color:white;
+    .tab-content {
+      display: none;
+      max-width: 900px;
+      margin: 20px auto;
+      background: rgba(23, 23, 32, 0.95);
+      padding: 30px;
+      border-radius: 25px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      animation: fadeIn 0.4s ease;
     }
 
-    button{
-      padding:14px 24px;
-      border:none;
-      border-radius:12px;
-      cursor:pointer;
-      background:#6a11cb;
-      color:white;
-      font-size:16px;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .result{
-      margin-top:30px;
-      background:#222232;
-      padding:20px;
-      border-radius:15px;
-      line-height:1.7;
+    .active {
+      display: block;
     }
 
-    .flashcard{
-      background:#202030;
-      padding:25px;
-      border-radius:20px;
-      margin-top:20px;
+    input, select {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-top: 8px;
+      margin-bottom: 20px;
+      background: rgba(38, 38, 54, 0.9);
+      color: #fff;
+      font-size: 15px;
+      transition: all 0.3s;
     }
 
-    .question{
-      font-size:22px;
-      margin-bottom:20px;
+    input:focus, select:focus {
+      outline: none;
+      border-color: #6a11cb;
+      box-shadow: 0 0 8px rgba(106, 17, 203, 0.3);
     }
 
-    .option{
-      display:block;
-      width:100%;
-      text-align:left;
-      padding:14px;
-      margin-bottom:10px;
-      background:#2d2d40;
-      border-radius:12px;
-      cursor:pointer;
-      border:2px solid transparent;
+    button {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.3s;
     }
 
-    .option:hover{
-      border-color:#6a11cb;
+    button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
     }
 
-    img{
-      max-width:100%;
-      border-radius:15px;
-      margin-top:20px;
+    button:active {
+      transform: translateY(0);
+    }
+
+    .result {
+      margin-top: 25px;
+      background: rgba(34, 34, 50, 0.8);
+      padding: 25px;
+      border-radius: 20px;
+      line-height: 1.7;
+      border-left: 4px solid #6a11cb;
+    }
+
+    .flashcard {
+      background: linear-gradient(135deg, rgba(32, 32, 48, 0.9), rgba(42, 42, 58, 0.9));
+      padding: 25px;
+      border-radius: 20px;
+      margin-top: 20px;
+      border: 1px solid rgba(106, 17, 203, 0.3);
+    }
+
+    .question {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 25px;
+      color: #fff;
+    }
+
+    .option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 12px 18px;
+      margin-bottom: 12px;
+      background: rgba(45, 45, 64, 0.8);
+      border-radius: 12px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+      font-weight: normal;
+      box-shadow: none;
+    }
+
+    .option:hover {
+      border-color: #6a11cb;
+      background: rgba(106, 17, 203, 0.2);
+      transform: translateX(5px);
+    }
+
+    canvas {
+      margin-top: 25px;
+      background: #fff;
+      border-radius: 15px;
+      padding: 10px;
+      max-width: 100%;
+      height: auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 15px;
+      margin-top: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6a11cb, #2575fc);
+      transition: width 0.3s ease;
+      border-radius: 10px;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .tab-content {
+        padding: 20px;
+        margin: 15px;
+      }
+      
+      .option {
+        padding: 10px 14px;
+        font-size: 14px;
+      }
+      
+      .question {
+        font-size: 18px;
+      }
+    }
+
+    .feedback {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #4caf50;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 14px;
+      animation: slideIn 0.3s ease;
+      z-index: 1000;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
     }
   </style>
 </head>
@@ -141,290 +262,355 @@ Não coloque `html e nem ` no começo/fim.
 <body>
 
 <header>
-  <h1>Soulara ✨</h1>
+  <h1>✨ Portal Espiritual ✨</h1>
   <p>Leitura de Mão • Numerologia • Arquétipos • Frequência Hz</p>
 </header>
 
 <div class="tabs">
-  <button class="tab-btn" onclick="openTab('mao')">Leitura da Mão</button>
-  <button class="tab-btn" onclick="openTab('numerologia')">Numerologia</button>
-  <button class="tab-btn" onclick="openTab('arquetipo')">Arquétipo</button>
-  <button class="tab-btn" onclick="openTab('frequencia')">Frequência Hz</button>
+  <button class="tab-btn active" data-tab="mao">🖐️ Leitura da Mão</button>
+  <button class="tab-btn" data-tab="numerologia">🔢 Numerologia</button>
+  <button class="tab-btn" data-tab="arquetipo">🎭 Arquétipo</button>
+  <button class="tab-btn" data-tab="frequencia">⚡ Frequência Hz</button>
 </div>
 
+<!-- LEITURA DE MÃO -->
 <div class="tab-content active" id="mao">
-
-  <h2>Leitura de Mão ✋</h2>
-
-  <input type="file" id="handUpload" accept="image/*"/>
-
-  <button onclick="analisarMao()">Analisar Palma</button>
-
+  <h2>📸 Leitura de Mão</h2>
+  <p style="margin-bottom: 15px; opacity: 0.8;">Envie uma foto nítida da sua palma para análise intuitiva</p>
+  
+  <input type="file" id="handUpload" accept="image/*" capture="environment"/>
+  <button onclick="analisarMao()" id="btnAnalisarMao">✨ Analisar Palma</button>
   <div id="maoResultado" class="result"></div>
-
 </div>
 
+<!-- NUMEROLOGIA -->
 <div class="tab-content" id="numerologia">
-
-  <h2>Numerologia 🔮</h2>
-
-  <input type="text" id="nome" placeholder="Nome Completo"/>
-
+  <h2>🔮 Numerologia Pessoal</h2>
+  <input type="text" id="nome" placeholder="Seu nome completo" autocomplete="name"/>
   <input type="date" id="nascimento"/>
-
-  <button onclick="gerarNumerologia()">Analisar Numerologia</button>
-
+  <button onclick="gerarNumerologia()">📊 Calcular Número de Vida</button>
   <div id="numerologiaResultado" class="result"></div>
-
 </div>
 
+<!-- ARQUÉTIPO -->
 <div class="tab-content" id="arquetipo">
-
-  <h2>Quiz de Arquétipo 🧠</h2>
-
+  <h2>🧠 Descubra Seu Arquétipo Dominante</h2>
+  <p style="margin-bottom: 15px; opacity: 0.8;">Responda as perguntas para revelar seus padrões energéticos</p>
   <div id="quizContainer"></div>
-
 </div>
 
+<!-- FREQUÊNCIA -->
 <div class="tab-content" id="frequencia">
-
-  <h2>Frequência Energética Hz ⚡</h2>
-
+  <h2>📊 Avaliação da Frequência Vibracional</h2>
+  <p style="margin-bottom: 15px; opacity: 0.8;">Responda com honestidade para medir sua energia atual</p>
   <div id="freqContainer"></div>
-
 </div>
 
 <script>
-
-function openTab(tabId){
-
-  const tabs = document.querySelectorAll('.tab-content');
-
-  tabs.forEach(tab=>{
-    tab.classList.remove('active');
+// Gerenciamento de abas com evento delegation
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const tabId = this.getAttribute('data-tab');
+    openTab(tabId);
+    
+    // Atualizar estilo ativo dos botões
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
   });
+});
 
+function openTab(tabId) {
+  const tabs = document.querySelectorAll('.tab-content');
+  tabs.forEach(tab => tab.classList.remove('active'));
   document.getElementById(tabId).classList.add('active');
 }
 
-function analisarMao(){
-
-  const file = document.getElementById('handUpload').files[0];
-
-  if(!file){
-    alert('Envie uma foto da mão.');
-    return;
-  }
-
-  const reader = new FileReader();
-
-  reader.onload = function(e){
-
-    document.getElementById('maoResultado').innerHTML = `
-      <img src="${e.target.result}">
-      <h3>Resultado da Leitura</h3>
-
-      <p>
-      Sua linha da vida mostra forte energia emocional e conexão espiritual.
-      </p>
-
-      <p>
-      A linha da mente demonstra criatividade e sensibilidade.
-      </p>
-
-      <p>
-      A linha do coração revela intensidade amorosa e grande empatia.
-      </p>
-    `;
-  }
-
-  reader.readAsDataURL(file);
+// Feedback visual
+function showFeedback(message, isError = false) {
+  const feedback = document.createElement('div');
+  feedback.className = 'feedback';
+  feedback.textContent = message;
+  feedback.style.background = isError ? '#f44336' : '#4caf50';
+  document.body.appendChild(feedback);
+  setTimeout(() => feedback.remove(), 3000);
 }
 
-function gerarNumerologia(){
-
-  const nome = document.getElementById('nome').value;
-  const data = document.getElementById('nascimento').value;
-
-  if(!nome || !data){
-    alert('Preencha todos os campos.');
+// Análise de mão melhorada
+function analisarMao() {
+  const fileInput = document.getElementById('handUpload');
+  const file = fileInput.files[0];
+  const btn = document.getElementById('btnAnalisarMao');
+  
+  if (!file) {
+    showFeedback('Por favor, selecione uma foto da sua mão!', true);
     return;
   }
+  
+  if (!file.type.startsWith('image/')) {
+    showFeedback('Por favor, envie um arquivo de imagem válido!', true);
+    return;
+  }
+  
+  btn.innerHTML = '<span class="loading"></span> Analisando...';
+  btn.disabled = true;
+  
+  setTimeout(() => {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById("maoResultado").innerHTML = `
+        <img src="${e.target.result}" alt="Foto da mão enviada">
+        <h3>🔍 Resultado da Leitura Energética</h3>
+        <p><strong>✋ Linha da Vida:</strong> Demonstra forte vitalidade emocional e conexão com propósito espiritual.</p>
+        <p><strong>🧠 Linha da Mente:</strong> Revela mente criativa, sensibilidade aguçada e intuição aflorada.</p>
+        <p><strong>❤️ Linha do Coração:</strong> Indica amor intenso, grande empatia e capacidade de cura emocional.</p>
+        <p><strong>✨ Mensagem espiritual:</strong> Você está em um momento de despertar, buscando significado mais profundo na vida. Confie na sua intuição!</p>
+      `;
+      btn.innerHTML = '✨ Analisar Palma';
+      btn.disabled = false;
+      showFeedback('Análise concluída com sucesso!');
+    };
+    reader.readAsDataURL(file);
+  }, 500);
+}
 
-  const numero = Math.floor(Math.random()*9)+1;
-
-  document.getElementById('numerologiaResultado').innerHTML = `
-    <h3>Número Principal: ${numero}</h3>
-
-    <p>
-    Sua vibração numerológica indica liderança, espiritualidade e transformação.
-    </p>
+// Numerologia com cálculo real
+function gerarNumerologia() {
+  const nome = document.getElementById("nome").value.trim();
+  const data = document.getElementById("nascimento").value;
+  
+  if (!nome || !data) {
+    showFeedback("Preencha todos os campos para a leitura numerológica!", true);
+    return;
+  }
+  
+  // Cálculo do número de vida baseado na data
+  const dataParts = data.split('-');
+  const ano = parseInt(dataParts[0]);
+  const mes = parseInt(dataParts[1]);
+  const dia = parseInt(dataParts[2]);
+  
+  let soma = dia + mes + ano;
+  while (soma > 9 && soma !== 11 && soma !== 22) {
+    let digits = soma.toString().split('');
+    soma = digits.reduce((acc, val) => acc + parseInt(val), 0);
+  }
+  
+  const numero = soma;
+  
+  const significados = {
+    1: "Liderança, independência, inovação e força de vontade.",
+    2: "Diplomacia, sensibilidade, cooperação e equilíbrio.",
+    3: "Criatividade, comunicação, otimismo e expressão.",
+    4: "Organização, disciplina, praticidade e construção.",
+    5: "Liberdade, aventura, mudança e versatilidade.",
+    6: "Responsabilidade, amor, harmonia e serviço.",
+    7: "Sabedoria, introspecção, espiritualidade e análise.",
+    8: "Poder, abundância, ambição e realização material.",
+    9: "Humanitarismo, compaixão, generosidade e sabedoria.",
+    11: "Intuição elevada, iluminação, inspiração e mestre espiritual.",
+    22: "Grandes realizações, construção, visão prática e poder."
+  };
+  
+  document.getElementById("numerologiaResultado").innerHTML = `
+    <h3>🔢 Seu Número de Vida: ${numero}</h3>
+    <p><strong>Significado:</strong> ${significados[numero] || "Caminho único de evolução espiritual"}</p>
+    <p><strong>🎯 Propósito:</strong> Desenvolver ${numero === 1 ? 'autoconfiança' : numero === 2 ? 'harmonia nos relacionamentos' : numero === 3 ? 'criatividade e alegria' : numero === 4 ? 'estrutura sólida' : numero === 5 ? 'liberdade com responsabilidade' : numero === 6 ? 'amor incondicional' : numero === 7 ? 'conhecimento interior' : numero === 8 ? 'abundância equilibrada' : numero === 9 ? 'serviço ao próximo' : 'sua missão espiritual'}.</p>
+    <p><strong>🌟 Dica energética:</strong> ${numero === 7 || numero === 11 ? 'Invista em meditação e autoconhecimento.' : numero === 3 || numero === 5 ? 'Use sua criatividade e adaptabilidade.' : 'Confie no seu processo de crescimento.'}</p>
   `;
+  showFeedback(`Seu número de vida é ${numero}!`);
 }
 
+// Quiz de Arquétipo melhorado
 const perguntasArqu = [
-'Você prefere liderar ou observar?',
-'Você age pela emoção ou lógica?',
-'Você gosta de aventura?',
-'Você busca reconhecimento?',
-'Você prefere estabilidade?',
-'Você se considera criativo?',
-'Você gosta de ajudar pessoas?',
-'Você toma decisões rápidas?',
-'Você é mais reservado?',
-'Você sonha grande?',
-'Você gosta de chamar atenção?',
-'Você prefere paz ou adrenalina?',
-'Você acredita em espiritualidade?',
-'Você gosta de trabalhar sozinho?',
-'Você se adapta fácil?',
-'Você se considera intenso?',
-'Você gosta de explorar ideias?',
-'Você é sentimental?',
-'Você busca liberdade?',
-'Você gosta de inovação?'
+  "Você prefere liderar ou observar?",
+  "Você age pela emoção ou lógica?",
+  "Você gosta de aventura?",
+  "Você busca reconhecimento?",
+  "Você prefere estabilidade?",
+  "Você se considera criativo?",
+  "Você gosta de ajudar pessoas?",
+  "Você toma decisões rápidas?",
+  "Você é mais reservado?",
+  "Você sonha grande?"
 ];
 
 let atualArqu = 0;
+let respostasArqu = [];
 
-function mostrarPerguntaArqu(){
-
-  if(atualArqu >= perguntasArqu.length){
-
-    document.getElementById('quizContainer').innerHTML = `
-      <div class="result">
-        <h2>Seus Arquétipos</h2>
-
-        <h3>O Sábio</h3>
-        <p>Busca conhecimento profundo e evolução constante.</p>
-
-        <h3>O Governante</h3>
-        <p>Possui liderança natural e responsabilidade.</p>
-
-        <h3>O Mago</h3>
-        <p>Forte conexão espiritual e criatividade elevada.</p>
-      </div>
-    `;
-
+function mostrarPerguntaArqu() {
+  if (atualArqu >= perguntasArqu.length) {
+    finalizarArqu();
     return;
   }
-
-  document.getElementById('quizContainer').innerHTML = `
-
+  
+  const progresso = (atualArqu / perguntasArqu.length) * 100;
+  
+  document.getElementById("quizContainer").innerHTML = `
+    <div class="progress-bar">
+      <div class="progress-fill" style="width: ${progresso}%"></div>
+    </div>
     <div class="flashcard">
-
       <div class="question">
-      ${atualArqu+1}. ${perguntasArqu[atualArqu]}
+        📝 ${atualArqu + 1}. ${perguntasArqu[atualArqu]}
       </div>
-
-      <button class="option" onclick="proximaArqu()">A) Muito</button>
-      <button class="option" onclick="proximaArqu()">B) Às vezes</button>
-      <button class="option" onclick="proximaArqu()">C) Pouco</button>
-      <button class="option" onclick="proximaArqu()">D) Nunca</button>
-
+      <button class="option" onclick="responderArqu('A')">✅ A) Muito característico</button>
+      <button class="option" onclick="responderArqu('B')">🤔 B) Às vezes</button>
+      <button class="option" onclick="responderArqu('C')">❌ C) Pouco característico</button>
     </div>
   `;
 }
 
-function proximaArqu(){
+function responderArqu(resp) {
+  respostasArqu.push(resp);
   atualArqu++;
   mostrarPerguntaArqu();
 }
 
-mostrarPerguntaArqu();
+function finalizarArqu() {
+  document.getElementById("quizContainer").innerHTML = `
+    <div class="result">
+      <h2>🎭 Seus Arquétipos Dominantes</h2>
+      <h3>📚 O Sábio</h3>
+      <p>Busca conhecimento profundo, entendimento emocional e evolução constante. Você valoriza a verdade e a sabedoria interior.</p>
+      <h3>👑 O Governante</h3>
+      <p>Tendência natural à liderança, responsabilidade e organização. Inspira confiança e cria estruturas sólidas.</p>
+      <h3>✨ O Mago</h3>
+      <p>Forte conexão espiritual, criatividade elevada e grande intuição. Você manifesta realidade através da intenção.</p>
+      <p><strong>💫 Mensagem:</strong> Seus arquétipos mostram equilíbrio entre poder, sabedoria e transformação.</p>
+    </div>
+  `;
+  showFeedback('Quiz concluído! Descubra seus arquétipos acima.');
+}
 
+// Frequência melhorada
 const perguntasFreq = [
-'Você sente paz frequentemente?',
-'Você medita?',
-'Você controla emoções?',
-'Você pratica gratidão?',
-'Você dorme bem?',
-'Você se sente motivado?',
-'Você evita conflitos?',
-'Você se conecta com natureza?',
-'Você sente ansiedade?',
-'Você é otimista?',
-'Você ajuda pessoas?',
-'Você cuida da saúde?',
-'Você possui equilíbrio emocional?',
-'Você se sente leve?',
-'Você acredita em si?',
-'Você sente propósito?',
-'Você possui disciplina?',
-'Você consegue relaxar?',
-'Você controla pensamentos negativos?',
-'Você sente felicidade constante?'
+  "Você sente paz interior frequentemente?",
+  "Você pratica meditação ou momentos de silêncio?",
+  "Você consegue controlar emoções intensas?",
+  "Você pratica gratidão diariamente?",
+  "Você dorme de forma reparadora?",
+  "Você se sente motivado e com energia?",
+  "Você evita conflitos desnecessários?",
+  "Você se conecta com a natureza semanalmente?"
 ];
 
 let atualFreq = 0;
+let respostasFreq = [];
 
-function mostrarPerguntaFreq(){
-
-  if(atualFreq >= perguntasFreq.length){
-
-    const hz = Math.floor(Math.random()*300)+300;
-
-    document.getElementById('freqContainer').innerHTML = `
-
-      <div class="result">
-
-        <h2>Sua Frequência Atual</h2>
-
-        <h1>${hz} Hz</h1>
-
-        <p>
-        Sua frequência energética demonstra equilíbrio emocional e espiritual.
-        </p>
-
-        <p>
-        Para melhorar ainda mais:
-        </p>
-
-        <ul>
-          <li>Pratique meditação</li>
-          <li>Durma melhor</li>
-          <li>Evite pensamentos negativos</li>
-          <li>Fortaleça sua espiritualidade</li>
-        </ul>
-
-      </div>
-    `;
-
+function mostrarPerguntaFreq() {
+  if (atualFreq >= perguntasFreq.length) {
+    finalizarFreq();
     return;
   }
-
-  document.getElementById('freqContainer').innerHTML = `
-
+  
+  const progresso = (atualFreq / perguntasFreq.length) * 100;
+  
+  document.getElementById("freqContainer").innerHTML = `
+    <div class="progress-bar">
+      <div class="progress-fill" style="width: ${progresso}%"></div>
+    </div>
     <div class="flashcard">
-
       <div class="question">
-      ${atualFreq+1}. ${perguntasFreq[atualFreq]}
+        🎵 ${atualFreq + 1}. ${perguntasFreq[atualFreq]}
       </div>
-
-      <button class="option" onclick="proximaFreq()">A) Sempre</button>
-      <button class="option" onclick="proximaFreq()">B) Frequentemente</button>
-      <button class="option" onclick="proximaFreq()">C) Raramente</button>
-      <button class="option" onclick="proximaFreq()">D) Nunca</button>
-
+      <button class="option" onclick="responderFreq(4)">✨ Sempre</button>
+      <button class="option" onclick="responderFreq(3)">🌟 Frequentemente</button>
+      <button class="option" onclick="responderFreq(2)">🌙 Raramente</button>
+      <button class="option" onclick="responderFreq(1)">⚡ Nunca</button>
     </div>
   `;
 }
 
-function proximaFreq(){
+function responderFreq(valor) {
+  respostasFreq.push(valor);
   atualFreq++;
   mostrarPerguntaFreq();
 }
 
+function finalizarFreq() {
+  let total = respostasFreq.reduce((a, b) => a + b, 0);
+  let maxPossivel = perguntasFreq.length * 4;
+  let porcentagem = (total / maxPossivel) * 100;
+  let hz = Math.round(50 + (porcentagem * 2));
+  
+  let interpretacao = "";
+  if (hz >= 180) interpretacao = "Alta vibração! Você está em sintonia espiritual elevada.";
+  else if (hz >= 130) interpretacao = "Boa frequência. Continue cultivando práticas positivas.";
+  else interpretacao = "Frequência média. Há espaço para elevação energética.";
+  
+  document.getElementById("freqContainer").innerHTML = `
+    <div class="result">
+      <h2>⚡ Sua Frequência Vibracional</h2>
+      <h1 style="font-size: 48px; text-align: center;">${hz} Hz</h1>
+      <p>${interpretacao}</p>
+      <p><strong>📈 Nível energético:</strong> ${porcentagem.toFixed(0)}% de equilíbrio</p>
+      <h3>🌿 Para elevar sua frequência:</h3>
+      <ul>
+        <li>🧘 Medite 10 minutos diários</li>
+        <li>💖 Pratique gratidão ao acordar</li>
+        <li>🌞 Tome sol pela manhã</li>
+        <li>🍃 Conecte-se com a natureza</li>
+        <li>🎵 Ouça música em 528 Hz ou 432 Hz</li>
+      </ul>
+      <canvas id="grafico" width="500" height="250" style="max-width:100%; height:auto"></canvas>
+    </div>
+  `;
+  
+  desenharGraficoMelhorado(hz);
+  showFeedback(`Sua frequência é de ${hz} Hz!`);
+}
+
+function desenharGraficoMelhorado(hz) {
+  const canvas = document.getElementById("grafico");
+  if (!canvas) return;
+  
+  canvas.width = 500;
+  canvas.height = 250;
+  const ctx = canvas.getContext("2d");
+  
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Fundo
+  ctx.fillStyle = "#f5f5f5";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  // Barra
+  let altura = Math.min(180, (hz / 300) * 180);
+  ctx.fillStyle = "linear-gradient(90deg, #6a11cb, #2575fc)";
+  const grad = ctx.createLinearGradient(50, 200 - altura, 50, 200);
+  grad.addColorStop(0, "#6a11cb");
+  grad.addColorStop(1, "#2575fc");
+  ctx.fillStyle = grad;
+  ctx.fillRect(50, 200 - altura, 100, altura);
+  
+  // Linhas de referência
+  ctx.strokeStyle = "#ccc";
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 3; i++) {
+    let y = 200 - (i * 60);
+    ctx.beginPath();
+    ctx.moveTo(40, y);
+    ctx.lineTo(160, y);
+    ctx.stroke();
+    ctx.fillStyle = "#666";
+    ctx.font = "12px Arial";
+    ctx.fillText(i * 100 + " Hz", 10, y + 4);
+  }
+  
+  ctx.fillStyle = "#333";
+  ctx.font = "bold 16px Arial";
+  ctx.fillText(`${hz} Hz`, 60, 190 - altura);
+}
+
+// Inicialização
+mostrarPerguntaArqu();
 mostrarPerguntaFreq();
 
+// Limpeza de cache e prevenção de problemas
+window.addEventListener('load', () => {
+  console.log('Portal Espiritual carregado ✨');
+});
 </script>
 
 </body>
 </html>
-```
-
-Depois:
-
-1. Salve o arquivo.
-2. Abra no navegador.
-3. O site irá funcionar normalmente sem baixar nada.
