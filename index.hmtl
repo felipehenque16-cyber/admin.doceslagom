@@ -1,15 +1,16 @@
 
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Cosmo Interior — Portal de Autoconhecimento: Leitura de Mão, Numerologia, Arquétipos e Frequência Vibracional" />
+  <meta name="description" content="Cosmo Interior — Experiência premium de autoconhecimento com tarot, numerologia, leitura da mão, arquétipos e frequência vibracional." />
   <meta name="theme-color" content="#07070f" />
   <meta property="og:title" content="Cosmo Interior | Portal de Autoconhecimento" />
-  <meta property="og:description" content="Ferramentas de autoconhecimento: Leitura de Mão, Numerologia, Arquétipos e Frequência Vibracional" />
-  <title>Cosmo Interior | Portal de Autoconhecimento</title>
+  <meta property="og:description" content="Uma experiência moderna e profissional para explorar tarot, numerologia, arquétipos, leitura da mão e frequência vibracional." />
+  <title>Cosmo Interior | Experiência Premium de Autoconhecimento</title>
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%2307070f'/%3E%3Ccircle cx='50' cy='50' r='38' fill='none' stroke='%23c4a044' stroke-width='4'/%3E%3Ccircle cx='50' cy='50' r='8' fill='%23c4a044'/%3E%3Cline x1='50' y1='12' x2='50' y2='88' stroke='%23c4a044' stroke-width='1.5' opacity='.35'/%3E%3Cline x1='12' y1='50' x2='88' y2='50' stroke='%23c4a044' stroke-width='1.5' opacity='.35'/%3E%3C/svg%3E" />
 
@@ -712,13 +713,13 @@
     /* ─── TAROT ─────────────────────────────────────────── */
     .tarot-spread {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+      gap: 14px;
       align-items: stretch;
     }
 
     .tarot-card {
-      min-height: 300px;
+      min-height: 218px;
       border: 0;
       background: transparent;
       perspective: 1200px;
@@ -731,12 +732,13 @@
     .tarot-card-inner {
       position: relative;
       width: 100%;
-      min-height: 300px;
+      min-height: 218px;
       transform-style: preserve-3d;
       transition: transform .7s var(--ease);
     }
 
     .tarot-card.revealed .tarot-card-inner { transform: rotateY(180deg); }
+    .tarot-card.locked { cursor: not-allowed; opacity: .4; }
 
     .tarot-face {
       position: absolute;
@@ -792,7 +794,7 @@
       flex-direction: column;
       justify-content: space-between;
       gap: 18px;
-      padding: 24px;
+      padding: 18px;
       background: linear-gradient(165deg, rgba(28,28,64,.98), rgba(12,12,30,.98));
     }
 
@@ -825,7 +827,7 @@
     .tarot-name {
       display: block;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 25px;
+      font-size: 21px;
       line-height: 1.12;
       color: var(--gold-lt);
       position: relative;
@@ -836,10 +838,35 @@
     .tarot-meaning {
       display: block;
       color: var(--text-muted);
-      font-size: 13.5px;
-      line-height: 1.7;
+      font-size: 12.5px;
+      line-height: 1.55;
       position: relative;
       z-index: 1;
+    }
+
+    .tarot-reading {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .tarot-reading-item {
+      padding: 14px 16px;
+      background: rgba(22,22,52,.62);
+      border: 1px solid var(--border);
+      border-radius: var(--r-card);
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .tarot-reading-item strong {
+      display: block;
+      color: var(--gold-lt);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 400;
+      margin-bottom: 3px;
     }
 
     .tarot-status {
@@ -1193,7 +1220,7 @@
       .tab-btn svg { width: 11px; height: 11px; }
       .card, .result-card, .question-card { padding: 20px 16px; }
       .tarot-spread { grid-template-columns: 1fr; }
-      .tarot-card, .tarot-card-inner { min-height: 260px; }
+      .tarot-card, .tarot-card-inner { min-height: 230px; }
       .panels { padding: 28px 16px 104px; }
       #toast { left: 16px; right: 16px; bottom: 88px; text-align: center; }
       footer { padding-bottom: 120px; }
@@ -1234,6 +1261,272 @@
       .panels { padding-bottom: 118px; }
       footer { padding-bottom: 118px; }
     }
+
+    /* ─── MODERN PREMIUM REFINEMENT ─────────────────────── */
+    :root {
+      --bg: #08090d;
+      --bg-mid: #101118;
+      --surface: rgba(18, 19, 26, .82);
+      --surface-hi: rgba(28, 29, 38, .9);
+      --surface-el: rgba(37, 38, 48, .95);
+      --gold: #d7b46a;
+      --gold-lt: #f0d99a;
+      --gold-dk: #a57c38;
+      --plum: #8d6bb1;
+      --text: #f7f1e7;
+      --text-muted: #b7ad9e;
+      --text-dim: #71695d;
+      --border: rgba(240, 217, 154, .14);
+      --border-hi: rgba(240, 217, 154, .34);
+      --sidebar: 276px;
+    }
+
+    body {
+      background:
+        linear-gradient(115deg, rgba(8,9,13,.98), rgba(16,17,24,.94) 46%, rgba(24,19,27,.96)),
+        var(--bg);
+    }
+
+    #ambient {
+      background:
+        linear-gradient(120deg, rgba(215,180,106,.08), transparent 28%),
+        radial-gradient(ellipse 70% 42% at 72% 8%, rgba(141,107,177,.16), transparent 62%),
+        radial-gradient(ellipse 70% 54% at 74% 86%, rgba(215,180,106,.08), transparent 66%);
+    }
+
+    header {
+      min-height: 690px;
+      padding-top: 76px;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      right: clamp(18px, 9vw, 130px);
+      top: 92px;
+      width: min(430px, 42vw);
+      aspect-ratio: 1;
+      border: 1px solid rgba(240,217,154,.22);
+      background:
+        linear-gradient(45deg, transparent 49%, rgba(240,217,154,.22) 49.5%, transparent 50.5%),
+        linear-gradient(-45deg, transparent 49%, rgba(240,217,154,.16) 49.5%, transparent 50.5%),
+        radial-gradient(circle at 50% 50%, rgba(240,217,154,.14), transparent 16%),
+        radial-gradient(circle at 50% 50%, transparent 38%, rgba(240,217,154,.12) 39%, transparent 40%);
+      transform: rotate(45deg);
+      opacity: .62;
+      pointer-events: none;
+      filter: drop-shadow(0 44px 90px rgba(0,0,0,.34));
+    }
+
+    .hero-inner {
+      grid-template-columns: minmax(0, 1.05fr) minmax(310px, .82fr);
+      align-items: center;
+      gap: clamp(34px, 6vw, 74px);
+    }
+
+    .header-eyebrow {
+      width: fit-content;
+      padding: 8px 12px;
+      border: 1px solid rgba(240,217,154,.18);
+      background: rgba(240,217,154,.055);
+      border-radius: 999px;
+      letter-spacing: 3.2px;
+    }
+
+    .brand {
+      max-width: 840px;
+      letter-spacing: 2px;
+      font-size: clamp(42px, 7.3vw, 96px);
+      text-wrap: balance;
+    }
+
+    .brand-sub {
+      color: var(--gold-lt);
+      letter-spacing: 3.6px;
+      opacity: .86;
+    }
+
+    .hero-copy {
+      max-width: 740px;
+      color: #ded3c2;
+      font-size: clamp(16px, 1.65vw, 21px);
+    }
+
+    .hero-actions {
+      gap: 14px;
+    }
+
+    .hero-actions .btn {
+      min-width: 196px;
+      min-height: 52px;
+    }
+
+    .hero-panel,
+    .card,
+    .question-card,
+    .result-card {
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    .hero-panel {
+      padding: 30px;
+      background:
+        linear-gradient(160deg, rgba(31,32,42,.88), rgba(12,13,18,.74)),
+        linear-gradient(90deg, rgba(215,180,106,.08), transparent);
+      border-color: rgba(240,217,154,.25);
+    }
+
+    .hero-panel-title {
+      font-size: 30px;
+      color: var(--text);
+    }
+
+    nav::before {
+      background: linear-gradient(90deg, rgba(8,9,13,.98), rgba(8,9,13,.86) 72%, transparent);
+    }
+
+    .tab-bar {
+      width: 216px;
+      padding: 12px;
+      background: rgba(14,15,21,.78);
+      border-color: rgba(240,217,154,.18);
+    }
+
+    .tab-btn {
+      border-radius: 8px;
+      padding: 13px 14px;
+      color: #a99f90;
+    }
+
+    .tab-indicator {
+      background: linear-gradient(135deg, rgba(215,180,106,.22), rgba(141,107,177,.16));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 12px 34px rgba(0,0,0,.22);
+    }
+
+    .panels {
+      max-width: 1080px;
+      padding-top: 54px;
+    }
+
+    .section-header {
+      padding-left: 18px;
+      border-left: 1px solid rgba(240,217,154,.28);
+    }
+
+    .section-title {
+      font-size: clamp(32px, 5vw, 48px);
+      color: #fff8ed;
+    }
+
+    .section-desc {
+      max-width: 680px;
+      color: #bdb2a2;
+      font-size: 14.5px;
+    }
+
+    .card {
+      padding: clamp(22px, 4vw, 36px);
+      background:
+        linear-gradient(145deg, rgba(24,25,33,.88), rgba(12,13,18,.8)),
+        rgba(18,19,26,.82);
+      border-color: rgba(240,217,154,.17);
+    }
+
+    .btn {
+      border-radius: 8px;
+      min-height: 48px;
+      text-transform: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f0d99a 0%, #c69644 100%);
+      color: #171006;
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,.025);
+      color: #d2c5b2;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    .opt-btn,
+    .tip-item,
+    .arch-card {
+      border-radius: 8px;
+    }
+
+    .dropzone {
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(240,217,154,.055), transparent),
+        rgba(255,255,255,.015);
+    }
+
+    .tarot-spread {
+      grid-template-columns: repeat(auto-fit, minmax(136px, 1fr));
+      gap: 16px;
+    }
+
+    .tarot-card,
+    .tarot-card-inner {
+      min-height: 238px;
+    }
+
+    .tarot-face {
+      border-radius: 8px;
+    }
+
+    .tarot-back {
+      background:
+        linear-gradient(155deg, rgba(31,32,42,.98), rgba(10,11,16,.96)),
+        radial-gradient(circle at 50% 18%, rgba(240,217,154,.22), transparent 44%);
+    }
+
+    .tarot-front {
+      background:
+        linear-gradient(165deg, rgba(42,38,45,.98), rgba(13,14,20,.98));
+    }
+
+    footer {
+      background: linear-gradient(180deg, transparent, rgba(0,0,0,.2));
+    }
+
+    @media (max-width: 560px) {
+      header {
+        padding-top: 36px;
+      }
+
+      header::before {
+        width: 250px;
+        right: -88px;
+        top: 80px;
+        opacity: .34;
+      }
+
+      .header-eyebrow {
+        letter-spacing: 2px;
+      }
+
+      .hero-panel {
+        padding: 20px;
+      }
+
+      .section-header {
+        padding-left: 14px;
+      }
+
+      .tarot-spread {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .tarot-card,
+      .tarot-card-inner {
+        min-height: 226px;
+      }
+    }
   </style>
 </head>
 
@@ -1250,10 +1543,10 @@
   <header>
     <div class="hero-inner">
       <div>
-        <div class="header-eyebrow">Portal de Espiritualidade e Autocuidado</div>
+        <div class="header-eyebrow">Experiência Premium de Autocuidado</div>
         <div class="brand">Cosmo Interior</div>
-        <div class="brand-sub">Cuidado espiritual para viver com mais presença</div>
-        <p class="hero-copy">Cuidar da espiritualidade é criar um espaço interno de escuta, equilíbrio e proteção para atravessar a vida com mais consciência. A Cosmo Interior reúne práticas simbólicas de autoconhecimento para ajudar você a observar sua energia, reconhecer sinais do seu caminho e fortalecer a relação com a sua própria essência.</p>
+        <div class="brand-sub">Clareza, presença e leitura simbólica em um só lugar</div>
+        <p class="hero-copy">Cuidar da espiritualidade é criar um espaço interno de escuta, equilíbrio e proteção para atravessar a vida com mais consciência. A Cosmo Interior organiza práticas simbólicas em uma experiência refinada para observar energia, reconhecer padrões e transformar intuição em direção.</p>
         <div class="hero-actions">
           <button class="btn btn-primary" type="button" onclick="selectTab('tarot')">Tarot do Dia</button>
           <button class="btn btn-ghost" type="button" onclick="selectTab('frequencia')">Cuidar da Energia</button>
@@ -1277,18 +1570,18 @@
         </svg>
       </div>
       <aside class="hero-panel" aria-label="Práticas espirituais disponíveis">
-        <div class="hero-panel-title">Escolha uma prática</div>
+        <div class="hero-panel-title">Um ritual digital para voltar ao centro</div>
         <div class="hero-feature">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7 9 18l-5-5"/></svg>
-          <span>Leituras organizadas por abas independentes, com acesso direto aos caminhos de autoconhecimento.</span>
+          <span>Navegação fixa e objetiva para alternar entre as práticas sem perder o foco da jornada.</span>
         </div>
         <div class="hero-feature">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6"/></svg>
-          <span>Tarot do Dia para virar cartas e receber uma mensagem simbólica no momento.</span>
+          <span>Tarot com baralho completo de 78 cartas e escolha de até cinco mensagens por rodada.</span>
         </div>
         <div class="hero-feature">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.4 5.7 6.1.5-4.7 4 1.4 5.9-5.2-3.1-5.2 3.1 1.4-5.9-4.7-4 6.1-.5L12 3Z"/></svg>
-          <span>Conteúdo voltado ao cuidado espiritual, ao equilíbrio energético e à escuta interior.</span>
+          <span>Ferramentas visuais e interativas para cuidado espiritual, equilíbrio energético e escuta interior.</span>
         </div>
       </aside>
     </div>
@@ -1393,12 +1686,12 @@
       <div class="section-header">
         <div class="section-eyebrow">Mensagem do Agora</div>
         <h2 class="section-title">Tarot do Dia</h2>
-        <p class="section-desc">Vire uma carta para receber um significado imediato sobre a energia que pede atenção hoje</p>
+        <p class="section-desc">Escolha até cinco cartas do baralho completo para receber mensagens sobre a energia que pede atenção hoje</p>
       </div>
 
       <div class="card">
         <div class="tarot-spread" id="tarotSpread" aria-live="polite"></div>
-        <p class="tarot-status" id="tarotStatus">Escolha uma das cartas. O significado aparece assim que ela virar.</p>
+        <p class="tarot-status" id="tarotStatus">Escolha até 5 cartas. Cada significado aparece assim que a carta virar.</p>
         <div class="reset-row">
           <button class="btn btn-ghost" type="button" onclick="resetTarot()">Embaralhar Novamente</button>
         </div>
@@ -1447,7 +1740,7 @@
     </svg>
     <div class="footer-brand">Cosmo Interior</div>
     <p class="footer-text">Ferramentas de autoconhecimento para a jornada espiritual</p>
-    <p class="footer-copy">&copy; 2025 Cosmo Interior &middot; Todos os direitos reservados</p>
+    <p class="footer-copy">&copy; 2026 Cosmo Interior &middot; Todos os direitos reservados</p>
   </footer>
 
 </div><!-- /app -->
@@ -1741,6 +2034,7 @@ function gerarNumerologia() {
    DAILY TAROT
 ═══════════════════════════════════════ */
 const TAROT_CARDS = [
+  { nome: 'O Louco', simbolo: '0', significado: 'Um novo caminho se apresenta. A carta convida a avançar com abertura, mas sem abandonar a consciência dos próprios passos.' },
   { nome: 'O Mago', simbolo: 'I', significado: 'A energia do dia pede ação consciente. Você tem recursos internos suficientes para iniciar algo importante, desde que una intenção, palavra e atitude no mesmo foco.' },
   { nome: 'A Sacerdotisa', simbolo: 'II', significado: 'O convite é escutar antes de responder. Nem tudo precisa ser resolvido pela pressa: uma percepção silenciosa pode mostrar o caminho mais verdadeiro.' },
   { nome: 'A Imperatriz', simbolo: 'III', significado: 'Hoje favorece nutrição, criatividade e cuidado com o corpo. O que recebe atenção amorosa tende a florescer com mais facilidade.' },
@@ -1752,17 +2046,59 @@ const TAROT_CARDS = [
   { nome: 'O Eremita', simbolo: 'IX', significado: 'Recolher-se pode ser necessário. Um momento de silêncio, oração ou escrita vai ajudar a separar a sua voz interna dos ruídos externos.' },
   { nome: 'A Roda da Fortuna', simbolo: 'X', significado: 'Ciclos estão em movimento. Aceite mudanças com atenção: algo que parecia desvio pode revelar uma oportunidade de amadurecimento.' },
   { nome: 'A Justiça', simbolo: 'XI', significado: 'O dia pede verdade, equilíbrio e responsabilidade. Observe onde suas escolhas precisam ficar mais alinhadas com aquilo que você diz acreditar.' },
+  { nome: 'O Enforcado', simbolo: 'XII', significado: 'A pausa revela outro ângulo. Soltar o controle por um instante pode abrir uma resposta que a força não alcançaria.' },
+  { nome: 'A Morte', simbolo: 'XIII', significado: 'Um ciclo precisa terminar para que a energia volte a circular. A transformação pede coragem para deixar ir o que perdeu verdade.' },
+  { nome: 'A Temperança', simbolo: 'XIV', significado: 'Integração, calma e medida conduzem o dia. Misture razão e sensibilidade antes de agir.' },
+  { nome: 'O Diabo', simbolo: 'XV', significado: 'Observe vínculos, excessos e automatismos. A liberdade começa quando você reconhece o que prende sua energia.' },
+  { nome: 'A Torre', simbolo: 'XVI', significado: 'Uma estrutura frágil pode pedir revisão. O abalo também limpa espaço para algo mais honesto nascer.' },
   { nome: 'A Estrela', simbolo: 'XVII', significado: 'Há uma energia de cura e esperança disponível. Cuide da fé com gestos simples e permita que o futuro volte a parecer habitável.' },
   { nome: 'A Lua', simbolo: 'XVIII', significado: 'Nem tudo está claro, e tudo bem. A carta orienta a respeitar sonhos, intuições e sinais emocionais sem tomar decisões movidas por medo.' },
   { nome: 'O Sol', simbolo: 'XIX', significado: 'Clareza, vitalidade e expansão marcam o dia. Procure o que aquece sua alma e compartilhe sua presença sem diminuir a própria luz.' },
+  { nome: 'O Julgamento', simbolo: 'XX', significado: 'Um chamado de consciência se aproxima. Escute o que a vida já vem repetindo e responda com maturidade.' },
   { nome: 'O Mundo', simbolo: 'XXI', significado: 'Um ciclo encontra integração. Reconheça o quanto já caminhou e escolha o próximo passo a partir de maturidade, não de cobrança.' },
 ];
 
+const NAIPE_INFO = {
+  Paus: { simbolo: '♣', tema: 'fogo, vontade, criação e movimento espiritual' },
+  Copas: { simbolo: '♡', tema: 'emoções, vínculos, intuição e cura afetiva' },
+  Espadas: { simbolo: '△', tema: 'pensamento, verdade, escolhas e clareza mental' },
+  Ouros: { simbolo: '◇', tema: 'corpo, recursos, trabalho e materialização' },
+};
+
+const VALOR_INFO = [
+  ['Ás', 'um começo potente se abre; receba a semente antes de cobrar o fruto'],
+  ['Dois', 'uma escolha ou parceria pede equilíbrio, escuta e presença'],
+  ['Três', 'a expansão acontece quando você compartilha, cria ou reconhece apoio'],
+  ['Quatro', 'é hora de organizar a base e proteger o que sustenta sua energia'],
+  ['Cinco', 'um atrito revela onde ainda existe apego, medo ou desalinhamento'],
+  ['Seis', 'harmonia e reparação aparecem quando você aceita ajuda e ajusta o caminho'],
+  ['Sete', 'defenda sua verdade com estratégia, sem desperdiçar energia em ruído'],
+  ['Oito', 'movimento consistente acelera processos que já estavam amadurecendo'],
+  ['Nove', 'a experiência acumulada pede pausa, discernimento e cuidado consigo'],
+  ['Dez', 'um ciclo chega ao ápice; conclua, simplifique e libere excesso'],
+  ['Pajem', 'uma mensagem inicial surge; mantenha curiosidade e humildade para aprender'],
+  ['Cavaleiro', 'a energia avança; direcione impulso para não confundir pressa com chamado'],
+  ['Rainha', 'acolha a maturidade interna e conduza o tema com presença receptiva'],
+  ['Rei', 'assuma liderança consciente, com domínio, responsabilidade e visão ampla'],
+];
+
+Object.entries(NAIPE_INFO).forEach(([naipe, info]) => {
+  VALOR_INFO.forEach(([valor, significado]) => {
+    TAROT_CARDS.push({
+      nome: `${valor} de ${naipe}`,
+      simbolo: info.simbolo,
+      significado: `No campo de ${info.tema}, ${significado}.`,
+    });
+  });
+});
+
 let tarotSelection = [];
-let tarotRevealed = false;
+let tarotChosen = [];
+const TAROT_MAX = 5;
 
 function shuffleTarot() {
-  tarotSelection = [...TAROT_CARDS].sort(() => Math.random() - .5).slice(0, 3);
+  tarotSelection = [...TAROT_CARDS].sort(() => Math.random() - .5);
+  tarotChosen = [];
 }
 
 function renderTarot() {
@@ -1787,28 +2123,41 @@ function renderTarot() {
 }
 
 window.revealTarot = function (index) {
-  if (tarotRevealed) return;
   const card = tarotSelection[index];
   const btn = document.querySelectorAll('.tarot-card')[index];
   const status = document.getElementById('tarotStatus');
   if (!card || !btn || !status) return;
+  if (btn.classList.contains('revealed') || tarotChosen.length >= TAROT_MAX) return;
 
-  tarotRevealed = true;
+  tarotChosen.push(card);
   btn.classList.add('revealed');
-  document.querySelectorAll('.tarot-card').forEach((el, i) => {
-    if (i !== index) el.style.opacity = '.36';
-    el.disabled = true;
-  });
-  status.innerHTML = `<strong style="color:var(--gold-lt);font-weight:400">${card.nome}</strong> — ${card.significado}`;
+  btn.disabled = true;
+
+  if (tarotChosen.length >= TAROT_MAX) {
+    document.querySelectorAll('.tarot-card:not(.revealed)').forEach(el => {
+      el.classList.add('locked');
+      el.disabled = true;
+    });
+  }
+
+  status.innerHTML = `
+    <span>${tarotChosen.length} de ${TAROT_MAX} cartas escolhidas.</span>
+    <span class="tarot-reading">
+      ${tarotChosen.map((item, i) => `
+        <span class="tarot-reading-item">
+          <strong>${i + 1}. ${item.nome}</strong>
+          ${item.significado}
+        </span>
+      `).join('')}
+    </span>`;
   toast('Carta revelada: ' + card.nome);
 };
 
 function resetTarot() {
-  tarotRevealed = false;
   shuffleTarot();
   renderTarot();
   const status = document.getElementById('tarotStatus');
-  if (status) status.textContent = 'Escolha uma das cartas. O significado aparece assim que ela virar.';
+  if (status) status.textContent = 'Escolha até 5 cartas. Cada significado aparece assim que a carta virar.';
 }
 
 renderTarot();
