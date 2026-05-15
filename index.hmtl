@@ -1,1142 +1,495 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin · Doce Lagom</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;600&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
-    <style>
-        /* ===== CORE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portal Espiritual</title>
 
-        :root {
-            --creme-fundo: #FDFCF9;
-            --terroso-luxo: #94745B;
-            --menta-seco: #8FA38B;
-            --texto: #3E3B39;
-            --branco: #FFFFFF;
-            --bege-claro: #F4F1ED;
-            --cinza-claro: #E8E6E1;
-            --esgotado: #E63946;
-        }
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
 
-        body {
-            background: var(--creme-fundo);
-            color: var(--texto);
-            display: flex;
-            min-height: 100vh;
-        }
+    body{
+      background:#0f0f14;
+      color:white;
+      min-height:100vh;
+    }
 
-        /* ===== SIDEBAR ===== */
-        .sidebar {
-            width: 280px;
-            background: var(--branco);
-            border-right: 1px solid var(--bege-claro);
-            padding: 40px 25px;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            overflow-y: auto;
-        }
+    header{
+      padding:30px;
+      text-align:center;
+      background:linear-gradient(90deg,#6a11cb,#2575fc);
+    }
 
-        .logo {
-            text-align: center;
-            margin-bottom: 50px;
-        }
+    header h1{
+      font-size:38px;
+    }
 
-        .logo img {
-            max-width: 120px;
-            border-radius: 50%;
-            margin-bottom: 10px;
-        }
+    .tabs{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:30px 0;
+    }
 
-        .logo h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            color: var(--terroso-luxo);
-        }
+    .tab-btn{
+      padding:14px 24px;
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+      background:#1d1d28;
+      color:white;
+      font-size:16px;
+      transition:0.3s;
+    }
 
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 12px 20px;
-            border-radius: 50px;
-            color: var(--texto);
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            transition: 0.2s;
-            cursor: pointer;
-        }
+    .tab-btn:hover{
+      background:#6a11cb;
+    }
 
-        .nav-item:hover {
-            background: var(--bege-claro);
-        }
+    .tab-content{
+      display:none;
+      max-width:900px;
+      margin:auto;
+      background:#171720;
+      padding:30px;
+      border-radius:20px;
+      margin-bottom:40px;
+    }
 
-        .nav-item.active {
-            background: var(--terroso-luxo);
-            color: white;
-        }
+    .active{
+      display:block;
+    }
 
-        .nav-item i {
-            font-style: normal;
-            font-size: 1.1rem;
-        }
+    input, select{
+      width:100%;
+      padding:14px;
+      border-radius:12px;
+      border:none;
+      margin-top:12px;
+      margin-bottom:20px;
+      background:#262636;
+      color:white;
+    }
 
-        /* ===== MAIN ===== */
-        .main {
-            flex: 1;
-            padding: 40px;
-            background: var(--creme-fundo);
-            overflow-x: auto;
-        }
+    button{
+      padding:14px 24px;
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+      background:#6a11cb;
+      color:white;
+      font-size:16px;
+      transition:0.3s;
+    }
 
-        .section {
-            display: none;
-        }
+    button:hover{
+      background:#7d28eb;
+    }
 
-        .section.active {
-            display: block;
-        }
+    .result{
+      margin-top:30px;
+      background:#222232;
+      padding:20px;
+      border-radius:15px;
+      line-height:1.7;
+    }
 
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-        }
+    .flashcard{
+      background:#202030;
+      padding:25px;
+      border-radius:20px;
+      margin-top:20px;
+    }
 
-        .section-header h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2rem;
-            color: var(--terroso-luxo);
-        }
+    .question{
+      font-size:22px;
+      margin-bottom:20px;
+    }
 
-        .btn {
-            background: var(--terroso-luxo);
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
+    .option{
+      display:block;
+      width:100%;
+      text-align:left;
+      padding:14px;
+      margin-bottom:10px;
+      background:#2d2d40;
+      border-radius:12px;
+      cursor:pointer;
+      border:2px solid transparent;
+    }
 
-        .btn:hover {
-            opacity: 0.9;
-            transform: scale(0.98);
-        }
+    .option:hover{
+      border-color:#6a11cb;
+    }
 
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--terroso-luxo);
-            color: var(--terroso-luxo);
-        }
+    canvas{
+      margin-top:30px;
+      background:white;
+      border-radius:15px;
+      padding:10px;
+    }
 
-        .btn-esgotado {
-            background: var(--esgotado);
-        }
-
-        /* ===== CARDS PRODUTO ===== */
-        .produtos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-        }
-
-        .produto-card {
-            background: white;
-            border-radius: 16px;
-            border: 1px solid var(--bege-claro);
-            padding: 20px;
-            transition: 0.2s;
-        }
-
-        .produto-header {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .produto-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
-            object-fit: cover;
-            background: #f5f5f5;
-        }
-
-        .produto-info {
-            flex: 1;
-        }
-
-        .produto-nome {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--terroso-luxo);
-            margin-bottom: 4px;
-        }
-
-        .produto-categoria {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            color: var(--menta-seco);
-            letter-spacing: 1px;
-        }
-
-        .produto-desc {
-            font-size: 0.8rem;
-            color: #666;
-            margin: 10px 0;
-        }
-
-        .variacao-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.8rem;
-            margin: 15px 0;
-        }
-
-        .variacao-table td {
-            padding: 8px 0;
-            border-bottom: 1px dashed var(--bege-claro);
-        }
-
-        .estoque-badge {
-            background: var(--bege-claro);
-            padding: 4px 10px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-
-        .esgotado-badge {
-            background: var(--esgotado);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-
-        .acoes {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            justify-content: flex-end;
-        }
-
-        .btn-pequeno {
-            padding: 8px 16px;
-            font-size: 0.7rem;
-        }
-
-        /* ===== ESTOQUE ===== */
-        .estoque-list {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-        }
-
-        .estoque-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--bege-claro);
-        }
-
-        .progress-bar {
-            width: 200px;
-            height: 8px;
-            background: var(--bege-claro);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--terroso-luxo);
-            border-radius: 10px;
-        }
-
-        /* ===== PEDIDOS ===== */
-        .pedidos-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .pedido-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            border-left: 5px solid var(--menta-seco);
-        }
-
-        .pedido-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .status {
-            font-size: 0.65rem;
-            padding: 4px 12px;
-            border-radius: 50px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .status.pendente { background: #FFE4B5; color: #8B4513; }
-        .status.concluido { background: #C1E1C1; color: #2F4F4F; }
-
-        /* ===== MODAL ===== */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 35px;
-            border-radius: 24px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            color: var(--terroso-luxo);
-            margin-bottom: 25px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--texto);
-            text-transform: uppercase;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid var(--bege-claro);
-            border-radius: 12px;
-            font-size: 0.9rem;
-        }
-
-        .variacao-item {
-            background: var(--bege-claro);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 10px;
-        }
-
-        /* ===== UTILS ===== */
-        .notification {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            background: var(--terroso-luxo);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            z-index: 10000;
-            display: none;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @media (max-width: 900px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; position: relative; }
-        }
-    </style>
+    img{
+      max-width:100%;
+      border-radius:15px;
+      margin-top:20px;
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- NOTIFICAÇÃO FLUTUANTE -->
-<div id="notification" class="notification"></div>
+<header>
+  <h1>Portal Espiritual ✨</h1>
+  <p>Leitura de Mão • Numerologia • Arquétipos • Frequência Hz</p>
+</header>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-    <div class="logo">
-        <img src="https://i.pinimg.com/originals/54/2c/45/542c4582ca79a683b61ad28f926f9efd.png" alt="Doce Lagom">
-        <h1>Doce Lagom</h1>
-        <p style="font-size: 0.7rem; color: var(--menta-seco); letter-spacing: 2px; margin-top: 5px;">ADMIN</p>
-    </div>
-
-    <div id="navProdutos" class="nav-item active" onclick="mudarSecao('produtos')">
-        <i>🍰</i> PRODUTOS
-    </div>
-    <div id="navEstoque" class="nav-item" onclick="mudarSecao('estoque')">
-        <i>📦</i> ESTOQUE
-    </div>
-    <div id="navPedidos" class="nav-item" onclick="mudarSecao('pedidos')">
-        <i>📋</i> PEDIDOS
-    </div>
-    <div id="navConfig" class="nav-item" onclick="mudarSecao('config')">
-        <i>⚙️</i> CONFIGURAÇÕES
-    </div>
-
-    <div style="margin-top: 50px; padding: 20px 0; border-top: 1px solid var(--bege-claro);">
-        <div style="display: flex; gap: 15px; align-items: center;">
-            <div style="background: var(--bege-claro); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">👤</div>
-            <div>
-                <p style="font-weight: 600; font-size: 0.85rem;">Admin</p>
-                <p style="font-size: 0.65rem; color: #777;">gestor@docelagom</p>
-            </div>
-        </div>
-    </div>
+<div class="tabs">
+  <button class="tab-btn" onclick="openTab('mao')">Leitura da Mão</button>
+  <button class="tab-btn" onclick="openTab('numerologia')">Numerologia</button>
+  <button class="tab-btn" onclick="openTab('arquetipo')">Arquétipo</button>
+  <button class="tab-btn" onclick="openTab('frequencia')">Frequência Hz</button>
 </div>
 
-<!-- CONTEÚDO PRINCIPAL -->
-<div class="main">
-    <!-- SEÇÃO PRODUTOS -->
-    <div id="secaoProdutos" class="section active">
-        <div class="section-header">
-            <h2>🍬 Catálogo de Produtos</h2>
-            <button class="btn" onclick="abrirModalProduto(null)">+ NOVO PRODUTO</button>
-        </div>
-        <div id="produtosContainer" class="produtos-grid">
-            <!-- JS irá preencher -->
-        </div>
-    </div>
+<!-- LEITURA DE MÃO -->
+<div class="tab-content active" id="mao">
 
-    <!-- SEÇÃO ESTOQUE -->
-    <div id="secaoEstoque" class="section">
-        <div class="section-header">
-            <h2>📊 Nível de Estoque</h2>
-            <button class="btn btn-outline" onclick="resetarEstoqueGlobal()">ZERAR VENDAS</button>
-        </div>
-        <div id="estoqueContainer" class="estoque-list">
-            <!-- JS irá preencher -->
-        </div>
-    </div>
+  <h2>Leitura de Mão ✋</h2>
 
-    <!-- SEÇÃO PEDIDOS -->
-    <div id="secaoPedidos" class="section">
-        <div class="section-header">
-            <h2>📦 Pedidos Recentes</h2>
-            <button class="btn btn-outline" onclick="adicionarPedidoExemplo()">+ ADICIONAR EXEMPLO</button>
-        </div>
-        <div id="pedidosContainer" class="pedidos-list">
-            <!-- JS irá preencher -->
-        </div>
-    </div>
+  <input type="file" id="handUpload" accept="image/*"/>
 
-    <!-- SEÇÃO CONFIGURAÇÕES -->
-    <div id="secaoConfig" class="section">
-        <div class="section-header">
-            <h2>⚙️ Configurações</h2>
-        </div>
-        <div style="background: white; border-radius: 16px; padding: 30px; max-width: 600px;">
-            <h3 style="font-family: 'Cormorant Garamond'; color: var(--terroso-luxo); margin-bottom: 20px;">Limite padrão de produção</h3>
-            <div class="form-group">
-                <label>Estoque máximo por item (unidades)</label>
-                <input type="number" id="estoqueMaximoInput" class="form-control" value="10" min="1">
-            </div>
-            <button class="btn" onclick="salvarConfiguracoes()" style="margin-top: 10px;">SALVAR</button>
-            <hr style="margin: 30px 0; border: none; border-top: 1px solid var(--bege-claro);">
-            <h3 style="font-family: 'Cormorant Garamond'; color: var(--terroso-luxo); margin-bottom: 20px;">Danger Zone</h3>
-            <button class="btn" style="background: var(--esgotado);" onclick="resetarTudo()">APAGAR TODOS OS DADOS</button>
-        </div>
-    </div>
+  <button onclick="analisarMao()">Analisar Palma</button>
+
+  <div id="maoResultado" class="result"></div>
+
 </div>
 
-<!-- MODAL DE PRODUTO (CRIAR/EDITAR) -->
-<div id="modalProduto" class="modal">
-    <div class="modal-content">
-        <h3 id="modalTitulo">Novo Produto</h3>
-        <form id="formProduto">
-            <input type="hidden" id="produtoId" value="">
+<!-- NUMEROLOGIA -->
+<div class="tab-content" id="numerologia">
 
-            <div class="form-group">
-                <label>Nome do produto</label>
-                <input type="text" id="produtoNome" class="form-control" required>
-            </div>
+  <h2>Numerologia 🔮</h2>
 
-            <div class="form-group">
-                <label>Descrição</label>
-                <textarea id="produtoDesc" class="form-control" rows="2"></textarea>
-            </div>
+  <input type="text" id="nome" placeholder="Nome Completo"/>
 
-            <div class="form-group">
-                <label>Categoria</label>
-                <select id="produtoCategoria" class="form-control">
-                    <option value="trufas">Trufas</option>
-                    <option value="bolos">Bolos de Pote</option>
-                    <option value="combos">Combos</option>
-                </select>
-            </div>
+  <input type="date" id="nascimento"/>
 
-            <div class="form-group">
-                <label>URL da Imagem</label>
-                <input type="url" id="produtoImagem" class="form-control" placeholder="https://...">
-            </div>
+  <button onclick="gerarNumerologia()">Analisar Numerologia</button>
 
-            <div class="form-group">
-                <label>Tipo de preço</label>
-                <select id="tipoPreco" class="form-control" onchange="toggleVariacoes()">
-                    <option value="unico">Preço único</option>
-                    <option value="variacoes">Múltiplos tamanhos (trufas)</option>
-                </select>
-            </div>
+  <div id="numerologiaResultado" class="result"></div>
 
-            <!-- Área para preço único -->
-            <div id="precoUnicoArea">
-                <div class="form-group">
-                    <label>Preço (R$)</label>
-                    <input type="number" id="produtoPreco" class="form-control" step="0.01" min="0">
-                </div>
-            </div>
+</div>
 
-            <!-- Área para variações (tamanhos) -->
-            <div id="variacoesArea" style="display: none;">
-                <label>Variações de tamanho e preço</label>
-                <div id="variacoesContainer">
-                    <!-- JS irá adicionar linhas -->
-                </div>
-                <button type="button" class="btn btn-outline" onclick="adicionarVariacao()" style="margin-top: 10px; width: 100%;">+ Adicionar tamanho</button>
-            </div>
+<!-- ARQUÉTIPO -->
+<div class="tab-content" id="arquetipo">
 
-            <div class="form-group" style="margin-top: 25px;">
-                <label>Badge / Destaque (opcional)</label>
-                <input type="text" id="produtoBadge" class="form-control" placeholder="Favorito, Especial, etc">
-            </div>
+  <h2>Quiz de Arquétipo 🧠</h2>
 
-            <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 30px;">
-                <button type="button" class="btn btn-outline" onclick="fecharModalProduto()">Cancelar</button>
-                <button type="submit" class="btn">Salvar Produto</button>
-            </div>
-        </form>
-    </div>
+  <div id="quizContainer"></div>
+
+</div>
+
+<!-- FREQUÊNCIA -->
+<div class="tab-content" id="frequencia">
+
+  <h2>Frequência Energética Hz ⚡</h2>
+
+  <div id="freqContainer"></div>
+
 </div>
 
 <script>
-    // ============================================
-    //  ADMIN DO LAGOM - GERENCIAMENTO COMPLETO
-    // ============================================
 
-    // ---------- CONSTANTES ----------
-    const STORAGE_PRODUTOS = 'produtos_lagom';
-    const STORAGE_ESTOQUE = 'estoque_lagom';
-    const STORAGE_PEDIDOS = 'pedidos_lagom';
-    const STORAGE_CONFIG = 'config_lagom';
+function openTab(tabId){
 
-    let ESTOQUE_MAX = 10; // valor padrão
+  const tabs = document.querySelectorAll('.tab-content');
 
-    // ---------- DADOS INICIAIS ----------
-    // Produtos padrão (caso não existam no localStorage)
-    const produtosPadrao = [
-        {
-            id: 'mar',
-            nome: 'Maracujá',
-            descricao: 'Trufa cremosa com recheio de maracujá, equilibrando doçura e acidez.',
-            categoria: 'trufas',
-            imagem: 'https://i.ibb.co/d4wBYTPT/b6e504dc-ee33-4c3e-9be3-721ed8f5c3b7.jpg',
-            badge: 'Favorito',
-            tipoPreco: 'variacoes',
-            variacoes: [
-                { tamanho: 'Média', preco: 6, key: 'mar-m' },
-                { tamanho: 'Mini', preco: 4, key: 'mar-mini' }
-            ]
-        },
-        {
-            id: 'ni',
-            nome: 'Ninho & Nutella',
-            descricao: 'Combinação irresistível de leite Ninho com Nutella em uma trufa macia.',
-            categoria: 'trufas',
-            imagem: 'https://i.ibb.co/vCYCLvML/image.png',
-            badge: 'Favorito',
-            tipoPreco: 'variacoes',
-            variacoes: [
-                { tamanho: 'Média', preco: 6, key: 'ni-m' },
-                { tamanho: 'Mini', preco: 4, key: 'ni-mini' }
-            ]
-        },
-        {
-            id: 'pa',
-            nome: 'Paçoca',
-            descricao: 'Trufa com o sabor clássico da paçoca, crocante e irresistível.',
-            categoria: 'trufas',
-            imagem: 'https://i.ibb.co/JjrwS6gV/4e7c1bd3-101a-47cd-8f6c-dbbaf1f42caf.jpg',
-            badge: '',
-            tipoPreco: 'variacoes',
-            variacoes: [
-                { tamanho: 'Média', preco: 6, key: 'pa-m' },
-                { tamanho: 'Mini', preco: 4, key: 'pa-mini' }
-            ]
-        },
-        {
-            id: 'caf',
-            nome: 'Café',
-            descricao: 'Trufa com intenso sabor de café, perfeita para os amantes da bebida.',
-            categoria: 'trufas',
-            imagem: 'https://i.ibb.co/0jmQ2JwH/91d96de8-2f80-48fa-a370-7d775f17eb8d.jpg',
-            badge: '',
-            tipoPreco: 'variacoes',
-            variacoes: [
-                { tamanho: 'Média', preco: 6, key: 'caf-m' },
-                { tamanho: 'Mini', preco: 4, key: 'caf-mini' }
-            ]
-        },
-        {
-            id: 'bn',
-            nome: 'Bolo Ninho & Nutella',
-            descricao: 'Camadas de creme de Ninho com Nutella no pote, pura indulgência.',
-            categoria: 'bolos',
-            imagem: 'https://i.ibb.co/vxf8TJDv/Cantinho-da-G-Wordmark-Logo-1.png',
-            badge: '',
-            tipoPreco: 'unico',
-            preco: 15,
-            key: 'bn'
-        },
-        {
-            id: 'bm',
-            nome: 'Bolo Maracujá',
-            descricao: 'Bolo de pote refrescante com creme de maracujá e massa fofinha.',
-            categoria: 'bolos',
-            imagem: 'https://i.ibb.co/gFXm5yhG/Cantinho-da-G-Wordmark-Logo.png',
-            badge: '',
-            tipoPreco: 'unico',
-            preco: 15,
-            key: 'bm'
-        },
-        {
-            id: 'bc',
-            nome: 'Bolo Chocolate',
-            descricao: 'Bolo de pote de chocolate intenso, para os chocólatras de plantão.',
-            categoria: 'bolos',
-            imagem: 'https://i.ibb.co/wZkd0tZ8/image.png',
-            badge: '',
-            tipoPreco: 'unico',
-            preco: 15,
-            key: 'bc'
-        },
-        {
-            id: 'kit',
-            nome: 'Kit Degustação',
-            descricao: '5 mini trufas sortidas.',
-            categoria: 'combos',
-            imagem: 'https://i.ibb.co/gFSmx2Cy/f1f2641a-3653-437d-b84f-52be0901330a.jpg',
-            badge: 'Especial',
-            tipoPreco: 'unico',
-            preco: 15,
-            key: 'kit'
-        },
-        {
-            id: 'trio',
-            nome: 'Combo Trio Médias',
-            descricao: 'Escolha 3 trufas médias dos nossos sabores favoritos.',
-            categoria: 'combos',
-            imagem: 'https://i.ibb.co/7xV904Pc/image.png',
-            badge: 'Mais Pedido',
-            tipoPreco: 'unico',
-            preco: 15,
-            key: 'trio'
-        },
-        {
-            id: 'duo',
-            nome: 'Duo Lagom',
-            descricao: '1 bolo de pote + 1 trufa média, a combinação perfeita.',
-            categoria: 'combos',
-            imagem: 'https://i.ibb.co/DfL33q2K/image.png',
-            badge: 'Favorito',
-            tipoPreco: 'unico',
-            preco: 20,
-            key: 'duo'
-        }
-    ];
+  tabs.forEach(tab=>{
+    tab.classList.remove('active');
+  });
 
-    // ---------- INICIALIZAÇÃO ----------
-    function inicializarDados() {
-        // Carregar configuração
-        let config = JSON.parse(localStorage.getItem(STORAGE_CONFIG)) || {};
-        ESTOQUE_MAX = config.estoqueMax || 10;
-        document.getElementById('estoqueMaximoInput').value = ESTOQUE_MAX;
+  document.getElementById(tabId).classList.add('active');
+}
 
-        // Produtos
-        if (!localStorage.getItem(STORAGE_PRODUTOS)) {
-            localStorage.setItem(STORAGE_PRODUTOS, JSON.stringify(produtosPadrao));
-        }
+function analisarMao(){
 
-        // Estoque
-        if (!localStorage.getItem(STORAGE_ESTOQUE)) {
-            localStorage.setItem(STORAGE_ESTOQUE, JSON.stringify({}));
-        }
+  const file = document.getElementById('handUpload').files[0];
 
-        // Pedidos
-        if (!localStorage.getItem(STORAGE_PEDIDOS)) {
-            localStorage.setItem(STORAGE_PEDIDOS, JSON.stringify([]));
-        }
+  if(!file){
+    alert("Envie uma foto da mão.");
+    return;
+  }
 
-        renderizarProdutos();
-        renderizarEstoque();
-        renderizarPedidos();
-    }
+  const reader = new FileReader();
 
-    // ---------- UTILITÁRIOS ----------
-    function mostrarNotificacao(msg, tipo = 'sucesso') {
-        let notif = document.getElementById('notification');
-        notif.style.background = tipo === 'erro' ? '#E63946' : '#94745B';
-        notif.innerText = msg;
-        notif.style.display = 'block';
-        setTimeout(() => notif.style.display = 'none', 3000);
-    }
+  reader.onload = function(e){
 
-    // ---------- PRODUTOS ----------
-    function renderizarProdutos() {
-        const produtos = JSON.parse(localStorage.getItem(STORAGE_PRODUTOS)) || [];
-        const container = document.getElementById('produtosContainer');
-        container.innerHTML = '';
+    document.getElementById("maoResultado").innerHTML = `
+      <img src="${e.target.result}">
+      <h3>Resultado da Leitura</h3>
 
-        produtos.forEach(prod => {
-            const card = document.createElement('div');
-            card.className = 'produto-card';
+      <p>
+      Sua linha da vida mostra forte energia emocional e conexão espiritual.
+      A linha da mente demonstra criatividade e sensibilidade.
+      A linha do coração revela intensidade amorosa e grande empatia.
+      </p>
 
-            let variacoesHTML = '';
-            let estoqueInfo = '';
+      <p>
+      Você possui tendência ao crescimento espiritual,
+      busca profunda por propósito e forte intuição.
+      </p>
+    `;
+  }
 
-            if (prod.tipoPreco === 'variacoes' && prod.variacoes) {
-                let rows = '';
-                prod.variacoes.forEach(varia => {
-                    const vendidos = getEstoqueVendidos(varia.key);
-                    const disponivel = vendidos < ESTOQUE_MAX ? 'Disponível' : 'Esgotado';
-                    const badgeClass = vendidos >= ESTOQUE_MAX ? 'esgotado-badge' : 'estoque-badge';
-                    rows += `<tr>
-                        <td>${varia.tamanho}</td>
-                        <td>R$ ${varia.preco.toFixed(2)}</td>
-                        <td><span class="${badgeClass}">${vendidos} / ${ESTOQUE_MAX}</span></td>
-                    </tr>`;
-                });
-                variacoesHTML = `<table class="variacao-table">${rows}</table>`;
-            } else {
-                const vendidos = getEstoqueVendidos(prod.key);
-                const badgeClass = vendidos >= ESTOQUE_MAX ? 'esgotado-badge' : 'estoque-badge';
-                variacoesHTML = `<div style="display:flex; justify-content:space-between; margin:10px 0;">
-                    <span>Preço único:</span>
-                    <strong>R$ ${prod.preco.toFixed(2)}</strong>
-                    <span class="${badgeClass}">${vendidos} / ${ESTOQUE_MAX}</span>
-                </div>`;
-            }
+  reader.readAsDataURL(file);
+}
 
-            card.innerHTML = `
-                <div class="produto-header">
-                    <img src="${prod.imagem || 'https://via.placeholder.com/80'}" class="produto-img" onerror="this.src='https://via.placeholder.com/80'">
-                    <div class="produto-info">
-                        <div class="produto-nome">${prod.nome}</div>
-                        <span class="produto-categoria">${categoriaPtBr(prod.categoria)}</span>
-                        ${prod.badge ? `<span style="background:var(--terroso-luxo); color:white; padding:2px 10px; border-radius:50px; font-size:0.6rem; display:inline-block; margin-top:5px;">${prod.badge}</span>` : ''}
-                    </div>
-                </div>
-                <div class="produto-desc">${prod.descricao}</div>
-                ${variacoesHTML}
-                <div class="acoes">
-                    <button class="btn btn-pequeno btn-outline" onclick="abrirModalProduto('${prod.id}')">Editar</button>
-                    <button class="btn btn-pequeno" style="background:var(--esgotado);" onclick="removerProduto('${prod.id}')">Remover</button>
-                </div>
-            `;
-            container.appendChild(card);
-        });
-    }
+function gerarNumerologia(){
 
-    function getEstoqueVendidos(key) {
-        let estoque = JSON.parse(localStorage.getItem(STORAGE_ESTOQUE)) || {};
-        return estoque[key] || 0;
-    }
+  const nome = document.getElementById("nome").value;
+  const data = document.getElementById("nascimento").value;
 
-    function categoriaPtBr(cat) {
-        const map = { trufas: 'TRUFAS', bolos: 'BOLOS DE POTE', combos: 'COMBOS' };
-        return map[cat] || cat;
-    }
+  if(!nome || !data){
+    alert("Preencha todos os campos.");
+    return;
+  }
 
-    // ---------- MODAL PRODUTO ----------
-    let editandoProdutoId = null;
+  const numero = Math.floor(Math.random()*9)+1;
 
-    window.abrirModalProduto = function(id) {
-        editandoProdutoId = id;
-        const modal = document.getElementById('modalProduto');
-        document.getElementById('formProduto').reset();
-        document.getElementById('variacoesContainer').innerHTML = '';
+  document.getElementById("numerologiaResultado").innerHTML = `
+    <h3>Número Principal: ${numero}</h3>
 
-        if (id) {
-            // Edição
-            document.getElementById('modalTitulo').innerText = 'Editar Produto';
-            const produtos = JSON.parse(localStorage.getItem(STORAGE_PRODUTOS));
-            const prod = produtos.find(p => p.id === id);
-            if (prod) {
-                document.getElementById('produtoId').value = prod.id;
-                document.getElementById('produtoNome').value = prod.nome || '';
-                document.getElementById('produtoDesc').value = prod.descricao || '';
-                document.getElementById('produtoCategoria').value = prod.categoria || 'trufas';
-                document.getElementById('produtoImagem').value = prod.imagem || '';
-                document.getElementById('produtoBadge').value = prod.badge || '';
-                document.getElementById('tipoPreco').value = prod.tipoPreco || 'unico';
+    <p>
+    Sua vibração numerológica indica liderança,
+    espiritualidade e grande capacidade de transformação.
+    </p>
 
-                if (prod.tipoPreco === 'unico') {
-                    document.getElementById('precoUnicoArea').style.display = 'block';
-                    document.getElementById('variacoesArea').style.display = 'none';
-                    document.getElementById('produtoPreco').value = prod.preco || 0;
-                } else {
-                    document.getElementById('precoUnicoArea').style.display = 'none';
-                    document.getElementById('variacoesArea').style.display = 'block';
-                    if (prod.variacoes) {
-                        prod.variacoes.forEach(v => adicionarVariacao(v.tamanho, v.preco, v.key));
-                    }
-                }
-            }
-        } else {
-            // Novo
-            document.getElementById('modalTitulo').innerText = 'Novo Produto';
-            document.getElementById('produtoId').value = '';
-            document.getElementById('precoUnicoArea').style.display = 'block';
-            document.getElementById('variacoesArea').style.display = 'none';
-            document.getElementById('tipoPreco').value = 'unico';
-        }
+    <p>
+    Você tende a atrair experiências importantes
+    para crescimento pessoal e emocional.
+    </p>
 
-        modal.style.display = 'flex';
-    }
+    <p>
+    Existe forte conexão com propósito de vida,
+    criatividade e expansão energética.
+    </p>
+  `;
+}
 
-    window.fecharModalProduto = function() {
-        document.getElementById('modalProduto').style.display = 'none';
-    }
+const perguntasArqu = [
 
-    window.toggleVariacoes = function() {
-        const tipo = document.getElementById('tipoPreco').value;
-        if (tipo === 'unico') {
-            document.getElementById('precoUnicoArea').style.display = 'block';
-            document.getElementById('variacoesArea').style.display = 'none';
-        } else {
-            document.getElementById('precoUnicoArea').style.display = 'none';
-            document.getElementById('variacoesArea').style.display = 'block';
-            if (document.getElementById('variacoesContainer').children.length === 0) {
-                adicionarVariacao('Média', 6, '');
-                adicionarVariacao('Mini', 4, '');
-            }
-        }
-    }
+"Você prefere liderar ou observar?",
+"Você age pela emoção ou lógica?",
+"Você gosta de aventura?",
+"Você busca reconhecimento?",
+"Você prefere estabilidade?",
+"Você se considera criativo?",
+"Você gosta de ajudar pessoas?",
+"Você toma decisões rápidas?",
+"Você é mais reservado?",
+"Você sonha grande?",
+"Você gosta de chamar atenção?",
+"Você prefere paz ou adrenalina?",
+"Você acredita em espiritualidade?",
+"Você gosta de trabalhar sozinho?",
+"Você se adapta fácil?",
+"Você se considera intenso?",
+"Você gosta de explorar ideias?",
+"Você é sentimental?",
+"Você busca liberdade?",
+"Você gosta de inovação?"
 
-    window.adicionarVariacao = function(tamanho = '', preco = 0, key = '') {
-        const container = document.getElementById('variacoesContainer');
-        const div = document.createElement('div');
-        div.className = 'variacao-item';
-        div.innerHTML = `
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <input type="text" placeholder="Tamanho" class="form-control" style="flex:1;" value="${tamanho}">
-                <input type="number" placeholder="Preço" class="form-control" style="width:100px;" step="0.01" value="${preco}">
-                <input type="text" placeholder="Chave (ex: mar-m)" class="form-control" style="flex:1;" value="${key}">
-                <button type="button" onclick="this.parentElement.parentElement.remove()" style="background:transparent; border:none; font-size:1.3rem; cursor:pointer;">&times;</button>
-            </div>
-        `;
-        container.appendChild(div);
-    }
+];
 
-    // Salvar produto
-    document.getElementById('formProduto').addEventListener('submit', function(e) {
-        e.preventDefault();
+let atualArqu = 0;
+let respostasArqu = [];
 
-        const id = document.getElementById('produtoId').value || gerarIdProduto(document.getElementById('produtoNome').value);
-        const nome = document.getElementById('produtoNome').value;
-        const descricao = document.getElementById('produtoDesc').value;
-        const categoria = document.getElementById('produtoCategoria').value;
-        const imagem = document.getElementById('produtoImagem').value;
-        const badge = document.getElementById('produtoBadge').value;
-        const tipoPreco = document.getElementById('tipoPreco').value;
+function mostrarPerguntaArqu(){
 
-        let produto = {
-            id,
-            nome,
-            descricao,
-            categoria,
-            imagem,
-            badge,
-            tipoPreco
-        };
+  if(atualArqu >= perguntasArqu.length){
 
-        if (tipoPreco === 'unico') {
-            produto.preco = parseFloat(document.getElementById('produtoPreco').value) || 0;
-            produto.key = id; // chave para estoque
-        } else {
-            const variacoes = [];
-            const itens = document.querySelectorAll('#variacoesContainer .variacao-item');
-            itens.forEach(item => {
-                const inputs = item.querySelectorAll('input');
-                const tamanho = inputs[0].value;
-                const preco = parseFloat(inputs[1].value) || 0;
-                let key = inputs[2].value;
-                if (!key) key = `${id}-${tamanho.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')}`;
-                if (tamanho && preco > 0) {
-                    variacoes.push({ tamanho, preco, key });
-                }
-            });
-            produto.variacoes = variacoes;
-        }
+    finalizarArqu();
+    return;
+  }
 
-        let produtos = JSON.parse(localStorage.getItem(STORAGE_PRODUTOS)) || [];
-        const index = produtos.findIndex(p => p.id === id);
-        if (index !== -1) {
-            produtos[index] = produto;
-        } else {
-            produtos.push(produto);
-        }
+  document.getElementById("quizContainer").innerHTML = `
 
-        localStorage.setItem(STORAGE_PRODUTOS, JSON.stringify(produtos));
-        mostrarNotificacao('Produto salvo com sucesso!');
-        fecharModalProduto();
-        renderizarProdutos();
-        renderizarEstoque(); // Atualiza lista de estoque
-    });
+    <div class="flashcard">
 
-    function gerarIdProduto(nome) {
-        return nome.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '-').substring(0, 20);
-    }
+      <div class="question">
+      ${atualArqu+1}. ${perguntasArqu[atualArqu]}
+      </div>
 
-    window.removerProduto = function(id) {
-        if (confirm(`Tem certeza que deseja remover este produto?`)) {
-            let produtos = JSON.parse(localStorage.getItem(STORAGE_PRODUTOS)) || [];
-            produtos = produtos.filter(p => p.id !== id);
-            localStorage.setItem(STORAGE_PRODUTOS, JSON.stringify(produtos));
-            mostrarNotificacao('Produto removido');
-            renderizarProdutos();
-            renderizarEstoque();
-        }
-    }
+      <button class="option" onclick="responderArqu('A')">A) Muito</button>
+      <button class="option" onclick="responderArqu('B')">B) Às vezes</button>
+      <button class="option" onclick="responderArqu('C')">C) Pouco</button>
+      <button class="option" onclick="responderArqu('D')">D) Nunca</button>
 
-    // ---------- ESTOQUE ----------
-    function renderizarEstoque() {
-        const estoque = JSON.parse(localStorage.getItem(STORAGE_ESTOQUE)) || {};
-        const produtos = JSON.parse(localStorage.getItem(STORAGE_PRODUTOS)) || [];
-        const container = document.getElementById('estoqueContainer');
-        container.innerHTML = '<h3 style="margin-bottom:20px;">📌 Itens vendidos / Limite de produção</h3>';
+    </div>
+  `;
+}
 
-        let lista = document.createElement('div');
+function responderArqu(resp){
 
-        // Coletar todas as chaves de estoque a partir dos produtos
-        let chaves = new Set();
-        produtos.forEach(prod => {
-            if (prod.tipoPreco === 'unico' && prod.key) chaves.add(prod.key);
-            if (prod.variacoes) prod.variacoes.forEach(v => chaves.add(v.key));
-        });
+  respostasArqu.push(resp);
+  atualArqu++;
 
-        // Adicionar também chaves que existem no estoque mas não nos produtos? Vamos listar todas.
-        Object.keys(estoque).forEach(key => chaves.add(key));
+  mostrarPerguntaArqu();
+}
 
-        chaves = Array.from(chaves).sort();
+function finalizarArqu(){
 
-        chaves.forEach(key => {
-            const vendidos = estoque[key] || 0;
-            const percent = Math.min((vendidos / ESTOQUE_MAX) * 100, 100);
-            const nomeExibicao = key; // Podemos buscar nome do produto
-            let nomeAmigavel = key;
-            // Tenta achar um produto relacionado
-            for (let prod of produtos) {
-                if (prod.key === key) { nomeAmigavel = prod.nome; break; }
-                if (prod.variacoes) {
-                    let varEncontrada = prod.variacoes.find(v => v.key === key);
-                    if (varEncontrada) { nomeAmigavel = `${prod.nome} (${varEncontrada.tamanho})`; break; }
-                }
-            }
+  document.getElementById("quizContainer").innerHTML = `
 
-            const item = document.createElement('div');
-            item.className = 'estoque-item';
-            item.innerHTML = `
-                <div style="flex:2;">
-                    <strong>${nomeAmigavel}</strong><br>
-                    <span style="font-size:0.7rem; color:#777;">${key}</span>
-                </div>
-                <div style="flex:1; text-align:center;">
-                    <span style="font-weight:600;">${vendidos}</span> / ${ESTOQUE_MAX}
-                </div>
-                <div style="flex:2;">
-                    <div class="progress-bar"><div class="progress-fill" style="width: ${percent}%;"></div></div>
-                </div>
-                <div>
-                    <button class="btn btn-pequeno btn-outline" onclick="zerarEstoqueItem('${key}')" style="padding:5px 10px;">Zerar</button>
-                </div>
-            `;
-            lista.appendChild(item);
-        });
+    <div class="result">
 
-        container.appendChild(lista);
-    }
+      <h2>Seus Arquétipos</h2>
 
-    window.zerarEstoqueItem = function(key) {
-        let estoque = JSON.parse(localStorage.getItem(STORAGE_ESTOQUE)) || {};
-        delete estoque[key];
-        localStorage.setItem(STORAGE_ESTOQUE, JSON.stringify(estoque));
-        mostrarNotificacao(`Estoque de ${key} zerado`);
-        renderizarEstoque();
-        renderizarProdutos(); // atualiza badges
-    };
+      <h3>1. O Sábio</h3>
+      <p>
+      Você busca conhecimento profundo,
+      entendimento emocional e evolução constante.
+      </p>
 
-    window.resetarEstoqueGlobal = function() {
-        if (confirm('Zerar TODOS os itens vendidos?')) {
-            localStorage.setItem(STORAGE_ESTOQUE, JSON.stringify({}));
-            mostrarNotificacao('Todos os estoques foram zerados');
-            renderizarEstoque();
-            renderizarProdutos();
-        }
-    };
+      <h3>2. O Governante</h3>
+      <p>
+      Possui tendência natural à liderança,
+      responsabilidade e organização.
+      </p>
 
-    // ---------- PEDIDOS ----------
-    function renderizarPedidos() {
-        const pedidos = JSON.parse(localStorage.getItem(STORAGE_PEDIDOS)) || [];
-        const container = document.getElementById('pedidosContainer');
-        container.innerHTML = '';
+      <h3>3. O Mago</h3>
+      <p>
+      Forte conexão espiritual,
+      criatividade elevada e grande intuição.
+      </p>
 
-        if (pedidos.length === 0) {
-            container.innerHTML = '<div style="background:white; padding:30px; text-align:center; border-radius:16px; color:#777;">Nenhum pedido registrado ainda.</div>';
-            return;
-        }
+    </div>
+  `;
+}
 
-        pedidos.sort((a,b) => new Date(b.data) - new Date(a.data)).forEach(ped => {
-            const card = document.createElement('div');
-            card.className = 'pedido-card';
-            const data = new Date(ped.data).toLocaleString('pt-BR');
-            card.innerHTML = `
-                <div class="pedido-header">
-                    <span><strong>${ped.cliente}</strong> · ${data}</span>
-                    <span class="status ${ped.status || 'pendente'}">${ped.status || 'pendente'}</span>
-                </div>
-                <div style="font-size:0.85rem; margin-bottom:10px;">
-                    Pagamento: ${ped.pagamento} · Total: R$ ${ped.total.toFixed(2)}
-                </div>
-                <div style="background: var(--bege-claro); padding:10px; border-radius:8px; font-size:0.8rem;">
-                    ${ped.itens.map(i => `• ${i}`).join('<br>')}
-                </div>
-                <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:15px;">
-                    <button class="btn btn-pequeno btn-outline" onclick="mudarStatusPedido('${ped.id}', 'concluido')">✓ Concluir</button>
-                    <button class="btn btn-pequeno" style="background:var(--esgotado);" onclick="removerPedido('${ped.id}')">Remover</button>
-                </div>
-            `;
-            container.appendChild(card);
-        });
-    }
+mostrarPerguntaArqu();
 
-    window.adicionarPedidoExemplo = function() {
-        const pedidos = JSON.parse(localStorage.getItem(STORAGE_PEDIDOS)) || [];
-        const novoPedido = {
-            id: Date.now().toString(),
-            cliente: 'Cliente Exemplo',
-            pagamento: 'Pix',
-            total: 45.00,
-            itens: ['2x Trufa Média (Maracujá)', '1x Bolo Ninho & Nutella'],
-            data: new Date().toISOString(),
-            status: 'pendente'
-        };
-        pedidos.push(novoPedido);
-        localStorage.setItem(STORAGE_PEDIDOS, JSON.stringify(pedidos));
-        renderizarPedidos();
-        mostrarNotificacao('Pedido de exemplo adicionado');
-    };
+const perguntasFreq = [
 
-    window.mudarStatusPedido = function(id, status) {
-        let pedidos = JSON.parse(localStorage.getItem(STORAGE_PEDIDOS)) || [];
-        const index = pedidos.findIndex(p => p.id === id);
-        if (index !== -1) {
-            pedidos[index].status = status;
-            localStorage.setItem(STORAGE_PEDIDOS, JSON.stringify(pedidos));
-            renderizarPedidos();
-            mostrarNotificacao(`Status alterado para ${status}`);
-        }
-    };
+"Você sente paz frequentemente?",
+"Você medita?",
+"Você controla emoções?",
+"Você pratica gratidão?",
+"Você dorme bem?",
+"Você se sente motivado?",
+"Você evita conflitos?",
+"Você se conecta com natureza?",
+"Você sente ansiedade?",
+"Você é otimista?",
+"Você ajuda pessoas?",
+"Você cuida da saúde?",
+"Você possui equilíbrio emocional?",
+"Você se sente leve?",
+"Você acredita em si?",
+"Você sente propósito?",
+"Você possui disciplina?",
+"Você consegue relaxar?",
+"Você controla pensamentos negativos?",
+"Você sente felicidade constante?"
 
-    window.removerPedido = function(id) {
-        if (confirm('Remover este pedido?')) {
-            let pedidos = JSON.parse(localStorage.getItem(STORAGE_PEDIDOS)) || [];
-            pedidos = pedidos.filter(p => p.id !== id);
-            localStorage.setItem(STORAGE_PEDIDOS, JSON.stringify(pedidos));
-            renderizarPedidos();
-            mostrarNotificacao('Pedido removido');
-        }
-    };
+];
 
-    // ---------- CONFIGURAÇÕES ----------
-    window.salvarConfiguracoes = function() {
-        const novoMax = parseInt(document.getElementById('estoqueMaximoInput').value, 10);
-        if (novoMax > 0) {
-            ESTOQUE_MAX = novoMax;
-            localStorage.setItem(STORAGE_CONFIG, JSON.stringify({ estoqueMax: novoMax }));
-            mostrarNotificacao(`Limite de estoque alterado para ${novoMax}`);
-            renderizarProdutos();
-            renderizarEstoque();
-        }
-    };
+let atualFreq = 0;
+let respostasFreq = [];
 
-    window.resetarTudo = function() {
-        if (confirm('⚠️ Isso irá apagar TODOS os produtos, estoque e pedidos. Tem certeza?')) {
-            localStorage.removeItem(STORAGE_PRODUTOS);
-            localStorage.removeItem(STORAGE_ESTOQUE);
-            localStorage.removeItem(STORAGE_PEDIDOS);
-            localStorage.removeItem(STORAGE_CONFIG);
-            inicializarDados();
-            mostrarNotificacao('Todos os dados foram resetados');
-        }
-    };
+function mostrarPerguntaFreq(){
 
-    // ---------- NAVEGAÇÃO ----------
-    window.mudarSecao = function(secao) {
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        document.getElementById(`secao${secao.charAt(0).toUpperCase() + secao.slice(1)}`).classList.add('active');
+  if(atualFreq >= perguntasFreq.length){
 
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        document.getElementById(`nav${secao.charAt(0).toUpperCase() + secao.slice(1)}`).classList.add('active');
+    finalizarFreq();
+    return;
+  }
 
-        // Recarregar dados ao entrar na seção
-        if (secao === 'produtos') renderizarProdutos();
-        if (secao === 'estoque') renderizarEstoque();
-        if (secao === 'pedidos') renderizarPedidos();
-    }
+  document.getElementById("freqContainer").innerHTML = `
 
-    // ---------- START ----------
-    window.onload = function() {
-        inicializarDados();
+    <div class="flashcard">
 
-        // Fechar modal clicando fora
-        window.onclick = function(event) {
-            const modal = document.getElementById('modalProduto');
-            if (event.target === modal) modal.style.display = 'none';
-        };
-    };
+      <div class="question">
+      ${atualFreq+1}. ${perguntasFreq[atualFreq]}
+      </div>
+
+      <button class="option" onclick="responderFreq(4)">A) Sempre</button>
+      <button class="option" onclick="responderFreq(3)">B) Frequentemente</button>
+      <button class="option" onclick="responderFreq(2)">C) Raramente</button>
+      <button class="option" onclick="responderFreq(1)">D) Nunca</button>
+
+    </div>
+  `;
+}
+
+function responderFreq(valor){
+
+  respostasFreq.push(valor);
+  atualFreq++;
+
+  mostrarPerguntaFreq();
+}
+
+function finalizarFreq(){
+
+  let total = respostasFreq.reduce((a,b)=>a+b,0);
+
+  let hz = 100 + (total * 8);
+
+  document.getElementById("freqContainer").innerHTML = `
+
+    <div class="result">
+
+      <h2>Sua Frequência Atual</h2>
+
+      <h1>${hz} Hz</h1>
+
+      <p>
+      Sua frequência energética demonstra o nível atual
+      de equilíbrio emocional, mental e espiritual.
+      </p>
+
+      <p>
+      Para elevar ainda mais:
+      </p>
+
+      <ul>
+        <li>Pratique meditação</li>
+        <li>Evite pensamentos negativos</li>
+        <li>Durma melhor</li>
+        <li>Fortaleça sua espiritualidade</li>
+        <li>Pratique gratidão diariamente</li>
+      </ul>
+
+      <canvas id="grafico" width="500" height="250"></canvas>
+
+    </div>
+  `;
+
+  desenharGrafico(hz);
+}
+
+function desenharGrafico(hz){
+
+  const canvas = document.getElementById("grafico");
+  const ctx = canvas.getContext("2d");
+
+  ctx.fillStyle = "#6a11cb";
+
+  ctx.fillRect(50,200-hz/3,100,hz/3);
+
+  ctx.font = "20px Arial";
+  ctx.fillText(hz + " Hz", 60, 220);
+}
+
+mostrarPerguntaFreq();
+
 </script>
+
 </body>
 </html>
